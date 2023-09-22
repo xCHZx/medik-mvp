@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class VisitController extends Controller
@@ -26,9 +27,13 @@ class VisitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($businessId, $visitorId)
     {
-        //
+        $visit = new Visit();
+        $visit->businessId = $businessId;
+        $visit->visitorId = $visitorId;
+        $visit->visitDate = Carbon::now();
+        $visit->save();
     }
 
     /**

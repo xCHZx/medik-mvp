@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('visita')->group(function () {
     Route::get('/{id}', [VisitorController::class, 'visit'])->name('visitor.visit');
+    Route::post('/{id}', [VisitorController::class, 'store'])->name('visitor.store');
+    Route::get('/{id}/gracias', [VisitorController::class, 'success'])->name('visitor.success');
+    Route::get('/{id}/denegado', [VisitorController::class, 'denied'])->name('visitor.denied');
 });
 
 require __DIR__.'/auth.php';

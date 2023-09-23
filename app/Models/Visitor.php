@@ -13,6 +13,15 @@ class Visitor extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'visitors';
+
+    protected $fillable = [
+        'firstName',
+        'lastName',
+        'phone',
+        'email'
+    ];
+
     public function visits(): HasMany
     {
         return $this->hasMany(Visit::class, 'visitorId', 'id');

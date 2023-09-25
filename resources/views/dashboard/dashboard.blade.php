@@ -15,6 +15,6 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop
 

@@ -12,7 +12,7 @@
     @if ($business)
         <p>{{$business}}</p>
 
-        <html>{{$svg}}</html>
+        <html>{!!$svg!!}</html>
 
     @else
 

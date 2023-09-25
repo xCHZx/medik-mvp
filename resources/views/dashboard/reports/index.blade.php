@@ -11,7 +11,7 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop
 
 @section('js')

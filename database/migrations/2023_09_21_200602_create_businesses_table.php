@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('qrPath')->nullable();
+            $table->text('rawQr')->nullable();
             $table->unsignedBigInteger('userId')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

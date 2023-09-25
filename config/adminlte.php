@@ -330,12 +330,12 @@ return [
         ],
         [
             'text'        => 'Mi Negocio',
-            'url'         => "#",
+            'route'       => 'business.index',
             'icon'        => 'fas fa-fw fa-store',
         ],
         [
             'text'        => 'Reportes',
-            'url'         => "#",
+            'route'       => 'reports.index',
             'icon'        => 'fas fa-fw fa-table',
         ],
         ['header' => 'CONFIGURACIÓN DE CUENTA'],

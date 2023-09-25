@@ -19,9 +19,12 @@ class VisitorController extends Controller
     }
 
     public function visit($id){
+
         try{
             $business = Business::select('name')->findOrFail($id);
+
         }catch(Exception $e){
+
             abort(404);
         }
         return view('visitor.visit',compact('business','id'));
@@ -59,6 +62,7 @@ class VisitorController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request, $id){
+
         try{
             $visitor = Visitor::with(['visits'=>function($query){
                 $query->orderByDesc('id');

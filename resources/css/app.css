@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @media screen {
+    #printSection {
+        display: none;
+    }
+  } */
+@media print {
+
+    .btn{
+        display:none;
+    }
+
+    .qr{
+        display:block!important;
+    }
+}
+
+.form-control{
+    border-radius: .25rem!important;
+    border: 1px solid #ced4da;
+}
+
+.qr{
+    display:none;
+}
+.container-fluid{
+    width: 95%;
+}
 
 .card{
     box-shadow: 0px 4px 18px 0px rgba(13,74,55,0.1);
@@ -18,10 +45,8 @@ body{
     font-size: 16px;
 }
 
-.card{
-    box-shadow: 0px 4px 18px 0px rgba(13,74,55,0.1);
-    border-color: white!important;
-    border-radius: 6px!important;
+.card-title{
+    font-size: 1.8rem;
 }
 
 

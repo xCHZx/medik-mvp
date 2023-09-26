@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/negocio', [BusinessController::class, 'index'])->name('business.index');
         Route::post('/negocio', [BusinessController::class, 'store'])->name('business.store');
+        Route::get('/negocio/{id}/editar', [BusinessController::class, 'edit'])->name('business.edit');
+        Route::post('/negocio/{id}/editar', [BusinessController::class, 'update'])->name('business.update');
+        // Route::post('/qr', [BusinessController::class, 'downloadQr'])->name('business.qr');
 
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     });

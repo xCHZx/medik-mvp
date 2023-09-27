@@ -340,8 +340,8 @@ return [
         ],
         ['header' => 'CONFIGURACIÓN DE CUENTA'],
         [
-            'text'        => 'Configuración',
-            'url'         => "#",
+            'text'        => 'Editar Perfil',
+            'url'         => "panel/perfil",
             'icon'        => 'fas fa-fw fa-cog',
         ],
         // [
@@ -486,7 +486,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

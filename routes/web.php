@@ -28,13 +28,18 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware('auth')->group(function () {
     Route::prefix('panel')->group(function () {
+        
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+        // ver y modificar los datos de su cuenta
+        Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/contrasena' , [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
         Route::get('/negocio', [BusinessController::class, 'index'])->name('business.index');
         Route::post('/negocio', [BusinessController::class, 'store'])->name('business.store');

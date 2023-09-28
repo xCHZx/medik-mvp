@@ -44,7 +44,7 @@
             <!-- First Name -->
             <div class="col-6">
                 <label for="firstName" class="block text-sm font-medium text-gray-700">Nombres</label>
-                <input id="firstName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:ring-opacity-50" type="text" name="firstName" value="{{ old('firstName') }}" required autofocus autocomplete="firstName" />
+                <input id="firstName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="firstName" value="{{ old('firstName') }}" required autofocus autocomplete="firstName" />
                 @if ($errors->has('firstName'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('firstName') }}</p>
                 @endif
@@ -53,7 +53,7 @@
             <!-- Last Name -->
             <div class="col-6">
                 <label for="lastName" class="block text-sm font-medium text-gray-700">Apellidos</label>
-                <input id="lastName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:ring-opacity-50" type="text" name="lastName" value="{{ old('lastName') }}" autocomplete="lastName" />
+                <input id="lastName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="lastName" value="{{ old('lastName') }}" autocomplete="lastName" />
                 @if ($errors->has('lasttName'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('lastName') }}</p>
                 @endif
@@ -62,7 +62,7 @@
             <!-- Phone Number -->
             <div class="col-6 mt-4">
                 <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Número de Celular</label>
-                <input id="phoneNumber" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:ring-opacity-50" type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" autocomplete="phoneNumber" />
+                <input id="phoneNumber" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" autocomplete="phoneNumber" />
                 @if ($errors->has('phoneNumber'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('phoneNumber') }}</p>
                 @endif
@@ -71,7 +71,7 @@
             <!-- Email -->
             <div class="col-6 mt-4">
                 <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <input id="email" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:ring-opacity-50" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
+                <input id="email" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
                 @if ($errors->has('email'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('email') }}</p>
                 @endif
@@ -80,7 +80,7 @@
             <!-- Password -->
             <div class="col-6 mt-4">
                 <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input id="password" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:ring-opacity-50" type="password" name="password" required autocomplete="new-password" />
+                <input id="password" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" name="password" required autocomplete="new-password" />
                 @if ($errors->has('password'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('password') }}</p>
                 @endif
@@ -89,7 +89,7 @@
             <!-- Confirm Password -->
             <div class="col-6 mt-4">
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repite la contraseña</label>
-                <input id="password_confirmation" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:ring-opacity-50" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <input id="password_confirmation" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" name="password_confirmation" required autocomplete="new-password" />
                 @if ($errors->has('password_confirmation'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('password_confirmation') }}</p>
                 @endif
@@ -98,11 +98,11 @@
         </div>
 
         <div class="flex justify-content-between align-items-center mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('login') }}">
                 ¿Ya tienes una cuenta?
             </a>
             
-            <button type="submit" class="ml-4 px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-800 focus:outline-none focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+            <button type="submit" class="ml-4 px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-800 focus:outline-none focus:ring focus:border-indigo-500 focus:ring-indigo-500">
                 Resgistrarme
             </button>
         </div>

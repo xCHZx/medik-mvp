@@ -53,7 +53,7 @@
         <!-- Password -->
         <div class="mb-4">
             <label for="password" class="block font-medium text-sm text-gray-600">Contraseña</label>
-            <input id="password" placeholder="••••••••" class="border-gray-300  focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" type="password" name="password" required autocomplete="current-password">
+            <input id="password" placeholder="••••••••" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" type="password" name="password" required autocomplete="current-password">
             @error('password')
             <div class="mt-2 text-red-600">{{ $message }}</div>
             @enderror

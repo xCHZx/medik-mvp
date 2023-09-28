@@ -6,7 +6,7 @@
         <span class="text-4xl">&#128526;</span>
 
         <!-- Título -->
-        <div class="flex justify-content-center align-content-center mt-2">
+        <div class="flex justify-content-center align-content-center mt-2" style="margin-botton: -0.25rem">
             <h1 class="text-2xl font-bold fs-4 text-gray-600 mt-3" style="padding-top: 0.13rem">
                 Quiero unirme a 
             </h1>
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Descripción -->
-        <p class="text-gray-600 mt-2">Ingresa tus datos para registrarte con nosotros</p>
+        <p class="text-gray-600" style="margin-top: -0.25rem">Ingresa tus datos para registrarte con nosotros</p>
     </div>
 
     <!-- Form section -->
@@ -42,8 +42,8 @@
         <div class="row">
 
             <!-- First Name -->
-            <div class="col-6">
-                <label for="firstName" class="block text-sm font-medium text-gray-700">Nombres</label>
+            <div class="col-12 col-md-6">
+                <label for="firstName" class="block text-sm font-medium text-gray-700">Nombre(s)</label>
                 <input id="firstName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="firstName" value="{{ old('firstName') }}" required autofocus autocomplete="firstName" />
                 @if ($errors->has('firstName'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('firstName') }}</p>
@@ -51,25 +51,16 @@
             </div>
 
             <!-- Last Name -->
-            <div class="col-6">
-                <label for="lastName" class="block text-sm font-medium text-gray-700">Apellidos</label>
+            <div class="col-12 col-md-6 mt-4 mt-md-0">
+                <label for="lastName" class="block text-sm font-medium text-gray-700">Apellido(s)</label>
                 <input id="lastName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="lastName" value="{{ old('lastName') }}" autocomplete="lastName" />
                 @if ($errors->has('lasttName'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('lastName') }}</p>
                 @endif
             </div>
 
-            <!-- Phone Number -->
-            <div class="col-6 mt-4">
-                <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Número de Celular</label>
-                <input id="phoneNumber" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" autocomplete="phoneNumber" />
-                @if ($errors->has('phoneNumber'))
-                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('phoneNumber') }}</p>
-                @endif
-            </div>
-
             <!-- Email -->
-            <div class="col-6 mt-4">
+            <div class="col-12 col-md-6 mt-4">
                 <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
                 <input id="email" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
                 @if ($errors->has('email'))
@@ -77,8 +68,17 @@
                 @endif
             </div>
 
+            <!-- Phone Number -->
+            <div class="col-12 col-md-6 mt-4">
+                <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Número de Celular</label>
+                <input id="phoneNumber" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" autocomplete="phoneNumber" />
+                @if ($errors->has('phoneNumber'))
+                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('phoneNumber') }}</p>
+                @endif
+            </div>
+
             <!-- Password -->
-            <div class="col-6 mt-4">
+            <div class="mt-4">
                 <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
                 <input id="password" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" name="password" required autocomplete="new-password" />
                 @if ($errors->has('password'))
@@ -87,7 +87,7 @@
             </div>
 
             <!-- Confirm Password -->
-            <div class="col-6 mt-4">
+            <div class="mt-4">
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repite la contraseña</label>
                 <input id="password_confirmation" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" name="password_confirmation" required autocomplete="new-password" />
                 @if ($errors->has('password_confirmation'))
@@ -97,14 +97,34 @@
 
         </div>
 
-        <div class="flex justify-content-between align-items-center mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('login') }}">
-                ¿Ya tienes una cuenta?
-            </a>
+        <div class="flex flex-col justify-content-between align-items-center mt-4 d-block d-sm-none">
+            <!-- Mobile -->
+            <div class="col-12 mt-4">
+                <button type="submit" class="w-full px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-800 focus:outline-none focus:ring focus:border-indigo-500 focus:ring-indigo-500">
+                    Registrarme
+                </button>
+            </div>
+
+            <div class="col-12 mt-2 text-center">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('login') }}">
+                    ¿Ya tienes una cuenta?
+                </a>
+            </div>
+        </div>
             
-            <button type="submit" class="ml-4 px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-800 focus:outline-none focus:ring focus:border-indigo-500 focus:ring-indigo-500">
-                Resgistrarme
-            </button>
+        <div class="justify-content-between align-items-center mt-4 d-none d-sm-flex">
+            <!-- Mediano y superior -->
+            <div class="col-md-5">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('login') }}">
+                    ¿Ya tienes una cuenta?
+                </a>
+            </div>
+            
+            <div class="col-md-4">
+                <button type="submit" class="ml-4 px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md hover:bg-teal-800 focus:outline-none focus:ring focus:border-indigo-500 focus:ring-indigo-500">
+                    Registrarme
+                </button>
+            </div>
         </div>
     </form>
 

@@ -79,11 +79,19 @@
             </div>
         </div>        
 
-            <div>
+        <div class="flex flex-col justify-content-between align-items-center mt-4 d-block d-sm-flex">
+            <div class="col-12">
                 <button class="px-4 py-2 text-white bg-teal-600 rounded-md hover:bg-teal-800 focus:outline-none focus:ring focus:ring-indigo-500 w-full">
                     Iniciar sesión
                 </button>
             </div>
+
+            <div class="col-12 mt-2 text-center">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('register') }}">
+                    ¿Aún no tienes una cuenta? Unete!
+                </a>
+            </div>
+        </div>
         
     </form>
 </x-visitor-layout>

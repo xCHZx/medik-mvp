@@ -319,6 +319,11 @@ return [
             'icon'        => 'fas fa-fw fa-tachometer-alt',
         ],
         [
+            'text'        => 'Mi Negocio',
+            'route'       => 'business.index',
+            'icon'        => 'fas fa-fw fa-store',
+        ],
+        [
             'text'        => 'Flujos de Reputación',
             'url'         => "#",
             'icon'        => 'fab fa-fw fa-whatsapp',
@@ -328,12 +333,7 @@ return [
             'url'         => "#",
             'icon'        => 'fas fa-fw fa-dollar-sign',
         ],
-        [
-            'text'        => 'Mi Negocio',
-            'route'       => 'business.index',
-            'icon'        => 'fas fa-fw fa-store',
-        ],
-        [
+                [
             'text'        => 'Reportes',
             'route'       => 'reports.index',
             'icon'        => 'fas fa-fw fa-table',

@@ -20,7 +20,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form class="p-3" method="POST" action="{{route('business.update', $business["id"])}}"">
+                <form class="p-3" method="POST" action="{{route('business.update', $business["id"])}}">
                 @csrf
                     <div class="row mb-3">
                         <div class="form-group col-md-12">

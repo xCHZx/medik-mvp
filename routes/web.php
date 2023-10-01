@@ -37,8 +37,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
         // ver y modificar los datos de su cuenta
-        Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/perfil/editar', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/perfil/cambiarContrasena', [ProfileController::class, 'changePassword'])->name('profile.change-password');
         Route::post('/contrasena' , [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
         Route::get('/negocio', [BusinessController::class, 'index'])->name('business.index');

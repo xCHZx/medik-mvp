@@ -16,14 +16,33 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function index(Request $request): View
     {
-        return view('dashboard.profile.account', [
+        return view('dashboard.profile.index', [
             'user' => $request->user(),
         ]);
-
-        
     }
+
+    /**
+     * Display the edit user's profile form.
+     */
+    public function edit(Request $request): View
+    {
+        return view('dashboard.profile.edit', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    /**
+     * Display the password user's profile form.
+     */
+    public function changePassword(Request $request): View
+    {
+        return view('dashboard.profile.change-password', [
+            'user' => $request->user(),
+        ]);
+    }
+
 
     /**
      * Update the user's profile information.
@@ -39,7 +58,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.index')->with('status', 'profile-updated');
     }
 
     // update users password
@@ -48,7 +67,8 @@ class ProfileController extends Controller
         $currentPasword = $request->user()->password;
         $validated = $request->validate([
             'currentPassword' => 'required',
-            'newPassword' => 'required'
+            'newPassword' => 'required',
+            'confirmNewPassword' => 'required'
         ]);
 
         // checar que conozca su contraseña
@@ -60,19 +80,13 @@ class ProfileController extends Controller
                 $user->password = $request->newPassword;
                 $user->save();
 
-                return Redirect::route('profile.edit')->with('status', 'password-updated');
+                return Redirect::route('profile.index')->with('status', 'password-updated');
             }else{
-                return Redirect::route('profile.edit')->with('status', 'password-error');
-
-            }
-            
-            
+                return Redirect::route('profile.change-password')->with('status', 'password-error');
+            }          
         }else{
-            return Redirect::route('profile.edit')->with('status', 'password-error');
-
+            return Redirect::route('profile.change-password')->with('status', 'password-error');
         }
-
-
     }
 
     /**

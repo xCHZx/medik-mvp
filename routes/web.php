@@ -49,6 +49,20 @@ Route::middleware('auth')->group(function () {
         Route::post('/negocio/{id}/editar', [BusinessController::class, 'update'])->name('business.update');
         // Route::post('/qr', [BusinessController::class, 'downloadQr'])->name('business.qr');
 
+        // Vista principal con todos los flujos
+        Route::get('/flow', [FlowController::class, 'index'])->name('flow.index');
+
+        // Vista para crear un nuevo flujo
+        Route::get('/flow/create', [FlowController::class, 'create'])->name('flow.create');
+        Route::post('/flow', [FlowController::class, 'store'])->name('flow.store');
+
+        // Vista para editar los datos del flujo
+        Route::get('/flow/{id}/edit', [FlowController::class, 'edit'])->name('flow.edit');
+        Route::put('/flow/{id}', [FlowController::class, 'update'])->name('flow.update');
+
+        // Acción para encender/apagar el flujo
+        Route::patch('/flow/{id}/toggle', [FlowController::class, 'toggle'])->name('flow.toggle');
+
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     });
 });

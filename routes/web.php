@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FlowsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VisitorController;
@@ -48,6 +49,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/negocio/{id}/editar', [BusinessController::class, 'edit'])->name('business.edit');
         Route::post('/negocio/{id}/editar', [BusinessController::class, 'update'])->name('business.update');
         // Route::post('/qr', [BusinessController::class, 'downloadQr'])->name('business.qr');
+
+        //flujos
+        Route::get('/flujos',[FlowsController::class, 'index'])->name('flows.index');
+        Route::post('/flujos/crear', [FlowsController::class , 'store'])->name('flows.store');
+        Route::post('/flujos/changeStatus' , [FlowsController::class , 'changeStatus'])->name('flows.changeStatus');
 
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     });

@@ -320,7 +320,7 @@ return [
         ],
         [
             'text'        => 'Flujos de Reputación',
-            'url'         => "#",
+            'url'         => "panel/flujos",
             'icon'        => 'fab fa-fw fa-whatsapp',
         ],
         [

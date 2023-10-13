@@ -3,13 +3,13 @@
 @section('title', 'Flujos')
 
 @section('content_header')
-    <h1> {{$message}} </h1>
+    <h1 class="mt-4"> {{$message}} &#129299;&#9757; </h1>
 @stop
 
 @section('content')
-    <p>Da click al boton para <b>Crear un negocio</b></p>
-    <a href="panel/negocio">
-    <button type="button" class="btn btn-outline-info">Crear Negocio</button>
+    <h2 class="mt-0">Da click al botón para <b>crear un negocio</b></h2>
+    <a href="{{ route('business.index') }}" >
+        <button type="button" class="btn btn-outline-info my-3">Crear Negocio</button>
     </a>
 @stop
 

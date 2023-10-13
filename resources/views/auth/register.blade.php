@@ -55,7 +55,6 @@
                 <label for="lastName" class="block text-sm font-medium text-gray-700">Apellido(s)</label>
                 <input id="lastName" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="lastName" value="{{ old('lastName') }}" autocomplete="lastName" />
                 @if ($errors->has('lastName'))
-                @if ($errors->has('lastName'))
                     <p class="mt-2 text-sm text-red-600">{{ $errors->first('lastName') }}</p>
                 @endif
             </div>

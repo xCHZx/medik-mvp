@@ -9,136 +9,139 @@
 @section('content')
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header row col-12 border-none mt-3">
-            <h1 class="card-title col-6 text-black">Creación de flujo</h1>
-            <div class="text-right col-6 mr-0">
-                <button class="btn btnmdk-confirm btnmdk-hover mr-2 col-4">Guardar</button>
-                <button class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <!-- Tab header -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="objetives-tab" data-toggle="tab" href="#objetives" role="tab" aria-controls="objetives" aria-selected="true">Objetivos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="information-tab" data-toggle="tab" href="#information" role="tab" aria-controls="information" aria-selected="false">Información</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Redes Sociales</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Resultado</a>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="myTabContent">
-                <!-- Objetive window -->
-                <div class="tab-pane fade show active" id="objetives" role="tabpanel" aria-labelledby="objetives-tab">
-                    <div class="card cardmdk mt-0.5 mb-3 mx-0">
-                        <div class="card-header border-none text-black">
-                            Escoge uno de los siguientes objetivos para definir qué aspecto deseas evaluar:
-                        </div>
-
-                        <div class="flex justify-content-between col-12">
-                            <div class="card-body ml-3 col-5">
-                                <div class="form-check mb-4">
-                                    <input class="form-check-input" type="radio" name="obj1" id="obj1" value="{{ old('objetivo') }}">
-                                    <label class="form-check-label" for="obj1">
-                                        Calidad de la atención médica
-                                    </label>
-                                </div>
-                                <div class="form-check mb-4">
-                                    <input class="form-check-input" type="radio" name="obj2" id="obj2" value="{{ old('objetivo') }}">
-                                    <label class="form-check-label" for="obj2">
-                                        Accesibilidad y tiempo de espera
-                                    </label>
-                                </div>
-                                <div class="form-check mb-4">
-                                    <input class="form-check-input" type="radio" name="obj3" id="obj3" value="{{ old('objetivo') }}">
-                                    <label class="form-check-label" for="obj3">
-                                        Comunicación médico-paciente
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="obj4" id="obj4" value="{{ old('objetivo') }}">
-                                    <label class="form-check-label" for="obj4">
-                                        Satisfacción general
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Dinamic description -->
-                            <div id="descripcion-objetivo" class="cardmdk-display my-3 mr-3 col-6">
-                                <div class="card-body ml-3">
-                                    <p id="texto-descripcion" class="text-body-secondary"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Information window -->
-                <div class="tab-pane fade" id="information" role="tabpanel" aria-labelledby="information-tab">
-                    <div class="card cardmdk mt-0.5 mb-3 mx-0">
-                        <div class="card-header border-none">
-                            Démosle un nombre a tu flujo para poder identificarlo, si no asignas un nombre, no te preocupes, le asignaremos uno por ti.
-                        </div>
-                        <div class="card-body row col-12">
-                            <div class="form-group col-7">
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Escribe el nombre de tu flujo (opcional)">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review window -->
-                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                    <div class="card cardmdk mt-0.5 mb-3 mx-0">
-                        <div class="card-header border-none">    
-                            Junto a los comentarios y calificaciones tus pacientes podrán ver links a tus redes sociales o a tu página web, si deseas agregarlos colocalos aquí, en caso de que no tengas ninguno puedes dejar el espacio en blanco
-                        </div>
-                        <div class="card-body row col-12">
-                            <div class="form-group col-5">
-                                <label for="facebookLink">
-                                    <i class="fab fa-facebook"></i>
-                                    Facebook
-                                </label>
-                                <input type="text" class="form-control" id="facebookLink" name="facebookLink" value="{{ old('facebook') }}" placeholder="Escribe enlace">
-                            </div>
-                            <div class="form-group col-5 offset-1">
-                                <label for="googleLink">
-                                    <i class="fab fa-google"></i>
-                                    Google
-                                </label>
-                                <input type="text" class="form-control" id="googleLink" name="googleLink" value="{{ old('google') }}" placeholder="Escribe enlace">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result window -->
-                <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                    <div class="card flex-row col-12 card cardmdk mt-0.5 mb-3 mx-0">
-                        <div class="card col-6 my-2">
-                            <div class="card-header bg-green-50">
-                                <h1 class="card-title text-center" style="font-weight: 600">Mensaje Principal</h1>
-                            </div>
-                            <div style="background-color: red">
-                            </div>
-                        </div>
-                        <div class="card col-6 my-2">
-                            <div class="card-header bg-green-50">
-                                <h1 class="card-title text-center" style="font-weight: 600">Encuesta</h1>
-                            </div>
-                            <div style="background-color: rebeccapurple">
-                            </div>
-                        </div>
-                    </div>
+        <form method="POST" action="{{ route('flows.store') }}">
+            @csrf
+            <div class="card-header row col-12 border-none mt-3">
+                <h1 class="card-title col-6 text-black">Creación de flujo</h1>
+                <div class="text-right col-6 mr-0">
+                    <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-4">Guardar</button>
+                    <a href="{{ route('flows.index') }}" class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</a>
                 </div>
             </div>
-        </div>
+            
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="objetives-tab" data-toggle="tab" href="#objetives" role="tab" aria-controls="objetives" aria-selected="true">Objetivos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="information-tab" data-toggle="tab" href="#information" role="tab" aria-controls="information" aria-selected="false">Información</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Redes Sociales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Resultado</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    <!-- Objetive window -->
+                    <div class="tab-pane fade show active" id="objetives" role="tabpanel" aria-labelledby="objetives-tab">
+                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                            <div class="card-header border-none text-black">
+                                Escoge uno de los siguientes objetivos para definir qué aspecto deseas evaluar:
+                            </div>
+
+                            <div class="flex justify-content-between col-12">
+                                <div class="card-body ml-3 col-5">
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" type="radio" name="objetivo" id="obj1" value="Calidad de la atención médica">
+                                        <label class="form-check-label" for="obj1">
+                                            Calidad de la atención médica
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" type="radio" name="objetivo" id="obj2" value="Accesibilidad y tiempo de espera">
+                                        <label class="form-check-label" for="obj2">
+                                            Accesibilidad y tiempo de espera
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" type="radio" name="objetivo" id="obj3" value="Comunicación médico-paciente">
+                                        <label class="form-check-label" for="obj3">
+                                            Comunicación médico-paciente
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="objetivo" id="obj4" value="Satisfacción general">
+                                        <label class="form-check-label" for="obj4">
+                                            Satisfacción general
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Dinamic description -->
+                                <div id="descripcion-objetivo" class="cardmdk-display my-3 mr-3 col-6">
+                                    <div class="card-body ml-3">
+                                        <p id="texto-descripcion" class="text-body-secondary"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Information window -->
+                    <div class="tab-pane fade" id="information" role="tabpanel" aria-labelledby="information-tab">
+                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                            <div class="card-header border-none">
+                                Démosle un nombre a tu flujo para poder identificarlo, si no asignas un nombre, no te preocupes, le asignaremos uno por ti.
+                            </div>
+                            <div class="card-body row col-12">
+                                <div class="form-group col-7">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Escribe el nombre de tu flujo (opcional)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review window -->
+                    <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                            <div class="card-header border-none">    
+                                Junto a los comentarios y calificaciones tus pacientes podrán ver links a tus redes sociales o a tu página web, si deseas agregarlos colocalos aquí, en caso de que no tengas ninguno puedes dejar el espacio en blanco
+                            </div>
+                            <div class="card-body row col-12">
+                                <div class="form-group col-5">
+                                    <label for="facebookLink">
+                                        <i class="fab fa-facebook"></i>
+                                        Facebook
+                                    </label>
+                                    <input type="text" class="form-control" id="facebookLink" name="facebookUrl" placeholder="Escribe enlace">
+                                </div>
+                                <div class="form-group col-5 offset-1">
+                                    <label for="googleLink">
+                                        <i class="fab fa-google"></i>
+                                        Google
+                                    </label>
+                                    <input type="text" class="form-control" id="googleLink" name="googleUrl" placeholder="Escribe enlace">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result window -->
+                    <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
+                        <div class="card flex-row col-12 card cardmdk mt-0.5 mb-3 mx-0">
+                            <div class="card col-6 my-2">
+                                <div class="card-header bg-green-50">
+                                    <h1 class="card-title text-center" style="font-weight: 600">Mensaje Principal</h1>
+                                </div>
+                                <div style="background-color: red">
+                                </div>
+                            </div>
+                            <div class="card col-6 my-2">
+                                <div class="card-header bg-green-50">
+                                    <h1 class="card-title text-center" style="font-weight: 600">Encuesta</h1>
+                                </div>
+                                <div style="background-color: rebeccapurple">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @stop

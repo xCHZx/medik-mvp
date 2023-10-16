@@ -122,19 +122,28 @@
 
                     <!-- Result window -->
                     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                        <div class="card flex-row col-12 card cardmdk mt-0.5 mb-3 mx-0">
-                            <div class="card col-6 my-2">
-                                <div class="card-header bg-green-50">
-                                    <h1 class="card-title text-center" style="font-weight: 600">Mensaje Principal</h1>
+                        <div class="card cardmdk flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
+                            <div class="card col-5 my-2">
+                                <div class="card-header pl-1">
+                                    <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
                                 </div>
-                                <div style="background-color: red">
+                                <div class="card-body p-2 col-12" style="height: 200px; background-color: #E5DCD5;">                                
+                                    <div class="mb-4 p-3 col-10 text-left text-black" style="background-color: #FAFAFA; border-radius: 7px">
+                                        <div class="p-2 text-white" style="background-color: #166ECD; border-radius: 7px">
+                                            <p class="text-left">medik</p>
+                                        </div>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card col-6 my-2">
-                                <div class="card-header bg-green-50">
-                                    <h1 class="card-title text-center" style="font-weight: 600">Encuesta</h1>
+                            <div class="card col-5 my-2">
+                                <div class="card-header pl-1">
+                                    <p class="fs-6 text-left fw-medium">Encuesta</p>
                                 </div>
-                                <div style="background-color: rebeccapurple">
+                                <div style="width: 100%; height: 200px; background-color: #E5DCD5;">                                
+                                    <div class="p-3 row col-12" style="height: 80%">
+                                      <p class="mx-1 my-1 p-3 col-10 text-left" style="background-color: #FAFAFA; border-radius: 7px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

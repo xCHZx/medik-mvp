@@ -38,8 +38,8 @@
                     </div>
                     <div class="mt-3">
                         <input name="businessId" value="" type="hidden" />
-                        <button type="submit" class="btn btn-outline-success">Guardar y regresar</button>
-                        <a href="{{route('business.index')}}" role="button" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btnmdk-confirm btnmdk-hover">Guardar y regresar</button>
+                        <a href="{{route('business.index')}}" role="button" class="btn btnmdk-cancel btnmdk-hover">Cancelar</a>
                     </div>
                   </form>
             </div>

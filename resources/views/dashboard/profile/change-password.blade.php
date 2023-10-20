@@ -50,8 +50,8 @@
                         <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
                     </div>
                     <div class="mt-4 flex justify-content-end">
-                        <button type="submit" class="btn btn-outline-success">Guardar y regresar</button>
-                        <a href="{{route('profile.index')}}" role="button" class="btn btn-outline-secondary ml-md-2">Cancelar</a>
+                        <button type="submit" class="btn btnmdk-confirm btnmdk-hover">Guardar y regresar</button>
+                        <a href="{{route('profile.index')}}" role="button" class="btn btnmdk-cancel btnmdk-hover ml-md-2">Cancelar</a>
                     </div>
                 </form>
             </div>

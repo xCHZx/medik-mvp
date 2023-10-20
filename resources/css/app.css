@@ -133,3 +133,25 @@ body{
     border-top: none !important;
     border-radius: 0 0 .5rem .5rem !important;
 }
+
+.wss-bg {
+    background-image: url('../images/wss-bg.png');
+    background-size: auto cover;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    border-radius: .5rem;
+    height: 83%;
+}
+
+
+.bg-strongblue {
+    background-color: #166ECD;
+}
+
+.bg-cancel {
+    color: #951111;
+}
+
+.bg-primaryquestion {
+    color: #3497F9
+}

@@ -76,3 +76,82 @@ body{
     /* font-weight: 400; */
     color: #404040;
 }
+
+/* CSS Customized */
+.btnmdk-hover{
+    &:hover {
+        background-image: linear-gradient(rgb(0 0 0/30%) 0 0);
+        color: rgb(255, 255, 255);
+    }
+}
+
+.btnmdk-cancel{
+    color: #fff;
+    background-color: #821010;
+    border: none;
+    box-shadow: none;
+}
+
+.btnmdk-confirm{
+    color:  #fff;
+    background-color: #0B8D65;
+    border: none;
+    box-shadow: none;
+}
+
+.cardmdk-display {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color:#F9F4F4;
+    border: 2px solid #C7CDE1;
+    border-radius: .5rem;
+    box-shadow: none;
+    align-content: flex-start;
+}
+
+.nav-tabs .nav-item .nav-link {
+    color: #686868;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    color: black;
+    border: none !important;
+    border-bottom: 3px solid black !important;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #C7CDE1;
+}
+
+.cardmdk {
+    box-shadow: none;
+    border: 2px solid !important;
+    border-color: #C7CDE1 !important;
+    border-top: none !important;
+    border-radius: 0 0 .5rem .5rem !important;
+}
+
+.wss-bg {
+    background-image: url('../images/wss-bg.png');
+    background-size: auto cover;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    border-radius: .5rem;
+    height: 83%;
+}
+
+
+.bg-strongblue {
+    background-color: #166ECD;
+}
+
+.bg-cancel {
+    color: #951111;
+}
+
+.bg-primaryquestion {
+    color: #3497F9
+}

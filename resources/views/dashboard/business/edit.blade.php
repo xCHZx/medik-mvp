@@ -20,7 +20,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form class="p-3" method="POST" action="{{route('business.update', $business["id"])}}"">
+                <form class="p-3" method="POST" action="{{route('business.update', $business["id"])}}">
                 @csrf
                     <div class="row mb-3">
                         <div class="form-group col-md-12">
@@ -38,8 +38,8 @@
                     </div>
                     <div class="mt-3">
                         <input name="businessId" value="" type="hidden" />
-                        <button type="submit" class="btn btn-outline-success">Guardar y regresar</button>
-                        <a href="{{route('business.index')}}" role="button" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btnmdk-confirm btnmdk-hover">Guardar y regresar</button>
+                        <a href="{{route('business.index')}}" role="button" class="btn btnmdk-cancel btnmdk-hover">Cancelar</a>
                     </div>
                   </form>
             </div>

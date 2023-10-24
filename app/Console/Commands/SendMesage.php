@@ -1,15 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Console\Commands;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-
-class MessagesController extends Controller
+class SendMesage extends Command
 {
-    public function send()
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'send:mesage';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Envia los mensajes de Whatsapp';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
     {
         // header
         $token = "EAASZBihnHCu8BO0ubQMuMYjIa5FgwUETK1ieTFYvLdBxh0YtZA4E97ezdvnkgEgJKI3w7JOrRgBpoi3oSC6AKZCSdpExxnVpKiCIWCwZBC0VkYjVZCgJsCQzaXRRVhvXjPPsTHVfH2e95NEi2IH3iguNfV4ZC4wz7vGQDCEwps47FbofjgFXgtlz9POfuRymhSCylvK6HZCKuhdXswFuJ0ZD";
@@ -73,7 +88,6 @@ class MessagesController extends Controller
 
         ]);
 
-        return response($response);
-
+        echo $response;
     }
 }

@@ -19,6 +19,7 @@ class Business extends Model
     protected $fillable = [
         'name',
         'description',
+        'imageUrl',
         'userId',
         'qrPath',
     ];

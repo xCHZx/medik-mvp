@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('objetivo'); 
-            $table->string('urlForm'); 
             $table->boolean('isActive'); // para activar el flujo o desactivarlo segun el usuario decida
             $table->unsignedBigInteger('businessId')->unique();
             $table->timestamps();

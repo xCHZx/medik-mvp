@@ -39,7 +39,7 @@ class FlowsController extends Controller
     public function store(Request $request){
 
         $validated = $request->validate([
-            'name' => 'required', // nuevo flujo de objetivo
+            'name' => 'required', // nuevo flujo de + objetivo
             'objetivo' => 'required',
         ]);
         

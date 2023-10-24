@@ -80,6 +80,7 @@ class VisitorController extends Controller
 
                 if ($diffHours >= 12){
                     app(VisitController::class)->store($id, $visitor->id);
+                    // hacer aqui el cron job
                     return redirect()->route('visitor.success', ['id' => $id]);
                 } else {
                     return redirect()->route('visitor.denied', ['id' => $id]);
@@ -95,6 +96,7 @@ class VisitorController extends Controller
                 $visitor->save();
 
                 app(VisitController::class)->store($id, $visitor->id);
+                // hacer el cron job aqui
                 return redirect()->route('visitor.success', ['id' => $id]);
             }
 

@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('objetivo'); 
-            $table->string('urlForm'); 
             $table->boolean('isActive'); // para activar el flujo o desactivarlo segun el usuario decida
-            $table->unsignedBigInteger('businessId')->unique();
+            $table->unsignedBigInteger('businessId');
             $table->timestamps();
         });
 
-        // modificar los de waiting y forward para guardar milisegundos en vez de enteros
+        
     }
 
     /**

@@ -8,21 +8,42 @@
 
 @section('content')
 
+@if (session('flow-status') === 'error')
+     <h5>no puedes tener dos flujos activos al mismo tiempo, desactiva uno antes de activar otro</h5>
+@endif
 
 
-<div class="card" style="width: 50rem;">
-  <div class="card-body">
-    <h5 class="card-title mb-2">{{$flow->name}}  </h5>
-    <h6 class="card-text">El tiempo de espera para empezar es de: {{$flow->waitingHours}}   </h6>
-    <p class="card-text mb-2">El tiempo para que se dispare el recordatorio es de : {{$flow->forwardingTime}}    </p>
-    <a href="#" class="card-link">Editar Flujo</a>
-    @if($flow->isActive)
-        
-        <button type="button" class="btn btn-outline-info">Desactivar flujo</button>
-    @endif
+<a href="{{ route('flows.create') }}" >
+        <button type="button" class="btn btn-outline-info my-3">Agregar flujo</button>
+    </a>
+@foreach($flows as $flow)
+        <div class="card" style="width: 50rem;">
+          <div class="card-body">
+            <h5 class="card-title mb-2">{{$flow->name}}  </h5>
+            <h6 class="card-text">objetivo : {{$flow->objetivo}}   </h6>
+            <p class="card-text mb-2">fecha de creacion : {{$flow->created_at}}</p>
+            <a href="#" class="card-link" value = "{{$flow->id}}">Editar Flujo</a>
+            @if($flow->isActive)
+                <form method="POST" action="{{ route('flows.changeStatus') }}">
+                    @csrf
+                    <input type="hidden" name="flowId" value="{{$flow->id}}">
+                    <input type="hidden" name="activate" value="false">
+                    <button type="send" class="btn btn-outline-info">Desactivar flujo</button>
+                </form>
+            @endif
 
-  </div>
-</div>
+            @if($flow->isActive == false)
+                <form method="POST" action="{{ route('flows.changeStatus') }}">
+                    @csrf
+                    <input type="hidden" name="flowId" value="{{$flow->id}}">
+                    <input type="hidden" name="activate" value="true">
+                    <button type="send" class="btn btn-outline-info">Activar flujo</button>
+                </form>
+            @endif
+
+          </div>
+        </div>
+@endforeach
 
 @if(session('status') === 'Flow-Created')
      @section('js')

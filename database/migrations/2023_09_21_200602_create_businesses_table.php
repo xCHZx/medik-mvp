@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('address');
             $table->text('rawQr')->nullable();
+            $table->string('imageUrl')->nullable();
             $table->unsignedBigInteger('userId')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Business;
-use App\Models\CalificactionLink;
+use App\Models\CalificationLink;
 use App\Models\Flow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,12 +18,12 @@ class FlowsController extends Controller
         // comprobamos que el usuario tenga un negocio
         $business = Business::where('userId' , $user->id)->first();
         if ($business){
-            // comprobamos que el usuario tenga un flujo
-            $flow = Flow::where('businessId' , $business->id)->first();
-            if ($flow)
+            
+            $flows = $business->flows;
+            if (count($flows) > 0)
             {
                 // vista de sus flujos
-                return view('dashboard.flows.index',['flow' => $flow]);
+                return view('dashboard.flows.index',['flows' => $flows]);
             }else{
                 // vista para crear su primer flujo
                 return view('dashboard.flows.create');
@@ -36,63 +36,117 @@ class FlowsController extends Controller
         }
     }
 
+    public function create(Request $request)
+    {
+        return view('dashboard.flows.create');
+    }
+
     public function store(Request $request){
 
         $validated = $request->validate([
-            'name' => 'required', // nuevo flujo de objetivo
+            'name' => 'required', // nuevo flujo de + objetivo
             'objetivo' => 'required',
         ]);
         
 
         $user = Auth::user();
         $business = $user->businesses->first();
+        $flows = Flow::where('businessId', $business->id)
+                   ->where('isActive' , true)->get();
 
         $flow = new Flow();
         $flow->name = $request->name;
         $flow->objetivo = $request->objetivo;
-        $flow->isActive = true;
         $flow->businessId = $business->id;
+
+        if(count($flows) > 0)
+        {
+            $flow->isActive = false;
+
+        }
+        else
+        {
+            $flow->isActive = true;
+        }
+        
+        
         $flow->save();
 
 
-        if ($request->googleUrl)
-        {
-            $calification1 = new CalificactionLink();
+        if(isset($request->googleUrl) && !empty($request->googleUrl))
+         {
+            $calification1 = new CalificationLink();
             $calification1->name = 'google';
             $calification1->url = $request->googleUrl;
             $calification1->flowId = $flow->id;
+            $calification1->save();
+         }
 
 
-        };
-        if ($request->facebookUrl)
-        {
-            $calification2 = new CalificactionLink();
+    
+        if (isset($request->facebookUrl) && !empty($request->facebookUrl)) {
+            $calification2 = new CalificationLink();
             $calification2->name = 'facebook';
             $calification2->url = $request->facebookUrl;
             $calification2->flowId = $flow->id;
-
-        }
+            $calification2->save();
+            
+        };
+        
         
 
         return Redirect::route('flows.index')->with('status', 'Flow-Created');
 
     }
 
-    public function changeStatus(Request $request)
+    public function edit(Request $request)
     {
-        // cambio el  status del flujo al que me enviaron
+        // recibo el id , y retorno la vista de creacion los datos del flujo
+        // con un status que diga editando
+    }
+
+    public function update(Request $request)
+    {
+        // recibo los datos del flujo y lo sobreescribo
+    }
+
+    public function changeStatus(Request $request)
+    {  
+        // este metodo sirve para modificar el status de un flujo
+        // la vista tiene que enviarme el id del flujo a modificar y si lo intenta activar o desactivar
         $validated = $request->validate([
-            'status' => 'required'
+            'flowId' => 'required',
+            'activate' => 'required'
         ]);
-
-        if ( $request->status === 'true' || $request->status === 'false')
+    
+        if ($request->activate === 'true')
         {
-            $user = Auth::user();
-            $flow = $user->businesses->flow;
+            $business = Auth::user()->businesses->first();
+            $flows = Flow::where('businessId' , $business->id)
+                          ->where('isActive' , true)->get();
+            if (count($flows) == 0){
 
-            $flow->isActive = $request->status;
-             
-        }    
+                Flow::where('id', $request->flowId)
+                       ->update(['isActive' => true]);
+               
+                return Redirect::route('flows.index');
+            }
+            else
+            {
+                // devolver con mensaje de error
+                return Redirect::route('flows.index')->with('flow-status' , 'error');
+            }
+
+        }
+        else
+        {
+            Flow::where('id', $request->flowId)
+                       ->update(['isActive' => false]);
+
+            return Redirect::route('flows.index');
+        }
+
+        
 
 
     }

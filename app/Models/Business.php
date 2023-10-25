@@ -19,6 +19,7 @@ class Business extends Model
     protected $fillable = [
         'name',
         'description',
+        'imageUrl',
         'userId',
         'qrPath',
     ];
@@ -33,9 +34,9 @@ class Business extends Model
         return $this->belongsTo(User::class, 'userId');
     }
 
-    public function flow(): HasMany
+    public function flows(): HasMany
     {
-        return $this->hasMany(Flow::class);
+        return $this->hasMany(Flow::class , 'businessId');
     }
 
 }

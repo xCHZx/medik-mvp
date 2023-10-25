@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CalificactionLink extends Model
+class CalificationLink extends Model
 {
     use HasFactory;
     protected $table = 'calification_links';

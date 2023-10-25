@@ -52,7 +52,10 @@ Route::middleware('auth')->group(function () {
 
         //flujos
         Route::get('/flujos',[FlowsController::class, 'index'])->name('flows.index');
+        Route::get('flujos/crear', [FlowsController::class , 'create'])->name('flows.create');
         Route::post('/flujos/crear', [FlowsController::class , 'store'])->name('flows.store');
+        Route::get('/flujos/editar' , [FlowsController::class , 'edit'])->name('flows.edit');
+        Route::post('/flujos/editar' , [FlowsController::class , 'update'])->name('flows.update');
         Route::post('/flujos/changeStatus' , [FlowsController::class , 'changeStatus'])->name('flows.changeStatus');
 
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');

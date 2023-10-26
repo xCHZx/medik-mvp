@@ -102,12 +102,56 @@ class FlowsController extends Controller
     public function edit(Request $request)
     {
         // recibo el id , y retorno la vista de creacion los datos del flujo
-        // con un status que diga editando
+
+        $validated = $request->validate(['flowId' => 'required']);
+
+        $flow = Flow::where('id', $request->flowId)->first();
+        $facebookLink = CalificationLink::where('name', 'facebook')->where('flowId', $flow->id)->first();
+        $googleLink = CalificationLink::where('name' , 'google')->where('flowId' , $flow->id)->first();
+        return view('dashboard.flows.edit',[
+            'flow' => $flow,
+            'facebookLink' => $facebookLink,
+            'googleLink' => $googleLink
+        ]);
+
+        
     }
 
     public function update(Request $request)
     {
         // recibo los datos del flujo y lo sobreescribo
+
+        $validated = $request->validate([
+            'flowId' => 'required',
+            'name' => 'required', // validar que sea string
+            'objetivo' => 'required' // validar que sea string
+        ]);
+
+        Flow::where('id' , $request->flowId)->update([
+                               'name' => $request->name,
+                               'objetivo' => $request->objetivo
+                           ]);
+        
+        // trabajar los links sociales para crearlos o sobre escribirlos
+        if(isset($request->googleUrl) && !empty($request->googleUrl))
+        {
+            $calificationLink = CalificationLink::updateOrCreate(
+                ['name' => 'google' , 'flowId' => $request->flowId],
+                ['url' => $request->googleUrl]
+            );
+        }
+
+        if (isset($request->facebookUrl) && !empty($request->facebookUrl))
+        {
+            $calificationLink2 = CalificationLink::updateOrCreate(
+                ['name' => 'facebook', 'flowId' => $request->flowId],
+                ['url' => $request->facebookUrl]
+            );
+        }
+
+        return Redirect::route('flows.index')->with('status', 'Flow-Changed');
+        
+        
     }
 
     public function changeStatus(Request $request)

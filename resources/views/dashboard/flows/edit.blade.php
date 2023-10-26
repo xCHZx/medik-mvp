@@ -9,12 +9,14 @@
 @section('content')
 <div class="container mt-3">
     <div class="card p-1">
-        <form method="POST" action="{{ route('flows.store') }}">
-            @csrf
+      
+        <form method="POST" action="{{ route('flows.update') }}">
+           @csrf
+           <input type="hidden" name="flowId" value="{{$flow->id}}">
             <div class="card-header row col-12 border-none mt-3 mr-0">
                 <h1 class="card-title col-6 text-black">Creación de flujo</h1>
                 <div class="text-right col-6 mr-0">
-                    <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-4">Guardar</button>
+                    <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-4">Guardar Cambios</button>
                     <a href="{{ route('flows.index') }}" class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</a>
                     
                 </div>
@@ -90,7 +92,7 @@
                             </div>
                             <div class="card-body row col-12">
                                 <div class="form-group col-7">
-                                    <input type="text" class="form-control" id="name" name="name" value= "Ingresa un nombre para tu flujo (opcional)">
+                                    <input type="text" class="form-control" id="name" name="name" value= "{{$flow->name }}">
                                 </div>
                             </div>
                         </div>
@@ -108,14 +110,22 @@
                                         <i class="fab fa-facebook"></i>
                                         Facebook
                                     </label>
+                                    @if($facebookLink)
+                                    <input type="text" class="form-control" id="facebookLink" name="facebookUrl" placeholder="{{$facebookLink->url}}">
+                                    @else
                                     <input type="text" class="form-control" id="facebookLink" name="facebookUrl" placeholder="Escribe enlace">
+                                    @endif
                                 </div>
                                 <div class="form-group col-5 offset-1">
                                     <label for="googleLink">
                                         <i class="fab fa-google"></i>
                                         Google
                                     </label>
+                                    @if($googleLink)
+                                    <input type="text" class="form-control" id="googleLink" name="googleUrl" placeholder="{{$googleLink->url}}">
+                                    @else
                                     <input type="text" class="form-control" id="googleLink" name="googleUrl" placeholder="Escribe enlace">
+                                    @endif
                                 </div>
                             </div>
                         </div>

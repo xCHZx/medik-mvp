@@ -22,7 +22,11 @@
             <h5 class="card-title mb-2">{{$flow->name}}  </h5>
             <h6 class="card-text">objetivo : {{$flow->objetivo}}   </h6>
             <p class="card-text mb-2">fecha de creacion : {{$flow->created_at}}</p>
-            <a href="#" class="card-link" value = "{{$flow->id}}">Editar Flujo</a>
+            <form method="get" action="{{ route('flows.edit') }}">
+                    @csrf
+                    <input type="hidden" name="flowId" value="{{$flow->id}}">
+                    <button type="send" class="btn btn-outline-info">Editar</button>
+                </form>
             @if($flow->isActive)
                 <form method="POST" action="{{ route('flows.changeStatus') }}">
                     @csrf

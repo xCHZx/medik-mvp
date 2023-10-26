@@ -27,9 +27,9 @@ class Flow extends Model
         return $this->belongsTo(Business::class,'businessId');
     }
 
-    public function calificationLink(): HasMany
+    public function calificationLinks(): HasMany
     {
-        return $this->hasMany(CalificactionLink::class);
+        return $this->hasMany(CalificactionLink::class , 'flowId');
     }
 
 

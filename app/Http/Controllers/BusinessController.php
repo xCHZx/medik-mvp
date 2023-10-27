@@ -51,7 +51,7 @@ class BusinessController extends Controller
             $business->userId = Auth::id();
             $business->save();
             $this->generateQr($business->id);
-            $this->generateImage($business->id);
+            //$this->generateImage($business->id);
 
             return back()->with("action", "ok");
         }catch(Exception $e){

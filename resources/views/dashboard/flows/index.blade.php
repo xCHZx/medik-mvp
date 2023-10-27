@@ -27,6 +27,11 @@
                     <input type="hidden" name="flowId" value="{{$flow->id}}">
                     <button type="send" class="btn btn-outline-info">Editar</button>
                 </form>
+                <form method="post" action="{{ route('flows.delete') }}">
+                    @csrf
+                    <input type="hidden" name="flowId" value="{{$flow->id}}">
+                    <button type="send" class="btn btn-outline-info">Eliminar</button>
+                </form>
             @if($flow->isActive)
                 <form method="POST" action="{{ route('flows.changeStatus') }}">
                     @csrf

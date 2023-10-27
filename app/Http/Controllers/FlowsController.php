@@ -19,14 +19,14 @@ class FlowsController extends Controller
         $business = Business::where('userId' , $user->id)->first();
         if ($business){
             
-            $flows = $business->flows;
+            $flows = Flow::where('businessId' , $business->id)->orderByDesc('isActive')->get();
             if (count($flows) > 0)
             {
                 // vista de sus flujos
                 return view('dashboard.flows.index',['flows' => $flows]);
             }else{
                 // vista para crear su primer flujo
-                return view('dashboard.flows.create');
+                return Redirect::route('flows.create');
             }
         }
         else{
@@ -194,4 +194,12 @@ class FlowsController extends Controller
 
 
     }
+     public function delete(Request $request)
+     {
+         // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente 
+         $validated = $request->validate(['flowId' => 'required']);
+
+         Flow::destroy($request->flowId);
+         return Redirect::route('flows.index')->with('flow-status' , 'success');
+     }
 }

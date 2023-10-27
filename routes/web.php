@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/flujos/editar' , [FlowsController::class , 'edit'])->name('flows.edit');
         Route::post('/flujos/editar' , [FlowsController::class , 'update'])->name('flows.update');
         Route::post('/flujos/changeStatus' , [FlowsController::class , 'changeStatus'])->name('flows.changeStatus');
+        Route::post('/flujos/eliminar', [FlowsController::class , 'delete'])->name('flows.delete');
 
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     });

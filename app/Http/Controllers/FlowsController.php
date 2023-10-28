@@ -19,14 +19,14 @@ class FlowsController extends Controller
         $business = Business::where('userId' , $user->id)->first();
         if ($business){
             
-            $flows = $business->flows;
+            $flows = Flow::where('businessId' , $business->id)->orderByDesc('isActive')->get();
             if (count($flows) > 0)
             {
                 // vista de sus flujos
-                return view('dashboard.flows.index',['flows' => $flows]);
+                return view('dashboard.flows.index',['flows' => $flows, 'businessName' => $business->name]);
             }else{
                 // vista para crear su primer flujo
-                return view('dashboard.flows.create');
+                return view('dashboard.flows.create', ['businessName' => $business->name]);
             }
         }
         else{
@@ -38,7 +38,9 @@ class FlowsController extends Controller
 
     public function create(Request $request)
     {
-        return view('dashboard.flows.create');
+        $user = Auth::user();
+        $business = Business::where('userId' , $user->id)->first();
+        return view('dashboard.flows.create', ['businessName' => $business->name]);
     }
 
     public function store(Request $request){
@@ -101,6 +103,8 @@ class FlowsController extends Controller
 
     public function edit(Request $request)
     {
+        $user = Auth::user();
+        $business = Business::where('userId' , $user->id)->first();
         // recibo el id , y retorno la vista de creacion los datos del flujo
 
         $validated = $request->validate(['flowId' => 'required']);
@@ -109,6 +113,7 @@ class FlowsController extends Controller
         $facebookLink = CalificationLink::where('name', 'facebook')->where('flowId', $flow->id)->first();
         $googleLink = CalificationLink::where('name' , 'google')->where('flowId' , $flow->id)->first();
         return view('dashboard.flows.edit',[
+            'businessName' => $business->name,
             'flow' => $flow,
             'facebookLink' => $facebookLink,
             'googleLink' => $googleLink

@@ -14,9 +14,9 @@
            @csrf
            <input type="hidden" name="flowId" value="{{$flow->id}}">
             <div class="card-header row col-12 border-none mt-3 mr-0">
-                <h1 class="card-title col-6 text-black">Creación de flujo</h1>
+                <h1 class="card-title col-6 text-black">Edición de flujos</h1>
                 <div class="text-right col-6 mr-0">
-                    <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-4">Guardar Cambios</button>
+                    <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-5">Guardar Cambios</button>
                     <a href="{{ route('flows.index') }}" class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</a>
                     
                 </div>
@@ -142,8 +142,7 @@
                                     <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
                                         <div class="p-2 text-white rounded-lg bg-strongblue">
                                             <span class="text-left text-white fw-bolder">
-                                                AQUI JALA EL FULL NAME
-                                                <!-- user->firstName }}  user->lastName }} -->
+                                                {{$businessName}}
                                             </span>
 
                                             <div class="d-flex justify-content-end align-items-end">
@@ -248,7 +247,8 @@
                 $('#descripcion-objetivo').show();
 
                 // Actualiza el valor del objetivo seleccionado
-                const nombreFlujo = nombreObjetivoSeleccionado + " - AQUI DEBO JALAR EL NOMBRE";
+                const businessName = '{{$businessName}}';
+                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
                 $('#name').val(nombreFlujo);
             });
 

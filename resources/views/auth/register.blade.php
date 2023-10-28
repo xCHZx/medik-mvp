@@ -70,10 +70,10 @@
 
             <!-- Phone Number -->
             <div class="col-12 col-md-6 mt-4">
-                <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Número de Celular</label>
-                <input id="phoneNumber" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" autocomplete="phoneNumber" />
-                @if ($errors->has('phoneNumber'))
-                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('phoneNumber') }}</p>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Número de Celular</label>
+                <input id="phone" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="phone" value="{{ old('phone') }}" autocomplete="phone" />
+                @if ($errors->has('phone'))
+                    <p class="mt-2 text-sm text-red-600">{{ $errors->first('phone') }}</p>
                 @endif
             </div>
 

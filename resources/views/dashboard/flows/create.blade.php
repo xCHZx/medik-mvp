@@ -132,8 +132,7 @@
                                     <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
                                         <div class="p-2 text-white rounded-lg bg-strongblue">
                                             <span class="text-left text-white fw-bolder">
-                                                AQUI JALA EL FULL NAME
-                                                <!-- user->firstName }}  user->lastName }} -->
+                                                {{$businessName}}
                                             </span>
 
                                             <div class="d-flex justify-content-end align-items-end">
@@ -166,7 +165,7 @@
 
                             <div class="col-5 my-2">
                                 <div class="card-header pl-1 border-0">
-                                    <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
+                                    <p class="fs-6 text-left fw-medium">Encuesta</p>
                                 </div>
                                 <div class="card-body p-2 mb-2 wss-bg">                                
                                     <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
@@ -238,7 +237,8 @@
                 $('#descripcion-objetivo').show();
 
                 // Actualiza el valor del objetivo seleccionado
-                const nombreFlujo = nombreObjetivoSeleccionado + " - AQUI DEBO JALAR EL NOMBRE";
+                const businessName = '{{$businessName}}';
+                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
                 $('#name').val(nombreFlujo);
             });
 

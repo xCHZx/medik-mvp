@@ -58,6 +58,13 @@ class RegisteredUserController extends Controller
 
 //        event(new Registered($user));
 
+
+        $user->createAsStripeCustomer([
+            'name' => "{$user->firstName} {$user->lastName}",
+            'email' => $user->email,
+            'phone' => $user->phone,
+        ]);
+
             Auth::login($user);
 
             return redirect()->route('dashboard.index');

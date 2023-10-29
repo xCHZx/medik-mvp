@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FlowsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubscriptionController;
@@ -38,8 +39,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
         // ver y modificar los datos de su cuenta
-        Route::get('/perfil', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/perfil/editar', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/perfil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/perfil/cambiarContrasena', [ProfileController::class, 'changePassword'])->name('profile.change-password');
         Route::post('/contrasena' , [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
         Route::get('/negocio', [BusinessController::class, 'index'])->name('business.index');
@@ -47,6 +50,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/negocio/{id}/editar', [BusinessController::class, 'edit'])->name('business.edit');
         Route::post('/negocio/{id}/editar', [BusinessController::class, 'update'])->name('business.update');
         // Route::post('/qr', [BusinessController::class, 'downloadQr'])->name('business.qr');
+
+        //flujos
+        Route::get('/flujos',[FlowsController::class, 'index'])->name('flows.index');
+        Route::get('flujos/crear', [FlowsController::class , 'create'])->name('flows.create');
+        Route::post('/flujos/crear', [FlowsController::class , 'store'])->name('flows.store');
+        Route::get('/flujos/editar' , [FlowsController::class , 'edit'])->name('flows.edit');
+        Route::post('/flujos/editar' , [FlowsController::class , 'update'])->name('flows.update');
+        Route::post('/flujos/changeStatus' , [FlowsController::class , 'changeStatus'])->name('flows.changeStatus');
+        Route::post('/flujos/eliminar', [FlowsController::class , 'delete'])->name('flows.delete');
 
         Route::get('/suscripcion', [SubscriptionController::class, 'index'])->name('subscription.index');
         Route::get('/suscripcion/metodo-de-pago', [SubscriptionController::class, 'paymentMethod'])->name('subscription.paymentMethod');

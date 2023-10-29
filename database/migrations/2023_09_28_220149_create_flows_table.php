@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('businesses', function (Blueprint $table) {
+        Schema::create('flows', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->text('address');
-            $table->text('rawQr')->nullable();
-            $table->string('imageUrl')->nullable();
-            $table->unsignedBigInteger('userId')->nullable();
+            $table->string('objetivo'); 
+            $table->boolean('isActive'); // para activar el flujo o desactivarlo segun el usuario decida
+            $table->unsignedBigInteger('businessId');
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
         });
+
+        
     }
 
     /**
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('businesses');
+        Schema::dropIfExists('flows');
     }
 };

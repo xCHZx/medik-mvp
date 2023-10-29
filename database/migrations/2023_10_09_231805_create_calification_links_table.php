@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('businesses', function (Blueprint $table) {
+        Schema::create('calification_links', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->text('address');
-            $table->text('rawQr')->nullable();
-            $table->string('imageUrl')->nullable();
-            $table->unsignedBigInteger('userId')->nullable();
+            $table->string('url');
+            $table->unsignedBigInteger('flowId');
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('businesses');
+        Schema::dropIfExists('calification_links');
     }
 };

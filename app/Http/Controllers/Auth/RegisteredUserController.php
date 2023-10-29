@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Error;
 use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -31,8 +33,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-
-        try{
+        try {
             $request->validate([
                 'firstName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
@@ -41,21 +42,21 @@ class RegisteredUserController extends Controller
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
-            $user = User::create([
-                'firstName' => $request->firstName,
-                'lastName' => $request->lastName,
-                'phone' => $request->phone,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+        } catch (Error $e) {
+            return Redirect::route('register')->with('status', 'register-error');
+        }
 
-            event(new Registered($user));
+        try{
+        $user = User::create([
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-            $user->createAsStripeCustomer([
-                'name' => "{$user->firstName} {$user->lastName}",
-                'email' => $user->email,
-                'phone' => $user->phone,
-            ]);
+
+//        event(new Registered($user));
 
             Auth::login($user);
 

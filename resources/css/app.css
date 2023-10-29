@@ -112,6 +112,10 @@ body{
     align-content: flex-start;
 }
 
+.card-flow {
+    height: 100%;
+}
+
 .nav-tabs .nav-item .nav-link {
     color: #686868;
 }

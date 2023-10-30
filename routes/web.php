@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/negocio', [BusinessController::class, 'store'])->name('business.store');
         Route::get('/negocio/{id}/editar', [BusinessController::class, 'edit'])->name('business.edit');
         Route::post('/negocio/{id}/editar', [BusinessController::class, 'update'])->name('business.update');
+        // Route::get('/negocio/{id}/image', [BusinessController::class, 'createImage'])->name('business.image');
+
         // Route::post('/qr', [BusinessController::class, 'downloadQr'])->name('business.qr');
 
         //flujos

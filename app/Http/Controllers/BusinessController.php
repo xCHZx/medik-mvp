@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class BusinessController extends Controller
 {
@@ -51,6 +54,7 @@ class BusinessController extends Controller
             $business->userId = Auth::id();
             $business->save();
             $this->generateQr($business->id);
+            $this->createImage($business->id);
             //$this->generateImage($business->id);
 
             return back()->with("action", "ok");
@@ -166,9 +170,11 @@ class BusinessController extends Controller
             $business->description = $request->description;
             $business->address = $request->address;
             $business->save();
+            $this->createImage($business->id);
             return redirect()->route('business.index')->with("action", "ok");
         }catch(Exception $e){
-            abort(403);
+            // abort(403);
+            dd($e);
         }
     }
 
@@ -178,5 +184,32 @@ class BusinessController extends Controller
     public function destroy(Business $business)
     {
         //
+    }
+
+    public function createImage($id){
+
+        $business = Business::find($id);
+        $title = $business->name;
+
+        $templatePath = resource_path('images/placeholder-medik.png');
+        $watermarkPath = resource_path('images/logo-medik-white.png');
+
+        $img = Image::make($templatePath);
+        $watermark = Image::make($watermarkPath);
+
+        $watermark->resize(179, 67);
+        $img->text($title, 30, 70, function($font){
+            $font->file(resource_path('fonts/nunito-semibold.ttf'));
+            $font->size(50);
+            $font->color('#ffffff');
+        });
+        $img->insert($watermark, 'bottom-right', 30, 20);
+        Storage::disk('public')->put('businesses/images/placeholders/'.$id.'.png', $img->encode('png'));
+        $img->destroy();
+
+        // return response($img->encode('png'), 200, [
+        //     'Content-Type' => 'image/png',
+        // ]);
+
     }
 }

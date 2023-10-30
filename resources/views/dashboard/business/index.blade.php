@@ -11,7 +11,6 @@
         <h2 class="mt-2 mb-5">Para utilizar la plataforma, crea tu primer negocio👇</h2>
     @endif
 
-
 @stop
 
 @section('content')

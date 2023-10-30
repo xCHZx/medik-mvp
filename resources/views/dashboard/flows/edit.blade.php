@@ -49,6 +49,7 @@
                             <div class="flex justify-content-between col-12">
                                 <div class="card-body ml-3 col-5">
                                     <div class="form-check mb-4">
+                                        <input type="hidden" value="{{$flow->objetivo}}" id="objetivoflow">
                                         <input class="form-check-input" type="radio" name="objetivo" id="obj1" value="Calidad de la atención médica">
                                         <label class="form-check-label" for="obj1">
                                             Calidad de la atención médica
@@ -237,12 +238,38 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
+
+        
+
+     
         $(document).ready(function () {
-            // Muestra descripción
-            $('input[type="radio"]').on('change', function () {
-                const objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
+            let checkboxes = document.querySelectorAll(".form-check-input");
+            let objetivo = document.querySelector("#objetivoflow").value;
+
+            checkboxes.forEach(checkbox => {
+            if(checkbox.value == objetivo){
+                checkbox.checked = true;
+                
+                const objetivoSeleccionado = checkbox.id;
+
                 const nombreObjetivoSeleccionado = $('input[type="radio"]:checked').attr('value');
                 const descripcion = obtenerDescripcion(objetivoSeleccionado);
+                $('#texto-descripcion').text(descripcion);
+                $('#descripcion-objetivo').show();
+
+                // Actualiza el valor del objetivo seleccionado
+                const businessName = '{{$businessName}}';
+                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
+                $('#name').val(nombreFlujo);
+            }
+        })
+
+            
+            // cambia descripcion con un click
+            $('input[type="radio"]').on('change', function () {
+                objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
+                nombreObjetivoSeleccionado = $('input[type="radio"]:checked').attr('value');
+                descripcion = obtenerDescripcion(objetivoSeleccionado);
                 $('#texto-descripcion').text(descripcion);
                 $('#descripcion-objetivo').show();
 
@@ -282,5 +309,7 @@
                 document.getElementById("info2-container").style.display = "none";
             });
         });
+
+        
     </script>
 @stop

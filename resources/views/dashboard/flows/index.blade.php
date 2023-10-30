@@ -46,27 +46,22 @@
 
                             <!-- Activar/Desactivar flujo -->
                             @if($flow->isActive)
-                                <form method="POST" action="{{ route('flows.changeStatus') }}">
-                                    @csrf
-                                    <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                    <input type="hidden" name="activate" value="false">
+                                
+                                    <input type="hidden"  id="changestatusUrl" value="{{ route('flows.changeStatus') }}">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-                                        <label class="custom-control-label" for="customSwitch1">Desactivar flujo</label>
+                                        <input type="checkbox" class="custom-control-input" id="{{$flow->id}}" value="false" checked>
+                                        <label class="custom-control-label" for="{{$flow->id}}">Desactivar flujo</label>
                                     </div>
-                                </form>
+                                
 
                                 @elseif($flow->isActive == false)
 
-                                <form method="POST" action="{{ route('flows.changeStatus') }}">
-                                    @csrf
-                                    <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                    <input type="hidden" name="activate" value="true">
+                                    <input type="hidden"  id="changestatusUrl" value="{{route('flows.changeStatus')}}">
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label text-gray-500" for="customSwitch1">Activar flujo</label>
+                                        <input type="checkbox" class="custom-control-input" id="{{$flow->id}}" value="true">
+                                        <label class="custom-control-label text-gray-500" for="{{$flow->id}}">Activar flujo</label>
                                     </div>
-                                </form>
+                               
                             @endif 
 
                             <!-- Activar/Desactivar flujo 
@@ -101,37 +96,59 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
-        $(document).ready(function () {
-            $('.custom-control-input').on('click', function () {
-                const isChecked = $(this).is(':checked');
-                const action = $(this).closest('.custom-switch').data('action');
-                const confirmationMessage = isChecked 
-                    ? '¿Estás seguro de que deseas activar este flujo?' 
-                    : '¿Estás seguro de que deseas desactivar este flujo?';
+        // tomamos el checbok y le agregamos un event listener
+        let checkboxes = document.querySelectorAll('.custom-control-input');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function(event){
+                let cheboxStatus = event.target;
+
+                let flowId = cheboxStatus.id;
+                let newStatus = cheboxStatus.value;
+
+                const changestatusUrl = document.querySelector("#changestatusUrl").value;
 
                 Swal.fire({
-                    title: 'Confirmación',
-                    text: confirmationMessage,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Confirmar',
-                    cancelButtonText: 'Cancelar',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Si se confirmó, enviar el formulario
-                        const form = $(this).closest('form');
-                        form.submit();
-                    } else {
-                        // Si se canceló, revertir el cambio en el switch (si se activó)
-                        if (isChecked) {
-                            $(this).prop('checked', false);
-                        }
-                    }
-                });
-            });
-        });
+            title: 'Seguro que quieres hacer este cambio?',
+            html:
+            '<form id="formulario" method="POST" action="'+changestatusUrl+'">' +
+                                    '@csrf' +
+                                    '<input type="hidden" name="flowId" value= "'+flowId +'">' +
+                                    '<input type="hidden" name="activate" value="'+newStatus+'">' +
+      
+            '</form>' ,
+            
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2',
+                denyButton: 'order-3',
+            }
+            }).then((result) => {
+                
+            if (result.value == true) {
+                let formulario = document.querySelector("#formulario");
+                formulario.submit()
+                Swal.fire('Listo!', '', 'success')
+            } else{
+                if(cheboxStatus.checked){
+                    cheboxStatus.checked = false;
+                }else{
+                    cheboxStatus.checked = true;
+                }
+                Swal.fire('No se guardaron los cambios', '', 'info')
+            }
+            })
+
+
+            })
+        })
+        
+
+        
+        
     </script>
 
     @if(session('flow-status') === 'error')

@@ -14,11 +14,10 @@
            @csrf
            <input type="hidden" name="flowId" value="{{$flow->id}}">
             <div class="card-header row col-12 border-none mt-3 mr-0">
-                <h1 class="card-title col-6 text-black">Edición de flujos</h1>
+                <h1 class="card-title col-6 text-black"><b>Edición</b> de flujos</h1>
                 <div class="text-right col-6 mr-0">
                     <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-5">Guardar Cambios</button>
                     <a href="{{ route('flows.index') }}" class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</a>
-                    
                 </div>
             </div>
             
@@ -234,10 +233,18 @@
 @stop
 
 @section('js')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <script>
         $(document).ready(function () {
+            //Marca objetivo establecido
+            var objetivoSeleccionado = '{{$flow->objetivo}}';
+            var objetivoRadios = document.querySelectorAll('input[name="objetivo"]');
+            // Recorrer los radio buttons y marcar el objetivo correcto
+            objetivoRadios.forEach(function(radio) {
+                if (radio.value === objetivoSeleccionado) {
+                    radio.checked = true;
+                }
+            });
+
             // Muestra descripción
             $('input[type="radio"]').on('change', function () {
                 const objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
@@ -248,7 +255,7 @@
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';
-                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
+                const nombreFlujo = nombreObjetivoSeleccionado;
                 $('#name').val(nombreFlujo);
             });
 
@@ -283,4 +290,6 @@
             });
         });
     </script>
+
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

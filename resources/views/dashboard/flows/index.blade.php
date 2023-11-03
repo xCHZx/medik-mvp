@@ -2,6 +2,10 @@
 
 @section('title', 'Flujos')
 
+@section('css')
+<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
+@stop
+
 @section('content_header')
     <div class="row d-flex justify-content-between align-items-center py-3">
         <div class="col-md-5">
@@ -23,7 +27,7 @@
     <div class="row">
         @foreach($flows as $flow)
             <div class="col-md-12 mb-3">
-                <div class="card card-flow {{ $flow->isActive ? 'bg-cyan-100' : 'bg-gray-200' }}">
+                <div class="card card-flow flowStyle {{ $flow->isActive ? '' : 'flowInactive' }}">
                     <div>
                         <div class="card-header h5 py-2">
                             <div class="row d-flex justify-content-between align-items-center">
@@ -37,7 +41,7 @@
                                         @csrf
                                         <input type="hidden" name="flowId" value="{{$flow->id}}">
                                         <button type="submit" class="btn btn-outline-info">
-                                            <i class="fas fa-edit"></i>Editar
+                                            <i class="fas fa-edit mr-1"></i>Editar
                                     </form>
                                 </div>
                             </div>
@@ -45,17 +49,14 @@
                     </div>
                     <div class="card-body pt-0 pb-2">
                         <p class="card-text my-2">Objetivo: {{$flow->objetivo}}</p>
-                        <p class="card-text my-2">Fecha de creacion : {{ \Carbon\Carbon::parse($flow->created_at)->format('d/m/Y \a \l\a\s H:i') }}</p>
+                        <p class="card-text my-2">Fecha de creación: {{ date('d/m/Y \a \l\a\s H:i', strtotime($flow->created_at)) }}</p>
                         <div class="row d-flex justify-content-between align-items-center mt-4">
 
                             <!-- Delete -->
-                            <form action="#" method="#">
-                                @csrf
-                                <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                <button type="submit" class="btn btnmdk-cancel">
-                                    <i class="fas fa-trash-alt"></i>Eliminar
-                                </button>
-                            </form>
+                            <button type="button" class="btn btnmdk-cancel btnmdk-hover" data-toggle="modal" data-target="#deleteModal" data-name="{{$flow->name}}" data-id="{{ $flow->id}}">
+                                <i class="fas fa-trash-alt mr-1"></i>Eliminar
+                            </button>
+                            
 
                             <!-- Activar/Desactivar flujo -->
                             <button type="button" class="custom-control custom-switch" data-toggle="modal" data-target="#staticBackdrop" data-name="{{$flow->name}}" data-status="{{ $flow->isActive}}" data-id="{{ $flow->id}}">
@@ -71,7 +72,36 @@
         @endforeach
     </div>
 
-    <!-- Modal -->
+    <!-- Modal delete -->
+    <div class="modal fade" id="deleteModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="deleteFlow" method="POST" action="{{ route('flows.delete') }}">
+                    @csrf
+                    <div class="form-group">
+                        ¿Estas seguro de <b>eliminar</b> el flujo: <b id="flowName"></b>?
+                    </div>
+                    <div class="form-group">
+                        <input class="inputDelete" type="hidden" name="flowId" value="{{$flow->id}}">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btnmdk-cancel btnmdk-hover" data-dismiss="modal">Cancelar</button>
+                <button id="submitDelete" class="btn btnmdk-confirm btnmdk-hover">Confirmar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal changeStatus -->
     <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -94,31 +124,25 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btnmdk-cancel" data-dismiss="modal">Cancelar</button>
-                <button id="submitFormButton" type="submit" class="btn btnmdk-confirm">Confirmar</button>
+                <button type="button" class="btn btnmdk-cancel btnmdk-hover" data-dismiss="modal">Cancelar</button>
+                <button id="submitFormButton" type="submit" class="btn btnmdk-confirm btnmdk-hover">Confirmar</button>
             </div>
         </div>
         </div>
     </div>
 @stop
 
-@section('css')
-<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
-@stop
-
 @section('js')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <script>
+        /*Cambiar estado del flujo */
         $('#staticBackdrop').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Botón que activó el modal
+            var button = $(event.relatedTarget); // Botón que activó el modal changeStatus
             var flowStatus = button.data('status');
             var flowNamed = button.data('name');
             var flowID = button.data('id');
             var modal = $(this);
 
             modal.find('#flowName').text(flowNamed);
-            // Modifica el texto y el valor de .input2
             if (flowStatus === 1) {
                 modal.find('#word').text('desactivar');
                 modal.find('.input2').val('false');
@@ -130,34 +154,63 @@
             modal.find('.input1').val(flowID);
         });
 
-        // Envía el formulario
         document.getElementById('submitFormButton').addEventListener('click', function () {
             document.getElementById('changeStatus').submit();
         });
 
+        /*Eliminar flujo*/
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que activó el modalDelete
+            var flowNamed = button.data('name');
+            var flowID = button.data('id');
+            var modal = $(this);
 
+            modal.find('#flowName').text(flowNamed);
+            modal.find('.inputDelete').val(flowID);
+        });
 
+        document.getElementById('submitDelete').addEventListener('click', function () {
+            document.getElementById('deleteFlow').submit();
+        });
     </script>
 
-    @if(session('flow-status') === 'error')
-     @section('js')
-        <script>
-            Swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'No puedes tener dos flujos activos al mismo tiempo, desactiva uno antes de activar otro',
-                })
-        </script>
-   @endif
-
     @if(session('status') === 'Flow-Created')
-     @section('js')
-     <script>
-              Swal.fire(
-                   'Listo!',
-                   'Flujo creado exitosamente!',
-                   'success'
-                )
-     </script>
-   @endif
+        @section('js')
+        <script>
+            Swal.fire(
+                'Listo!',
+                'El flujo fue creado con éxito',
+                'success'
+            )
+        </script>
+    @elseif(session('status') === 'Flow-Changed')
+        @section('js')
+        <script>
+            Swal.fire(
+                'Listo!',
+                'El flujo fue actualizado',
+                'success'
+            )
+        </script>
+    @elseif(session('flow-status') === 'success')
+        @section('js')
+        <script>
+            Swal.fire(
+                'Listo!',
+                'Flujo eliminado',
+                'success'
+            )
+        </script>
+    @elseif(session('flow-status') === 'error')
+        @section('js')
+        <script>
+            Swal.fire(
+                'Oops...',
+                'No puedes tener activos dos flujos a la vez, desactiva uno antes de activar otro',
+                'error'
+            )
+        </script>
+    @endif
+
+   @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\MessagesController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('send:message')->everyFifteenMinutes();
+        //$schedule->command('send:message')->cron(env('WHATSAPP_CRON'))->withoutOverlapping();
     }
 
     /**
@@ -22,7 +23,7 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
-        commands\SendMesage::class;
+        
 
         require base_path('routes/console.php');
     }

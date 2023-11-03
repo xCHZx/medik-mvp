@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Error;
+use Exception;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         try {
             $request->validate([
@@ -40,11 +41,12 @@ class RegisteredUserController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
-    
+
         } catch (Error $e) {
             return Redirect::route('register')->with('status', 'register-error');
         }
-        
+
+        try{
         $user = User::create([
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
@@ -53,10 +55,23 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+
 //        event(new Registered($user));
 
-        Auth::login($user);
 
-        return Redirect::Route('dashboard.index');
+        $user->createAsStripeCustomer([
+            'name' => "{$user->firstName} {$user->lastName}",
+            'email' => $user->email,
+            'phone' => $user->phone,
+        ]);
+
+            Auth::login($user);
+
+            return redirect()->route('dashboard.index');
+
+        }catch(Exception $e){
+            return $e;
+        }
+
     }
 }

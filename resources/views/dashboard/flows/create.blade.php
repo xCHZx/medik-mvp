@@ -238,7 +238,7 @@
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';
-                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
+                const nombreFlujo = nombreObjetivoSeleccionado;
                 $('#name').val(nombreFlujo);
             });
 

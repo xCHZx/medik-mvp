@@ -18,7 +18,7 @@ class FlowsController extends Controller
         // comprobamos que el usuario tenga un negocio
         $business = Business::where('userId' , $user->id)->first();
         if ($business){
-            
+
             $flows = Flow::where('businessId' , $business->id)->orderByDesc('isActive')->get();
             if (count($flows) > 0)
             {
@@ -49,7 +49,7 @@ class FlowsController extends Controller
             'name' => 'required', // nuevo flujo de + objetivo
             'objetivo' => 'required',
         ]);
-        
+
 
         $user = Auth::user();
         $business = $user->businesses->first();
@@ -70,8 +70,8 @@ class FlowsController extends Controller
         {
             $flow->isActive = true;
         }
-        
-        
+
+
         $flow->save();
 
 
@@ -85,17 +85,17 @@ class FlowsController extends Controller
          }
 
 
-    
+
         if (isset($request->facebookUrl) && !empty($request->facebookUrl)) {
             $calification2 = new CalificationLink();
             $calification2->name = 'facebook';
             $calification2->url = $request->facebookUrl;
             $calification2->flowId = $flow->id;
             $calification2->save();
-            
+
         };
-        
-        
+
+
 
         return Redirect::route('flows.index')->with('status', 'Flow-Created');
 
@@ -119,7 +119,7 @@ class FlowsController extends Controller
             'googleLink' => $googleLink
         ]);
 
-        
+
     }
 
     public function update(Request $request)
@@ -136,7 +136,7 @@ class FlowsController extends Controller
                                'name' => $request->name,
                                'objetivo' => $request->objetivo
                            ]);
-        
+
         // trabajar los links sociales para crearlos o sobre escribirlos
         if(isset($request->googleUrl) && !empty($request->googleUrl))
         {
@@ -155,19 +155,19 @@ class FlowsController extends Controller
         }
 
         return Redirect::route('flows.index')->with('status', 'Flow-Changed');
-        
-        
+
+
     }
 
     public function changeStatus(Request $request)
-    {  
+    {
         // este metodo sirve para modificar el status de un flujo
         // la vista tiene que enviarme el id del flujo a modificar y si lo intenta activar o desactivar
         $validated = $request->validate([
             'flowId' => 'required',
             'activate' => 'required'
         ]);
-    
+
         if ($request->activate === 'true')
         {
             $business = Auth::user()->businesses->first();
@@ -177,7 +177,7 @@ class FlowsController extends Controller
 
                 Flow::where('id', $request->flowId)
                        ->update(['isActive' => true]);
-               
+
                 return Redirect::route('flows.index');
             }
             else
@@ -195,13 +195,13 @@ class FlowsController extends Controller
             return Redirect::route('flows.index');
         }
 
-        
+
 
 
     }
      public function delete(Request $request)
      {
-         // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente 
+         // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente
          $validated = $request->validate(['flowId' => 'required']);
 
          Flow::destroy($request->flowId);

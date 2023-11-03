@@ -23,68 +23,82 @@
     <div class="row">
         @foreach($flows as $flow)
             <div class="col-md-12 mb-3">
-                <div class="card card-flow">
+                <div class="card card-flow {{ $flow->isActive ? 'bg-cyan-100' : 'bg-gray-200' }}">
                     <div>
-                        <div class="card-header h5 py-2">{{$flow->name}}
-                            <div class="card-subtitle h6 text-muted font-weight-normal mt-2">{{$businessName}}</div>
+                        <div class="card-header h5 py-2">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="flowCard" id="{{$flow->id}}">{{$flow->name}}</p>
+                                    <div class="card-subtitle h6 text-muted font-weight-normal mt-2">{{$businessName}}</div>
+                                </div>
+                                <div>
+                                    <!-- Editar -->
+                                    <form action="{{ route('flows.edit') }}" method="get">
+                                        @csrf
+                                        <input type="hidden" name="flowId" value="{{$flow->id}}">
+                                        <button type="submit" class="btn btn-outline-info">
+                                            <i class="fas fa-edit"></i>Editar
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body pt-0 pb-2">
                         <p class="card-text my-2">Objetivo: {{$flow->objetivo}}</p>
-                        <p class="card-text my-2">Fecha de creacion : {{$flow->created_at}}</p>
-                        
+                        <p class="card-text my-2">Fecha de creacion : {{ \Carbon\Carbon::parse($flow->created_at)->format('d/m/Y \a \l\a\s H:i') }}</p>
                         <div class="row d-flex justify-content-between align-items-center mt-4">
 
-                            <!-- Editar -->
-                            <form action="{{ route('flows.edit') }}" method="get">
+                            <!-- Delete -->
+                            <form action="#" method="#">
                                 @csrf
                                 <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                <button type="submit" class="btn btn-outline-info">
-                                    <i class="fas fa-edit"></i>
+                                <button type="submit" class="btn btnmdk-cancel">
+                                    <i class="fas fa-trash-alt"></i>Eliminar
                                 </button>
                             </form>
 
                             <!-- Activar/Desactivar flujo -->
-                            @if($flow->isActive)
-                                
-                                    <input type="hidden"  id="changestatusUrl" value="{{ route('flows.changeStatus') }}">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="{{$flow->id}}" value="false" checked>
-                                        <label class="custom-control-label" for="{{$flow->id}}">Desactivar flujo</label>
-                                    </div>
-                                
-
-                                @elseif($flow->isActive == false)
-
-                                    <input type="hidden"  id="changestatusUrl" value="{{route('flows.changeStatus')}}">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="{{$flow->id}}" value="true">
-                                        <label class="custom-control-label text-gray-500" for="{{$flow->id}}">Activar flujo</label>
-                                    </div>
-                               
-                            @endif 
-
-                            <!-- Activar/Desactivar flujo 
-                        
-
-                            ($flow->isActive == false)
-
-                                <form method="POST" action="{{ route('flows.changeStatus') }}">
-                                    @csrf
-                                    <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                    <input type="hidden" name="activate" value="true">
-                                    <button type="submit" class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label text-gray-500" for="customSwitch1">Activar flujo</label>
-                                    </button>
-                                </form>
-                            -->
-
+                            <button type="button" class="custom-control custom-switch" data-toggle="modal" data-target="#staticBackdrop" data-name="{{$flow->name}}" data-status="{{ $flow->isActive}}" data-id="{{ $flow->id}}">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1" {{ $flow->isActive ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="customSwitch1">
+                                    {{ $flow->isActive ? 'Desactivar flujo' : 'Activar flujo' }}
+                                </label>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="changeStatus" method="POST" action="{{ route('flows.changeStatus') }}">
+                    @csrf
+                    <div class="form-group">
+                        ¿Estas seguro de <b id="word"></b> el flujo: <b id="flowName"></b>?
+                    </div>
+                    <div class="form-group">
+                        <input class="input1" type="hidden" name="flowId">
+                        <input class="input2" type="hidden" name="activate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btnmdk-cancel" data-dismiss="modal">Cancelar</button>
+                <button id="submitFormButton" type="submit" class="btn btnmdk-confirm">Confirmar</button>
+            </div>
+        </div>
+        </div>
     </div>
 @stop
 
@@ -96,59 +110,33 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
-        // tomamos el checbok y le agregamos un event listener
-        let checkboxes = document.querySelectorAll('.custom-control-input');
+        $('#staticBackdrop').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que activó el modal
+            var flowStatus = button.data('status');
+            var flowNamed = button.data('name');
+            var flowID = button.data('id');
+            var modal = $(this);
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function(event){
-                let cheboxStatus = event.target;
-
-                let flowId = cheboxStatus.id;
-                let newStatus = cheboxStatus.value;
-
-                const changestatusUrl = document.querySelector("#changestatusUrl").value;
-
-                Swal.fire({
-            title: 'Seguro que quieres hacer este cambio?',
-            html:
-            '<form id="formulario" method="POST" action="'+changestatusUrl+'">' +
-                                    '@csrf' +
-                                    '<input type="hidden" name="flowId" value= "'+flowId +'">' +
-                                    '<input type="hidden" name="activate" value="'+newStatus+'">' +
-      
-            '</form>' ,
-            
-            showCancelButton: true,
-            confirmButtonText: 'Si',
-            customClass: {
-                actions: 'my-actions',
-                cancelButton: 'order-1 right-gap',
-                confirmButton: 'order-2',
-                denyButton: 'order-3',
+            modal.find('#flowName').text(flowNamed);
+            // Modifica el texto y el valor de .input2
+            if (flowStatus === 1) {
+                modal.find('#word').text('desactivar');
+                modal.find('.input2').val('false');
+            } else {
+                modal.find('#word').text('activar');
+                modal.find('.input2').val('true');
             }
-            }).then((result) => {
-                
-            if (result.value == true) {
-                let formulario = document.querySelector("#formulario");
-                formulario.submit()
-                Swal.fire('Listo!', '', 'success')
-            } else{
-                if(cheboxStatus.checked){
-                    cheboxStatus.checked = false;
-                }else{
-                    cheboxStatus.checked = true;
-                }
-                Swal.fire('No se guardaron los cambios', '', 'info')
-            }
-            })
+
+            modal.find('.input1').val(flowID);
+        });
+
+        // Envía el formulario
+        document.getElementById('submitFormButton').addEventListener('click', function () {
+            document.getElementById('changeStatus').submit();
+        });
 
 
-            })
-        })
-        
 
-        
-        
     </script>
 
     @if(session('flow-status') === 'error')

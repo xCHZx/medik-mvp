@@ -329,8 +329,8 @@ return [
             'icon'        => 'fab fa-fw fa-whatsapp',
         ],
         [
-            'text'        => 'Planes',
-            'url'         => "#",
+            'text'        => 'Suscripción',
+            'route'       => 'subscription.index',
             'icon'        => 'fas fa-fw fa-dollar-sign',
         ],
                 [

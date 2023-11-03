@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Http;
 
 class MessagesController extends Controller
 {
+    public function __invoke()
+    {
+        echo "hola mundillo";
+    }
+
     public function send()
     {
         // header

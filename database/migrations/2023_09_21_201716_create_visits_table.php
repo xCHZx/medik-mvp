@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('businessId')->nullable();
             $table->unsignedBigInteger('visitorId')->nullable();
+            //$table->unsignedBigInteger('flowId')->nullable();
             $table->timestamp('visitDate')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

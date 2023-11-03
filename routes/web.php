@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FlowsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitorController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::prefix('panel')->group(function () {
-        
+
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
         // ver y modificar los datos de su cuenta
@@ -58,6 +59,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/flujos/editar' , [FlowsController::class , 'update'])->name('flows.update');
         Route::post('/flujos/changeStatus' , [FlowsController::class , 'changeStatus'])->name('flows.changeStatus');
         Route::post('/flujos/eliminar', [FlowsController::class , 'delete'])->name('flows.delete');
+
+        Route::get('/suscripcion', [SubscriptionController::class, 'index'])->name('subscription.index');
+        Route::get('/suscripcion/metodo-de-pago', [SubscriptionController::class, 'paymentMethod'])->name('subscription.paymentMethod');
+        Route::post('/suscripcion/checkout', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
 
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     });

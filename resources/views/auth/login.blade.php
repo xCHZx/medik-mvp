@@ -6,6 +6,28 @@
             {{ session('status') }}
         </div>
     @endif
+    
+    <div class="modal mdkmodal" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Medik te informa:</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Para disfrutar de la experiencia completa de Medik, recomendamos usarlo en un escritorio.</p>
+                <img class="mx-auto" src="assets/work.webp" alt="trabajando" style="height: 15rem">
+                <p class="mt-2">Estamos trabajando en la versión mobile</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Lo comprendo</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
 
     <div class="text-center mb-1">
         <!-- Manito saludona -->

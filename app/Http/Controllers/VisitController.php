@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RegisteredVisit;
+use App\Jobs\WhatsappSender;
+use App\Models\Flow;
 use App\Models\Visit;
 use Carbon\Carbon;
+use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VisitController extends Controller
 {
@@ -34,7 +39,10 @@ class VisitController extends Controller
         $visit->visitorId = $visitorId;
         $visit->visitDate = Carbon::now();
         $visit->save();
+
         $this->generateHashedId($visit->id);
+
+        event(new RegisteredVisit($visit));
     }
 
     private function generateHashedId($visitId){

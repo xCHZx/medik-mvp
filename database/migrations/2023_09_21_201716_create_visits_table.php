@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('hashedId')->unique()->nullable();
             $table->unsignedBigInteger('businessId')->nullable();
             $table->unsignedBigInteger('visitorId')->nullable();
+            //$table->unsignedBigInteger('flowId')->nullable();
             $table->timestamp('visitDate')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

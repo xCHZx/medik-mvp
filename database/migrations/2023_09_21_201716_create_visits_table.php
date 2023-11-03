@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
+            $table->string('hashedId')->unique()->nullable();
             $table->unsignedBigInteger('businessId')->nullable();
             $table->unsignedBigInteger('visitorId')->nullable();
             //$table->unsignedBigInteger('flowId')->nullable();

@@ -116,6 +116,16 @@ body{
     height: 100%;
 }
 
+.flowStyle{
+    background-color: #e6fbff;
+    border-color: #8aedff !important;
+    border-width: 0.2rem;
+}
+
+.flowInactive{
+    filter: grayscale(100%);
+}
+
 .nav-tabs .nav-item .nav-link {
     color: #686868;
 }
@@ -158,4 +168,16 @@ body{
 
 .bg-primaryquestion {
     color: #3497F9
+}
+
+/*Recomendación de usar en escritorio*/
+.mdkmodal {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    .mdkmodal {
+        display: block !important; /* Muestra el modal en dispositivos móviles */
+    }
 }

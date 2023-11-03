@@ -9,19 +9,18 @@
 @section('content')
 <div class="container mt-3">
     <div class="card p-1">
-      
+
         <form method="POST" action="{{ route('flows.update') }}">
            @csrf
            <input type="hidden" name="flowId" value="{{$flow->id}}">
             <div class="card-header row col-12 border-none mt-3 mr-0">
-                <h1 class="card-title col-6 text-black">Edición de flujos</h1>
+                <h1 class="card-title col-6 text-black"><b>Edición</b> de flujos</h1>
                 <div class="text-right col-6 mr-0">
                     <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-5">Guardar Cambios</button>
                     <a href="{{ route('flows.index') }}" class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</a>
-                    
                 </div>
             </div>
-            
+
             <div class="card-body mb-0 pb-0">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -102,7 +101,7 @@
                     <!-- Review window -->
                     <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                         <div class="card cardmdk mt-0.5 mb-3 mx-0">
-                            <div class="card-header border-none">    
+                            <div class="card-header border-none">
                                 Junto a los comentarios y calificaciones tus pacientes podrán ver links a tus redes sociales o a tu página web, si deseas agregarlos colocalos aquí, en caso de que no tengas ninguno puedes dejar el espacio en blanco
                             </div>
                             <div class="card-body row col-12">
@@ -139,7 +138,7 @@
                                 <div class="card-header pl-1 border-0">
                                     <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
                                 </div>
-                                <div class="card-body p-2 mb-2 wss-bg">                                
+                                <div class="card-body p-2 mb-2 wss-bg">
                                     <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
                                         <div class="p-2 text-white rounded-lg bg-strongblue">
                                             <span class="text-left text-white fw-bolder">
@@ -178,7 +177,7 @@
                                 <div class="card-header pl-1 border-0">
                                     <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
                                 </div>
-                                <div class="card-body p-2 mb-2 wss-bg">                                
+                                <div class="card-body p-2 mb-2 wss-bg">
                                     <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
                                         <div class="p-2 text-white rounded-lg bg-strongblue">
                                             <span class="text-left text-white fw-bolder">
@@ -235,23 +234,21 @@
 @stop
 
 @section('js')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <script>
 
-        
 
-     
+
+
         $(document).ready(function () {
-            let checkboxes = document.querySelectorAll(".form-check-input");
-            let objetivo = document.querySelector("#objetivoflow").value;
-
-            checkboxes.forEach(checkbox => {
-            if(checkbox.value == objetivo){
-                checkbox.checked = true;
-                
-                const objetivoSeleccionado = checkbox.id;
-
+            //Marca objetivo establecido
+            var objetivoSeleccionado = '{{$flow->objetivo}}';
+            var objetivoRadios = document.querySelectorAll('input[name="objetivo"]');
+            // Recorrer los radio buttons y marcar el objetivo correcto
+            objetivoRadios.forEach(function(radio) {
+                if (radio.value === objetivoSeleccionado) {
+                    radio.checked = true;
+                }
+            });
                 const nombreObjetivoSeleccionado = $('input[type="radio"]:checked').attr('value');
                 const descripcion = obtenerDescripcion(objetivoSeleccionado);
                 $('#texto-descripcion').text(descripcion);
@@ -259,12 +256,12 @@
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';
-                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
+                const nombreFlujo = nombreObjetivoSeleccionado;
                 $('#name').val(nombreFlujo);
             }
         })
 
-            
+
             // cambia descripcion con un click
             $('input[type="radio"]').on('change', function () {
                 objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
@@ -275,7 +272,7 @@
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';
-                const nombreFlujo = nombreObjetivoSeleccionado + " - " + businessName;
+                const nombreFlujo = nombreObjetivoSeleccionado;
                 $('#name').val(nombreFlujo);
             });
 
@@ -310,6 +307,8 @@
             });
         });
 
-        
+
     </script>
+
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

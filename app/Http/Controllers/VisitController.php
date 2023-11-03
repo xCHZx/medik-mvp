@@ -33,17 +33,24 @@ class VisitController extends Controller
      * Store a newly created resource in storage.
      */
     public function store($businessId, $visitorId)
-    {   
+    {
         $visit = new Visit();
         $visit->businessId = $businessId;
         $visit->visitorId = $visitorId;
         $visit->visitDate = Carbon::now();
         $visit->save();
 
+        $this->generateHashedId($visit->id);
+
         event(new RegisteredVisit($visit));
-
-
     }
+
+    private function generateHashedId($visitId){
+        $visit = Visit::find($visitId);
+        $visit->hashedId = encrypt($visit->id, env('ENCRYPT_KEY'), ['length' => 10]);
+        $visit->save();
+    }
+
 
     /**
      * Display the specified resource.

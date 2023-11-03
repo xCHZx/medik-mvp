@@ -47,6 +47,7 @@ class WhatsappSender implements ShouldQueue
         $whatsappBusinessId = env('WP_ID'); // este es el del negocio de facebook
         $visitorNumber = $visitor->phone;
         $name = $visitor->firstName;
+        $reviewUrl = 'https://medik.mx';
 
         $response = Http::withToken($token)->post('https://graph.facebook.com/'. $version . '/' . $whatsappBusinessId . '/messages', [
             'messaging_product' => 'whatsapp',
@@ -90,7 +91,7 @@ class WhatsappSender implements ShouldQueue
                         'parameters' => [
                             [
                                 'type' => 'text',
-                                'text' => 'https://medik.mx' // url dinamica para review
+                                'text' => $reviewUrl // url dinamica para review
                                 
                             ]
                             

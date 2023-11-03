@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FlowsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitorController;
 use Illuminate\Support\Facades\Route;
@@ -66,15 +67,26 @@ Route::middleware('auth')->group(function () {
         Route::get('/suscripcion/metodo-de-pago', [SubscriptionController::class, 'paymentMethod'])->name('subscription.paymentMethod');
         Route::post('/suscripcion/checkout', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
 
+
+
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
     });
 });
 
+//Visitas
 Route::prefix('visita')->group(function () {
     Route::get('/{id}', [VisitorController::class, 'visit'])->name('visitor.visit');
     Route::post('/{id}', [VisitorController::class, 'store'])->name('visitor.store');
     Route::get('/{id}/gracias', [VisitorController::class, 'success'])->name('visitor.success');
     Route::get('/{id}/denegado', [VisitorController::class, 'denied'])->name('visitor.denied');
+});
+
+//Opiniones
+Route::prefix('opinion')->group(function () {
+    Route::get('/{visitEncrypted}', [ReviewController::class, 'create'])->name('review.create');
+    Route::post('/{visitEncrypted}', [ReviewController::class, 'store'])->name('review.store');
+    Route::get('/gracias/g/{visitEncrypted}', [ReviewController::class, 'thankYouGood'])->name('review.thankYouGood');
+    Route::get('/gracias/b/{visitEncrypted}', [ReviewController::class, 'thankYouBad'])->name('review.thankYouBad');
 });
 
 require __DIR__.'/auth.php';

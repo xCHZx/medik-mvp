@@ -102,7 +102,8 @@ class VisitorController extends Controller
 
             return $visitor;
         }catch(Exception $e){
-            return $e;
+            // return $e;
+            dd($e);
         }
 
         //

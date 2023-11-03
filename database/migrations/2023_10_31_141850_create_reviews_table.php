@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('hashedId')->unique()->nullable();
-            $table->unsignedBigInteger('businessId')->nullable();
-            $table->unsignedBigInteger('visitorId')->nullable();
-            $table->timestamp('visitDate')->nullable();
+            $table->integer('rating');
+            $table->text('comment')->nullable();
+            $table->unsignedBigInteger('visitId')->nullable();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('reviews');
     }
 };

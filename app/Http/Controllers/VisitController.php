@@ -34,7 +34,15 @@ class VisitController extends Controller
         $visit->visitorId = $visitorId;
         $visit->visitDate = Carbon::now();
         $visit->save();
+        $this->generateHashedId($visit->id);
     }
+
+    private function generateHashedId($visitId){
+        $visit = Visit::find($visitId);
+        $visit->hashedId = encrypt($visit->id, env('ENCRYPT_KEY'), ['length' => 10]);
+        $visit->save();
+    }
+
 
     /**
      * Display the specified resource.

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -32,15 +31,6 @@ class BusinessController extends Controller
         }
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -63,7 +53,7 @@ class BusinessController extends Controller
                 );
 
             $this->generateQr($business->id);
-            $this->createImage($business->id);
+            $this->generateImage($business->id);
             //$this->generateImage($business->id);
 
             return back()->with("action", "ok");
@@ -92,53 +82,6 @@ class BusinessController extends Controller
         }
     }
 
-    private function generateImage($businessId)
-    {
-        $ruta = 'C:\xampp\htdocs\medik-mvp\images/';
-        $image = 'C:\xampp\htdocs\medik-mvp\images/template.jpg';
-        $business = Business::find($businessId);
-        $imgName = 'imagen' . strval($businessId) . '.png';
-
-        // crear imagen y obtener su tamaño
-        $img = imagecreatefromjpeg($image);
-        $imgSize = getimagesize($image);
-        // definir el color y la fuente de texto
-        $color = imagecolorallocate($img,255,255,255);
-        $font = 'C:\Users\carlo\AppData\Local\Microsoft\Windows\Fonts\ASMAN.TTF';
-        $gris = imagecolorallocate($img, 128, 128, 128);
-
-        // texto a superponer
-        $text = $business->name;
-
-        // ubicacion del texto
-        $x = $imgSize[0] / 2;
-        $positionX = intval($x);
-        $y = $imgSize[1] / 2;
-        $positionY = intval($y);
-
-        // tamaño del texto
-        $textSize = 20.0;
-
-        // sombra con direccion
-        imagettftext($img, 20, 0, 11, 21, $gris, $font, $business->address);
-
-        // texto con el nombre
-        imagettftext($img,$textSize,0,$positionX,$positionY,$color,$font,$text);
-
-        // guardar la imagen
-        imagejpeg($img,$ruta . $imgName);
-
-        //limpiar memoria
-        imagedestroy($img);
-
-        //guardar en negocio
-        $business->imageUrl = $ruta . $imgName;
-        $business->save();
-
-
-
-    }
-
     // public function downloadQr (){
     //     $business = Business::where('userId', Auth::id())->first();
     //     $rawQr = $business->rawQr;
@@ -152,13 +95,6 @@ class BusinessController extends Controller
     //     return $pdf->download();
     // }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Business $business)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -209,15 +145,7 @@ class BusinessController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Business $business)
-    {
-        //
-    }
-
-    public function createImage($id){
+    private function generateImage($id){
 
         $business = Business::find($id);
         $title = $business->name;

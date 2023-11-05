@@ -14,6 +14,9 @@ class FlowsController extends Controller
 {
     //No dejar más de 2 saltos de línea seguidos porfa
     //Implementar llamado de los logs con trycatch6, ejemplo en Business
+    //Agregar descripciones contextuales si son necesarias, de funciones del Controler
+    //Si vas a manejar validaciones con If no tires error con Else, sino con Throw
+    //Ver ejemplo en http/requests/auth/loginrequest
     public function index()
     {
         $user = Auth::user();

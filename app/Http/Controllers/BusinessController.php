@@ -53,13 +53,29 @@ class BusinessController extends Controller
             $business->address = $request->address;
             $business->userId = Auth::id();
             $business->save();
+
+            app(LogController::class)->store(
+                "success", //tipo
+                "El usuario #".Auth::user()->id.", creó el negocio #".$business->id, //contenido
+                "Negocio", //categoria
+                Auth::user()->id, //userId
+                $business //descripcion (Obj o Exception)
+                );
+
             $this->generateQr($business->id);
             $this->createImage($business->id);
             //$this->generateImage($business->id);
 
             return back()->with("action", "ok");
         }catch(Exception $e){
-            return $e;
+            app(LogController::class)->store(
+                "error", //tipo
+                "El usuario #".Auth::user()->id.", error en crear el negocio", //contenido
+                "Negocio", //categoria
+                Auth::user()->id, //userId
+                $e //descripcion
+                );
+            return $e; //Falta regresar la vista con status error para disparar el SWAL
         }
     }
 
@@ -171,10 +187,25 @@ class BusinessController extends Controller
             $business->address = $request->address;
             $business->save();
             $this->createImage($business->id);
+
+            app(LogController::class)->store(
+                "success", //tipo
+                "El usuario #".Auth::user()->id.", editó el negocio #".$business->id, //contenido
+                "Negocio", //categoria
+                Auth::user()->id, //userId
+                $business //descripcion (Obj o Exception)
+                );
+
             return redirect()->route('business.index')->with("action", "ok");
         }catch(Exception $e){
-            // abort(403);
-            dd($e);
+            app(LogController::class)->store(
+                "error", //tipo
+                "El usuario #".Auth::user()->id.", error en editar el negocio", //contenido
+                "Negocio", //categoria
+                Auth::user()->id, //userId
+                $e //descripcion
+                );
+            return($e);
         }
     }
 

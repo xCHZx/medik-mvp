@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\LogController;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Error;
@@ -67,9 +68,24 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
 
+            app(LogController::class)->store(
+                "success",
+                "El usuario #".Auth::user()->id." se registró",
+                "Registro",
+                Auth::user()->id
+                );
+
             return redirect()->route('dashboard.index');
 
         }catch(Exception $e){
+            //tipo, contenido, categoria, userId(opcional), descripción(opcional)
+            app(LogController::class)->store(
+                "error",
+                "Error en registro",
+                "Registro",
+                0,
+                $e
+                );
             return $e;
         }
 

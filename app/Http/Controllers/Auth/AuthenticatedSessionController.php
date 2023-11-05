@@ -29,6 +29,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        app(LogController::class)->store(
+            "success", //tipo
+            "El usuario #".Auth::user()->id.", se registró",//contenido
+            "Login", //categoria
+            Auth::user()->id, //userId
+            Auth::user() //descripcion (Payload o Exception)
+            );
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

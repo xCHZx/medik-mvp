@@ -15,6 +15,7 @@ class BusinessController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * Acting as Create while there is only 1 business for the user
      */
     public function index(){
         try{
@@ -69,6 +70,9 @@ class BusinessController extends Controller
         }
     }
 
+    /**
+     * Generate QR via Api for the Visit functionality
+     */
     private function generateQr ($businessId){
         try{
             $url = urlencode(env('APP_URL'));
@@ -145,6 +149,9 @@ class BusinessController extends Controller
         }
     }
 
+    /**
+     * Create placeholder image for whatsapp and other uses via InterventionImage facade
+     */
     private function generateImage($id){
 
         $business = Business::find($id);

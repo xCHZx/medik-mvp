@@ -145,7 +145,7 @@ class BusinessController extends Controller
                 Auth::user()->id, //userId
                 $e //descripcion
                 );
-            return($e);
+            return($e); //Falta enviarlo al front con SWAL
         }
     }
 

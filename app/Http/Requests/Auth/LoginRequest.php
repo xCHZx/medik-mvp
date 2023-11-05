@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Http\Controllers\LogController;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,14 @@ class LoginRequest extends FormRequest
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
+
+            app(LogController::class)->store(
+                "error", //tipo
+                "Intento fallido de login", //contenido
+                "Login", //categoria
+                0, //userId, default 0 for internal issues
+                implode(',',$this->only('email', 'password')) //payload o descripcion
+            );
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),

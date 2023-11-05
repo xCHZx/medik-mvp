@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         app(LogController::class)->store(
             "success", //tipo
-            "El usuario #".Auth::user()->id.", se registró",//contenido
+            "El usuario #".Auth::user()->id.", inició sesión",//contenido
             "Login", //categoria
             Auth::user()->id, //userId
             Auth::user() //descripcion (Payload o Exception)

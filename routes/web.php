@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,10 +76,10 @@ Route::middleware('auth')->group(function () {
 
 //Visitas
 Route::prefix('visita')->group(function () {
-    Route::get('/{id}', [VisitorController::class, 'visit'])->name('visitor.visit');
-    Route::post('/{id}', [VisitorController::class, 'store'])->name('visitor.store');
-    Route::get('/{id}/gracias', [VisitorController::class, 'success'])->name('visitor.success');
-    Route::get('/{id}/denegado', [VisitorController::class, 'denied'])->name('visitor.denied');
+    Route::get('/{businessId}', [VisitController::class, 'create'])->name('visit.create');
+    Route::post('/{businessId}', [VisitController::class, 'store'])->name('visit.store');
+    Route::get('/{businessId}/gracias', [VisitController::class, 'success'])->name('visit.success');
+    Route::get('/{businessId}/denegado', [VisitController::class, 'denied'])->name('visit.denied');
 });
 
 //Opiniones

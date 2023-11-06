@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
         // ]);
     }
 
-    public function checkout(){
+    public function checkout(){ //Cuando haya oportunidad utilizar facade de Cashier
         $user = Auth::user();
         \Stripe\Stripe::setApiKey(config(key: 'stripe.sk'));
 

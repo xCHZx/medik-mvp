@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class FlowsController extends Controller
 {
+    //No dejar más de 2 saltos de línea seguidos porfa
+    //Implementar llamado de los logs con trycatch6, ejemplo en Business
+    //Agregar descripciones contextuales si son necesarias, de funciones del Controler
+    //Si vas a manejar validaciones con If no tires error con Else, sino con Throw
+    //Ver ejemplo en http/requests/auth/loginrequest
     public function index()
     {
         $user = Auth::user();
@@ -31,6 +36,7 @@ class FlowsController extends Controller
         }
         else{
             // le negamos que pueda ver un flujo o crearlo hasta que cree un negocio
+            //Esta validación se debe hacer frontside para no cargar el mvp de vistas ya que no estamos trabajando por componentes -CJ
             $message = "Debes tener un negocio antes de crear tu primer flujo";
             return view('dashboard.flows.notpermited' , ['message' => $message]);
         }
@@ -48,20 +54,20 @@ class FlowsController extends Controller
         $validated = $request->validate([
             'name' => 'required', // nuevo flujo de + objetivo
             'objetivo' => 'required',
-        ]);
-
+        ]); //No debes asignar la función a una variable si no se usará después -CJ
 
         $user = Auth::user();
         $business = $user->businesses->first();
         $flows = Flow::where('businessId', $business->id)
-                   ->where('isActive' , true)->get();
+                   ->where('isActive' , true)->get(); //Hay que meter select para jalar datos específicos de los modelos -CJ
+        //^^^^No debes llamar una lista de un modelo desde la misma función dónde lo creas-CJ^^^^^
 
         $flow = new Flow();
         $flow->name = $request->name;
         $flow->objetivo = $request->objetivo;
         $flow->businessId = $business->id;
 
-        if(count($flows) > 0)
+        if(count($flows) > 0) //No se recomienda meter comparativos a 0, mejor utiliza if($flows)
         {
             $flow->isActive = false;
 
@@ -70,18 +76,17 @@ class FlowsController extends Controller
         {
             $flow->isActive = true;
         }
-
-
         $flow->save();
 
 
-        if(isset($request->googleUrl) && !empty($request->googleUrl))
+        if(isset($request->googleUrl) && !empty($request->googleUrl)) //Al recibir en null puedes meter una validación más sencilla y no un AND -CJ
          {
-            $calification1 = new CalificationLink();
+            $calification1 = new CalificationLink(); //Hay que cambiar el nombre del modelo ya que no se usa Calification en ninguna instancia, sino Review -CJ
             $calification1->name = 'google';
             $calification1->url = $request->googleUrl;
             $calification1->flowId = $flow->id;
             $calification1->save();
+            //^^^^El nombre calification1 no es descriptivo -CJ^^^^
          }
 
 
@@ -93,9 +98,13 @@ class FlowsController extends Controller
             $calification2->flowId = $flow->id;
             $calification2->save();
 
-        };
+        }
+        //^^^^Mismos comentarios de la función anterior -CJ^^^^
 
-        return Redirect::route('flows.index')->with('status', 'Flow-Created');
+
+
+        return Redirect::route('flows.index')->with('status', 'Flow-Created'); //Hay que homologar los status a minúsculas, comunícaselo a Fer -CJ
+
     }
 
     public function edit(Request $request)
@@ -116,10 +125,9 @@ class FlowsController extends Controller
             'googleLink' => $googleLink
         ]);
 
-
     }
 
-    public function update(Request $request)
+    public function update(Request $request) //Mismas correccciones que en Store
     {
         // recibo los datos del flujo y lo sobreescribo
 
@@ -134,7 +142,6 @@ class FlowsController extends Controller
                                'objetivo' => $request->objetivo
                            ]);
 
-        // trabajar los links sociales para crearlos o sobre escribirlos
         if(isset($request->googleUrl) && !empty($request->googleUrl))
         {
             $calificationLink = CalificationLink::updateOrCreate(
@@ -150,13 +157,10 @@ class FlowsController extends Controller
                 ['url' => $request->facebookUrl]
             );
         }
-
         return Redirect::route('flows.index')->with('status', 'Flow-Changed');
-
-
     }
 
-    public function changeStatus(Request $request)
+    public function changeStatus(Request $request) //Mismas correcciones anteriores
     {
         // este metodo sirve para modificar el status de un flujo
         // la vista tiene que enviarme el id del flujo a modificar y si lo intenta activar o desactivar
@@ -165,7 +169,7 @@ class FlowsController extends Controller
             'activate' => 'required'
         ]);
 
-        if ($request->activate === 'true')
+        if ($request->activate === 'true') //Puedes utilizar una validación más resumida. True nunca se evalúa cómo String. Si lo guardas como String es error de modelo de datos
         {
             $business = Auth::user()->businesses->first();
             $flows = Flow::where('businessId' , $business->id)
@@ -180,6 +184,7 @@ class FlowsController extends Controller
             else
             {
                 // devolver con mensaje de error
+                //Falta manejo de excepciones -CJ
                 return Redirect::route('flows.index')->with('flow-status' , 'error');
             }
 
@@ -192,15 +197,11 @@ class FlowsController extends Controller
             return Redirect::route('flows.index');
         }
 
-
-
-
     }
-    
-    public function delete(Request $request)
-    {
-        // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente
-        $validated = $request->validate(['flowId' => 'required']);
+     public function delete(Request $request) //Mismas correcciones
+     {
+         // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente
+         $validated = $request->validate(['flowId' => 'required']);
 
         Flow::destroy($request->flowId);
         return Redirect::route('flows.index')->with('flow-status' , 'success');

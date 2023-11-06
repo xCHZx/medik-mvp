@@ -46,14 +46,18 @@ class WhatsappSender implements ShouldQueue
         $version = 'v18.0';
         $whatsappBusinessId = env('WP_ID'); // este es el del negocio de facebook
         $visitorNumber = $visitor->phone;
-        $name = $visitor->firstName;
+        $hashedId = $this->visit->hashedId;
+        
+        $name = $visitor->firstName; 
+        $imageUrl = asset('storage/businesses/images/placeholders/' . $this->visit->businessId . '.png');
+        
 
         $response = Http::withToken($token)->post('https://graph.facebook.com/'. $version . '/' . $whatsappBusinessId . '/messages', [
             'messaging_product' => 'whatsapp',
             'to' => '528715757804',//$visitorNumber,
             'type' => 'template',
             'template' => [
-                'name' => 'calidad_de_la_atencion_medica_clinica', // $flow->objetivo
+                'name' => 'satisfaccion_general_prueba', // $flow->objetivo
                 'language' => [
                     'code' => 'es_MX'
                 ],
@@ -64,7 +68,7 @@ class WhatsappSender implements ShouldQueue
                             [
                                 'type' => 'image',
                                 'image' => [
-                                    'link' => 'https://picsum.photos/700/400?random' // url de imagen
+                                    'link' => 'https://picsum.photos/700/400?random' //$imageUrl
                                 ]
 
                             ]
@@ -90,7 +94,7 @@ class WhatsappSender implements ShouldQueue
                         'parameters' => [
                             [
                                 'type' => 'text',
-                                'text' => 'https://medik.mx' // url dinamica para review
+                                'text' =>  $hashedId 
                                 
                             ]
                             

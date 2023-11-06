@@ -31,9 +31,14 @@
 }
 
 .card{
-    box-shadow: 0px 4px 18px 0px rgba(13,74,55,0.1);
+    box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.1);
     border-color: white!important;
-    border-radius: 6px!important;
+    border-radius: 15px!important;
+
+    .card-footer{
+        background: #FFF;
+        border-radius: 0 15px 15px !important;
+    }
 }
 
 .content-wrapper {
@@ -77,28 +82,144 @@ body{
     color: #404040;
 }
 
-/* CSS Customized */
-.btnmdk-hover{
+/* CSS DESIGN STYLE */
+
+/*Buttons*/
+.mdkbtn-outline{
+    color: #000;
+    background-color:none;
+    border: none;
+    
     &:hover {
-        background-image: linear-gradient(rgb(0 0 0/30%) 0 0);
-        color: rgb(255, 255, 255);
+        transform: scale(1.1);
+    }
+
+    &:disabled{
+        color: #9EA2B3;
     }
 }
 
-.btnmdk-cancel{
-    color: #fff;
-    background-color: #821010;
+.mdkbtn-success{
+    color: #FFF;
+    background-color:#28B486;
+    border-radius: 10px;
     border: none;
-    box-shadow: none;
+    
+    &:hover {
+        /*background-image: linear-gradient(rgba(42, 42, 42, 0.52) 0 0);*/
+        background-color:#206152;
+        color: #FFF;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
 }
 
-.btnmdk-confirm{
-    color:  #fff;
-    background-color: #0B8D65;
+.mdkbtn-primary{
+    color: #FFF;
+    background-color:#2673B5;
+    border-radius: 10px;
     border: none;
-    box-shadow: none;
+    
+    &:hover {
+        background-color:#0A3051;
+        color: #FFF;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
 }
 
+.mdkbtn-info{
+    color: #FFF;
+    background-color:#5C63FF;
+    border-radius: 10px;
+    border: none;
+    
+    &:hover {
+        background-color:#282DA4;
+        color: #FFF;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
+}
+
+.mdkbtn-faded{
+    color: #000;
+    background-color:#F7F7F7;
+    border-radius: 10px;
+    border: none;
+    
+    &:hover {
+        background-color:#DBD4D4;
+        color: #000;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
+}
+
+.mdkbtn-danger{
+    color: #FFF;
+    background-color:#BE4B67;
+    border-radius: 10px;
+    border: none;
+    
+    &:hover {
+        background-color:#631F1E;
+        color: #FFF;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
+}
+
+.mdkbtn-warning{
+    color: #FFF;
+    background-color:#E8A340;
+    border-radius: 10px;
+    border: none;
+    
+    &:hover {
+        background-color:#BD740C;
+        color: #FFF;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
+}
+
+.mdkbtn-inverse{
+    color: #FFF;
+    background-color:#292B2C;
+    border-radius: 10px;
+    border: none;
+    
+    &:hover{
+        background-color:#5E5E5E;
+        color: #FFF;
+    }
+
+    &:disabled{
+        background-color:#EDEEF2;
+        color: #9EA2B3;
+    }
+}
+
+/*Cards*/
 .cardmdk-display {
     position: relative;
     display: none;
@@ -116,14 +237,44 @@ body{
     height: 100%;
 }
 
-.flowStyle{
-    background-color: #e6fbff;
-    border-color: #8aedff !important;
-    border-width: 0.2rem;
+/*Flow Cards*/
+.mdkFlowCard{
+    background-color: #f0fcfa;
+    border-color: #5CD5B9 !important;
+    border-width: 3px;
 }
 
-.flowInactive{
+.mdkFlowInactive{
     filter: grayscale(100%);
+}
+
+#businessPicture {
+    height: 115px;
+    width: 115px;
+    background-color: #EEEEEE;
+    border-radius: 10px;
+}
+
+.mdkTextArea{
+    background-color: #FAFAFA;
+    border-color: #E0E0E0;
+    border-width: 0.5px;
+    padding: 0.5rem 0.8rem;
+    resize: none;
+}
+
+.mdkBigTextArea{
+    height: 12rem !important;
+    width: 27.5rem !important;
+}
+
+/*Text*/
+.fs-6{
+    font-size: 0.9rem;
+}
+
+.fs-7{
+    font-size: 0.8rem;
 }
 
 .nav-tabs .nav-item .nav-link {
@@ -140,7 +291,7 @@ body{
     border-bottom: 2px solid #C7CDE1;
 }
 
-.cardmdk {
+.mdkTabCard {
     box-shadow: none;
     border: 2px solid !important;
     border-color: #C7CDE1 !important;
@@ -181,3 +332,18 @@ body{
         display: block !important; /* Muestra el modal en dispositivos móviles */
     }
 }
+
+/* DEPRECATED  
+.mdkStandardCard{
+    border-color: #C7CDE1;
+    background: #FFF;
+    border-width: 2px;
+    border-radius: 12px;
+
+    .card-footer{
+        background: #FFF;
+        border-radius: 0 20px 20px !important;
+    }
+}
+
+*/

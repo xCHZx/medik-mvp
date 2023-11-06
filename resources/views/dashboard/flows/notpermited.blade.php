@@ -3,7 +3,7 @@
 @section('title', 'Flujos')
 
 @section('content_header')
-    <h1 class="mt-4"> {{$message}} &#129299;&#9757; </h1>
+    <h1 class="mt-4"> {{$message}} &#9757;&#129299;</h1>
 @stop
 
 @section('content')
@@ -11,10 +11,6 @@
     <a href="{{ route('business.index') }}" >
         <button type="button" class="btn btn-outline-info my-3">Crear Negocio</button>
     </a>
-@stop
-
-@section('css')
-<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
 @stop
 
 @section('js')

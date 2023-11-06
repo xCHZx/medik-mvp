@@ -2,10 +2,6 @@
 
 @section('title', 'Flujos')
 
-@section('css')
-<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
-@stop
-
 @section('content_header')
     <div class="row d-flex justify-content-between align-items-center py-3">
         <div class="col-md-5">
@@ -15,7 +11,7 @@
         <!-- Nuevo Flujo -->
         <div class="col-md-4">
             <div class="card text-center my-md-0 ">
-                <a href="{{ route('flows.create') }}" class="btn btn-success">
+                <a href="{{ route('flows.create') }}" class="btn mdkbtn-success">
                     <i class="fas fa-plus"></i> Nuevo Flujo
                 </a>
             </div>
@@ -27,7 +23,7 @@
     <div class="row">
         @foreach($flows as $flow)
             <div class="col-md-12 mb-3">
-                <div class="card card-flow flowStyle {{ $flow->isActive ? '' : 'flowInactive' }}">
+                <div class="card card-flow mdkFlowCard {{ $flow->isActive ? '' : 'mdkFlowInactive' }}">
                     <div>
                         <div class="card-header h5 py-2">
                             <div class="row d-flex justify-content-between align-items-center">
@@ -40,8 +36,8 @@
                                     <form action="{{ route('flows.edit') }}" method="get">
                                         @csrf
                                         <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                        <button type="submit" class="btn btn-outline-info">
-                                            <i class="fas fa-edit mr-1"></i>Editar
+                                        <button type="submit" class="btn mdkbtn-outline">
+                                            <i class="fas fa-edit mr-1"></i>Editar flujo
                                     </form>
                                 </div>
                             </div>
@@ -53,7 +49,7 @@
                         <div class="row d-flex justify-content-between align-items-center mt-4">
 
                             <!-- Delete -->
-                            <button type="button" class="btn btnmdk-cancel btnmdk-hover" data-toggle="modal" data-target="#deleteModal" data-name="{{$flow->name}}" data-id="{{ $flow->id}}">
+                            <button type="button" class="btn mdkbtn-danger" data-toggle="modal" data-target="#deleteModal" data-name="{{$flow->name}}" data-id="{{ $flow->id}}">
                                 <i class="fas fa-trash-alt mr-1"></i>Eliminar
                             </button>
                             
@@ -81,7 +77,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
             <div class="modal-body">
                 <form id="deleteFlow" method="POST" action="{{ route('flows.delete') }}">
                     @csrf
@@ -94,8 +89,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btnmdk-cancel btnmdk-hover" data-dismiss="modal">Cancelar</button>
-                <button id="submitDelete" class="btn btnmdk-confirm btnmdk-hover">Confirmar</button>
+                <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cancelar</button>
+                <button id="submitDelete" class="btn mdkbtn-success">Confirmar</button>
             </div>
         </div>
         </div>
@@ -124,8 +119,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btnmdk-cancel btnmdk-hover" data-dismiss="modal">Cancelar</button>
-                <button id="submitFormButton" type="submit" class="btn btnmdk-confirm btnmdk-hover">Confirmar</button>
+                <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cancelar</button>
+                <button id="submitFormButton" type="submit" class="btn mdkbtn-success">Confirmar</button>
             </div>
         </div>
         </div>

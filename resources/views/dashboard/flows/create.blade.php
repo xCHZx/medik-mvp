@@ -14,8 +14,8 @@
             <div class="card-header row col-12 border-none mt-3 mr-0">
                 <h1 class="card-title col-6 text-black">Creación de flujo</h1>
                 <div class="text-right col-6 mr-0">
-                    <button type="submit" class="btn btnmdk-confirm btnmdk-hover mr-2 col-4">Guardar</button>
-                    <a href="{{ route('flows.index') }}" class="btn btnmdk-cancel btnmdk-hover col-4">Cancelar</a>
+                    <button type="submit" class="btn mdkbtn-success mr-2 col-4">Guardar</button>
+                    <a href="{{ route('flows.index') }}" class="btn mdkbtn-danger col-4">Cancelar</a>
                     
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <div class="tab-content" id="myTabContent">
                     <!-- Objetive window -->
                     <div class="tab-pane fade show active" id="objetives" role="tabpanel" aria-labelledby="objetives-tab">
-                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                        <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none text-black">
                                 Escoge uno de los siguientes objetivos para definir qué aspecto deseas evaluar:
                             </div>
@@ -148,15 +148,21 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        <div class="mt-2 fs-6 mb-1">
+                                            Hola! 😀<br class="my-0 py-0">
+                                            <br class="my-0 py-0">
+                                            Te registraste para participar en nuestra encuesta de <p id="whatsappMainPreview" class="my-0 py-0 d-inline">OBJET</p>. 
+                                            ¿Deseas contestar un breve formulario y ayudarnos a evaluar la calidad de nuestro servicio? 🙏
+                                        </div>
+                                        <p class="text-gray-500 fs-7 mt-0">¿No te interesa? Toca "Detener promociones"</p>
                                         <ul class="list-group list-group-flush border-0 mt-2">
                                             <li class="list-group-item text-center text-primary border-top p-1">
                                                 <i class="fas fa-external-link-alt"></i>
-                                                Aceptar
+                                                Participar en encuesta
                                             </li>
                                             <li class="list-group-item text-center text-primary p-1">
-                                                <i class="fas fa-external-link-alt"></i>
-                                                Dejar de recibir promociones
+                                                <i class="fas fa-reply"></i>
+                                                Detener promociones
                                             </li>
                                         </ul>
                                     </div>
@@ -184,43 +190,41 @@
             </div>
         </form>
 
-        <div id="info1-container" class="container">
-            <div class="container d-flex justify-content-center">
-                <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
-                    <div class="d-flex align-items-center mx-3">
-                        <i class="fas fa-question-circle bg-primaryquestion"></i>
-                    </div>
-                    <div class="text-black text-left my-2">
-                        Cuando tus pacientes escaneen tu código QR y acepten recibir mensajes tuyos , recibirán un primer mensaje en la aplicación de mensajería Whatsapp para solicitarles que califiquen el objetivo que has seleccionado.
-                    </div>
-                    <div class="d-flex align-self-start mt-1 mr-1 p-0">
-                        <i id="info1" class="fas fa-times-circle bg-cancel"></i>
+        <div>
+            <div id="info1-container" class="container">
+                <div class="container d-flex justify-content-center">
+                    <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
+                        <div class="d-flex align-items-center mx-3">
+                            <i class="fas fa-question-circle bg-primaryquestion"></i>
+                        </div>
+                        <div class="text-black text-left my-2">
+                            Cuando tus pacientes escaneen tu código QR y acepten recibir mensajes tuyos , recibirán un primer mensaje en la aplicación de mensajería Whatsapp para solicitarles que califiquen el objetivo que has seleccionado.
+                        </div>
+                        <div class="d-flex align-self-start mt-1 mr-1 p-0">
+                            <i id="info1" class="fas fa-times-circle bg-cancel"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="info2-container" class="container">
-            <div class="container d-flex justify-content-center">
-                <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
-                    <div class="d-flex align-items-center mx-3">
-                        <i class="fas fa-question-circle bg-primaryquestion"></i>
-                    </div>
-                    <div class="text-black text-left my-2">
-                        Una vez que tus pacientes acepten en whatsapp calificar a tu negocio serán redirigidos a una página web donde les explicaremos el objetivo que quieres calificar y cómo pueden hacerlo.
-                    </div>
-                    <div class="d-flex align-self-start mt-1 mr-1 p-0">
-                        <i id="info2" class="fas fa-times-circle bg-cancel"></i>
+            <div id="info2-container" class="container">
+                <div class="container d-flex justify-content-center">
+                    <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
+                        <div class="d-flex align-items-center mx-3">
+                            <i class="fas fa-question-circle bg-primaryquestion"></i>
+                        </div>
+                        <div class="text-black text-left my-2">
+                            Una vez que tus pacientes acepten en whatsapp calificar a tu negocio serán redirigidos a una página web donde les explicaremos el objetivo que quieres calificar y cómo pueden hacerlo.
+                        </div>
+                        <div class="d-flex align-self-start mt-1 mr-1 p-0">
+                            <i id="info2" class="fas fa-times-circle bg-cancel"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@stop
-
-@section('css')
-<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
 @stop
 
 @section('js')
@@ -233,6 +237,7 @@
                 const descripcion = obtenerDescripcion(objetivoSeleccionado);
                 $('#texto-descripcion').text(descripcion);
                 $('#descripcion-objetivo').show();
+                $('#whatsappMainPreview').text(nombreObjetivoSeleccionado);
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';
@@ -272,5 +277,5 @@
         });
     </script>
 
-@vite(['resources/css/app.css', 'resources/js/app.js']) 
+    @vite(['resources/css/app.css', 'resources/js/app.js']) 
 @stop

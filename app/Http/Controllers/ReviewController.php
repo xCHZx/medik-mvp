@@ -18,12 +18,11 @@ class ReviewController extends Controller
     {
         try{
             $visitId = decrypt($visitEncrypted, env('ENCRYPT_KEY'));
-            $visit = Visit::find($visitId);
-            $business = $visit->visitor;
+            $visit = Visit::with('visitor','business')->findOrFail($visitId);
+            return view('reviews.create',compact('visit', 'visitEncrypted'));
         }catch(Exception $e){
             dd($e);
         }
-        return view('reviews.create', compact('visit','business'));
     }
 
     public function store(Request $request, $visitEncrypted){
@@ -34,6 +33,8 @@ class ReviewController extends Controller
             $review->comment = $request->comment;
             $review->visitId = $visitId;
             $review->save();
+
+            // app(BusinessController::class)->calculateRating($review->visit->businessId);<
 
             if ($review->rating >= 4){
                 return redirect()->route('review.thankYouGood', ['visitEncrypted' => $visitEncrypted]);

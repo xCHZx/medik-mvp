@@ -17,11 +17,7 @@ class Business extends Model
     protected $table = 'businesses';
 
     protected $fillable = [
-        'name',
-        'description',
-        'imageUrl',
-        'userId',
-        'qrPath',
+
     ];
 
     public function visits(): HasMany

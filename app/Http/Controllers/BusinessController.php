@@ -178,4 +178,7 @@ class BusinessController extends Controller
         // ]);
 
     }
+
+    public function calculateRating($businessId){
+    }
 }

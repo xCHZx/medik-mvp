@@ -16,12 +16,12 @@ class Visit extends Model
 
     public function business(): BelongsTo
     {
-        return $this->belongsTo(Business::class, 'id');
+        return $this->belongsTo(Business::class, 'businessId');
     }
 
     public function visitor(): BelongsTo
     {
-        return $this->belongsTo(Visitor::class, 'id');
+        return $this->belongsTo(Visitor::class, 'visitorId');
     }
 
     public function reviews(): HasMany

@@ -179,6 +179,17 @@ class BusinessController extends Controller
 
     }
 
+    /**
+     * Calculate the Rating counting all the reviews and dividing by the total
+     * --->NEEDS IMPROVEMENT, NEED A CRON JOB<---
+     */
     public function calculateRating($businessId){
+        $business = Business::with('reviews')->findOrFail($businessId);
+        $total = 0.0;
+        foreach ($business->reviews as $review) {
+            $total += $review->rating;
+        }
+        $business->averageRating = $total/count($business->reviews);
+        $business->save();
     }
 }

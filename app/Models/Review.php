@@ -14,6 +14,6 @@ class Review extends Model
 
     public function visit(): BelongsTo
     {
-        return $this->belongsTo(Visit::class, 'id');
+        return $this->belongsTo(Visit::class, 'visitId');
     }
 }

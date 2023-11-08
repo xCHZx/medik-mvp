@@ -34,7 +34,9 @@ class ReviewController extends Controller
             $review->visitId = $visitId;
             $review->save();
 
-            // app(BusinessController::class)->calculateRating($review->visit->businessId);<
+            $newReview = Review::with('visit')->findOrFail($review->id);
+
+            app(BusinessController::class)->calculateRating($newReview->visit->businessId);
 
             if ($review->rating >= 4){
                 return redirect()->route('review.thankYouGood', ['visitEncrypted' => $visitEncrypted]);
@@ -44,6 +46,7 @@ class ReviewController extends Controller
 
         }catch(Exception $e){
 
+            dd($e);
         }
 
     }

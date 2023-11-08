@@ -92,7 +92,7 @@ class VisitController extends Controller
         return false;
     }
 
-    private function generateHashedId($visitId){
+    public function generateHashedId($visitId){
         $visit = Visit::find($visitId);
         $visit->hashedId = encrypt($visit->id, env('ENCRYPT_KEY'), ['length' => 10]);
         $visit->save();

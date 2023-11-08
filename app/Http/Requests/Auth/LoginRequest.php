@@ -50,7 +50,7 @@ class LoginRequest extends FormRequest
                 "Intento fallido de login", //contenido
                 "Login", //categoria
                 0, //userId, default 0 for internal issues
-                implode(',',$this->only('email', 'password')) //payload o descripcion
+                implode(',',$this->only('email')) //payload o descripcion
             );
 
             throw ValidationException::withMessages([

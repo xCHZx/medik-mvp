@@ -18,7 +18,8 @@ class BusinessFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(2),
-            'description' => $this->faker->text(80),
+            'description' => $this->faker->text(50),
+            'address' => $this->faker->text(150),
             'userId' => $this->faker->numberBetween(1,10)
         ];
     }

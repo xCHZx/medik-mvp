@@ -5,7 +5,7 @@
 <div>
     <div class="card">
         <div class="card-body">
-            <form class="p-3"  method="POST" action="{{route('review.store', $visit->hashedId)}}">
+            <form class="p-3"  method="POST" action="{{route('review.store', $visitEncrypted)}}">
             @csrf
                 <div class="row mb-3">
                     <div class="form-group col-md-12">

@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\BusinessController;
 use App\Models\Business;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 
 class BusinessSeeder extends Seeder
 {
@@ -13,6 +15,9 @@ class BusinessSeeder extends Seeder
      */
     public function run(): void
     {
-        Business::factory(10)->create();
+        $business = Business::factory()->create();
+
+        app(BusinessController::class)->generateQr($business->id);
+        app(BusinessController::class)->generateImage($business->id);
     }
 }

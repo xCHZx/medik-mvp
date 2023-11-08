@@ -73,7 +73,7 @@ class BusinessController extends Controller
     /**
      * Generate QR via Api for the Visit functionality
      */
-    private function generateQr ($businessId){
+    public function generateQr ($businessId){
         try{
             $url = urlencode(env('APP_URL'));
             $svgQr = Http::get("http://api.qrserver.com/v1/create-qr-code/?data=".$url."/visita/".$businessId."&size=400x400&format=svg");
@@ -152,7 +152,7 @@ class BusinessController extends Controller
     /**
      * Create placeholder image for whatsapp and other uses via InterventionImage facade
      */
-    private function generateImage($id){
+    public function generateImage($id){
 
         $business = Business::find($id);
         $title = $business->name;
@@ -177,5 +177,8 @@ class BusinessController extends Controller
         //     'Content-Type' => 'image/png',
         // ]);
 
+    }
+
+    public function calculateRating($businessId){
     }
 }

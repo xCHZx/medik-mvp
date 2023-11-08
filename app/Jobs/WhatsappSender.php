@@ -34,12 +34,12 @@ class WhatsappSender implements ShouldQueue
     public function handle(): void
     {
         //obtener el visitante
-        
+
         $visitor = $this->visit->visitor;
         $business = $this->visit->business;
         $flow = $this->flow;
-        
-        // preparar mensaje 
+
+        // preparar mensaje
         // // header
         // guardar el token en el .env
         $token = env('WP_TOKEN');
@@ -47,10 +47,10 @@ class WhatsappSender implements ShouldQueue
         $whatsappBusinessId = env('WP_ID'); // este es el del negocio de facebook
         $visitorNumber = $visitor->phone;
         $hashedId = $this->visit->hashedId;
-        
-        $name = $visitor->firstName; 
+
+        $name = $visitor->firstName;
         $imageUrl = asset('storage/businesses/images/placeholders/' . $this->visit->businessId . '.png');
-        
+
 
         $response = Http::withToken($token)->post('https://graph.facebook.com/'. $version . '/' . $whatsappBusinessId . '/messages', [
             'messaging_product' => 'whatsapp',
@@ -72,7 +72,7 @@ class WhatsappSender implements ShouldQueue
                                 ]
 
                             ]
-                       
+
                     ]
 
                     ],
@@ -84,7 +84,7 @@ class WhatsappSender implements ShouldQueue
                                 'text' => $name
 
                             ]
-                        
+
                     ]
                         ],
                     [
@@ -94,21 +94,21 @@ class WhatsappSender implements ShouldQueue
                         'parameters' => [
                             [
                                 'type' => 'text',
-                                'text' =>  $hashedId 
-                                
+                                'text' =>  $hashedId
+
                             ]
-                            
+
                         ]
 
                     ]
-                    
-                   
+
+
                 ]
             ]
 
         ]);
 
         echo $response;
-        
+
     }
 }

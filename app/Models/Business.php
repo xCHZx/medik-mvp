@@ -41,4 +41,10 @@ class Business extends Model
         return $this->hasManyThrough(Review::class, Visit::class, 'businessId', 'visitId');
     }
 
+    // public function visitors(): HasManyThrough
+    // {
+    //     // return $this->hasManyThrough(Visitor::class, Visit::class, 'visitorId');
+    //     return $this->through('visits')->has('visitor');
+    // }
+
 }

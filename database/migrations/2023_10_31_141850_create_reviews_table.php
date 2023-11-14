@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('rating');
             $table->text('comment')->nullable();
+            $table->string('status')->default('Pendiente'); //Pendiente, Enviada, recibida, iniciada, finalizada
             $table->unsignedBigInteger('visitId')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

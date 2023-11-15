@@ -1,11 +1,8 @@
-<x-visitor-layout>
-    <div class="mb-8">
-        <h2>¡Gracias por tu registro a {{$business["name"]}}! 👋</h2>
+<x-visitor-layout >
+    <div class="align-bottom bg-cyan">
+        <h2 class="text-center">¡Gracias por tu registro a {{$business["name"]}}! 👋</h2>
     </div>
-    <div>
-        <div class="card">
-            {{-- <div class="card-body">
-            </div> --}}
-        </div>
+    <div class="text-center mx-3 mt-3">
+        <p>Pronto nos estaremos contactando para que recibas nuestras novedades!</p>
     </div>
-    </x-visitor-layout>
+</x-visitor-layout>

@@ -1,14 +1,16 @@
 <x-visitor-layout>
-<div class="mb-8">
-    <h2>¡No puedes registrarte a {{$business["name"]}}! ⛔</h2>
-</div>
-<div class="mb-8">
-    <h5>No han pasado 12 horas desde tu visita anterior.</h5>
-</div>
-<div>
-    <div class="card">
-        {{-- <div class="card-body">
-        </div> --}}
+
+    <div class="align-bottom bg-cyan">
+        <h2 class="text-center">¡No puedes registrarte a {{$business["name"]}}! ⛔</h2>
     </div>
-</div>
+    <div class="text-center mx-3 mt-3">
+        <p>No han pasado 12 horas desde tu visita anterior.</p>
+    </div>
+
+    <div>
+        <div class="card">
+            {{-- <div class="card-body">
+            </div> --}}
+        </div>
+    </div>
 </x-visitor-layout>

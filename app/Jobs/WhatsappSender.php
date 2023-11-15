@@ -40,8 +40,7 @@ class WhatsappSender implements ShouldQueue
         $flow = $this->flow;
 
         // preparar mensaje
-        // // header
-        // guardar el token en el .env
+        //header
         $token = env('WP_TOKEN');
         $version = 'v18.0';
         $whatsappBusinessId = env('WP_ID'); // este es el del negocio de facebook
@@ -57,7 +56,7 @@ class WhatsappSender implements ShouldQueue
             'to' => '528715757804',//$visitorNumber,
             'type' => 'template',
             'template' => [
-                'name' => 'satisfaccion_general_prueba', // $flow->objetivo
+                'name' => 'satisfaccion_general', // $flow->objetivo
                 'language' => [
                     'code' => 'es_MX'
                 ],
@@ -89,7 +88,7 @@ class WhatsappSender implements ShouldQueue
                         ],
                     [
                         'type' => 'button',
-                        'index' => '1',
+                        'index' => '0',
                         'sub_type' => 'url',
                         'parameters' => [
                             [

@@ -9,6 +9,8 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\VisitController;
+use App\Mail\confircorreoMailable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth' , 'verified')->group(function () {
     Route::prefix('panel')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -90,4 +92,7 @@ Route::prefix('opinion')->group(function () {
     Route::get('/gracias/b/{visitEncrypted}', [ReviewController::class, 'thankYouBad'])->name('review.thankYouBad');
 });
 
+Route::get('/confirmar', function(){
+    Mail::to('rpayns16@gmail.com')->send(new confircorreoMailable);
+});
 require __DIR__.'/auth.php';

@@ -52,7 +52,7 @@
         <!-- Email Address -->
         <div class="mb-4">
             <label for="email" class="block font-medium text-sm text-gray-600 ">Correo Electrónico</label>
-            <input id="email" placeholder="email@example.com" class="form-control focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+            <input id="email" placeholder="email@example.com" class="form-control focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
             @error('email')
             <div class="mt-2 text-red-600">{{ $message }}</div>
             @enderror

@@ -36,7 +36,7 @@
                                     <form action="{{ route('flows.edit') }}" method="get">
                                         @csrf
                                         <input type="hidden" name="flowId" value="{{$flow->id}}">
-                                        <button type="submit" class="btn mdkbtn-outline">
+                                        <button type="submit" class="btn mdkbtn-info">
                                             <i class="fas fa-edit mr-1"></i>Editar flujo
                                     </form>
                                 </div>

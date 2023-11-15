@@ -63,13 +63,17 @@ return [
     |
     */
 
-    'logo' => 'medik',
+    'logo' => '<p style="color: #0F0E4B;
+                        font-size: 24px;
+                        display: inline;
+                        font-weight: 630;">
+                    medik
+               </p>',
     'logo_img' => '/medik-icon.png',
-    // 'logo_img_class' => 'brand-image img-circle elevation-3',
-    'logo_img_class' => 'brand-image',
-    'logo_img_xl' => null,
-    'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_class' => 'brand-image ml-1',
+    'logo_img_xl' => '/medik-icon-full.png',
+    'logo_img_xl_class' => 'mdk-brand',
+    'logo_img_alt' => 'Medik logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +136,7 @@ return [
 
     'usermenu_enabled' => false,
     'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => '#',
     'usermenu_image' => false,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
@@ -193,7 +197,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-mdk sidebar-light-info',
+    'classes_sidebar' => 'mdk-sidebar sidebar-light-info',
     'classes_sidebar_nav' => 'sidebarnav',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -329,16 +333,16 @@ return [
             'icon'        => 'fab fa-fw fa-whatsapp',
         ],
         [
-            'text'        => 'Suscripción',
-            'route'       => 'subscription.index',
-            'icon'        => 'fas fa-fw fa-dollar-sign',
-        ],
-                [
             'text'        => 'Reportes',
             'route'       => 'reports.index',
             'icon'        => 'fas fa-fw fa-table',
         ],
         ['header' => 'CONFIGURACIÓN DE CUENTA'],
+        [
+            'text'        => 'Suscripción',
+            'route'       => 'subscription.index',
+            'icon'        => 'fas fa-fw fa-dollar-sign',
+        ],
         [
             'text'        => 'Editar Perfil',
             'url'         => "panel/perfil",

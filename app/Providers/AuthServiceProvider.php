@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +23,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // // enlace para recuperar contraseña
+        // ResetPassword::createUrlUsing(function($user , string $token){
+        //     return 'https://127.0.0.1:8000/reset-password?token=' .$token;
+        // });
+
+        
     }
 }

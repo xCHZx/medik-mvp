@@ -2,43 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @media screen {
-    #printSection {
-        display: none;
-    }
-  } */
-@media print {
-
-    .btn{
-        display:none;
-    }
-
-    .qr{
-        display:block!important;
-    }
-}
-
-.form-control{
-    border-radius: .25rem!important;
-    border: 1px solid #ced4da;
-}
-
-.qr{
-    display:none;
-}
 .container-fluid{
     width: 95%;
 }
 
-.card{
-    box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.1);
-    border-color: white!important;
-    border-radius: 15px!important;
-
-    .card-footer{
-        background: #FFF;
-        border-radius: 0 15px 15px !important;
-    }
+.field-icon {
+    float: right;
+    margin: -1.8rem 0.4rem;
+    position: relative;
+    z-index: 2;
+    color: #8D8D8D;
+    cursor: pointer;
 }
 
 .content-wrapper {
@@ -50,41 +24,51 @@ body{
     font-size: 16px;
 }
 
-.card-title{
-    font-size: 1.8rem;
+/* Active nav pill */
+.sidebar-light-info .nav-sidebar>.nav-item>.nav-link.active {
+    color: #fff!important;
+    background: #18CCAB;
 }
-
 
 .nav-sidebar>.nav-item {
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
-/* Active nav pill */
-.sidebar-light-info .nav-sidebar>.nav-item>.nav-link.active {
-    color: #fff!important;
-    background: rgb(22,158,102);
-    background: linear-gradient(60deg, rgba(22,158,102,1) 30%, rgba(36,193,221,1) 100%);
-
+.mdk-sidebar{
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 0 transparent, 0 0 transparent;
 }
 
-.sidebar-mdk{
-    box-shadow: 0 2px 6px rgba(4, 47, 41, 0.20), 0 0 transparent, 0 0 transparent;
-}
-
-.brand-text {
-    font-weight: 600!important;
-    color: #555;
+.mdk-brand {
+    margin-left: 3.8rem;
+    margin-top: -2.2rem;
+    max-height: 50px;
+    width: auto;
 }
 
 [class*=sidebar-light-] .sidebar a {
-    /* font-weight: 400; */
-    color: #404040;
+    color: #2B2B2B;
 }
 
 /* CSS DESIGN STYLE */
 
-/*Buttons*/
+/*Business*/
+#businessPicture {
+    height: 115px;
+    width: 115px;
+    background-color: #EEEEEE;
+    border-radius: 10px;
+}
+
+/*Buttons and colors*/
+.bg-cancel {
+    color: #951111;
+}
+
+.bg-primaryquestion {
+    color: #3497F9
+}
+
 .mdkbtn-outline{
     color: #000;
     background-color:none;
@@ -168,6 +152,25 @@ body{
     }
 }
 
+.navbar-nav.ml-auto>.nav-item>.nav-link{
+    color: #FFF;
+    background-color:#BE4B67;
+    border-radius: 10px;
+    border: none;
+    display: inline;
+    padding: 1px 5px 2px 3px;
+    border-radius: 0.4rem;
+    
+    &:hover {
+        background-color:#631F1E;
+        color: #FFF;
+    }
+}
+
+.fa.fa-fw.fa-power-off{
+    color: #FFF !important;
+}
+
 .mdkbtn-danger{
     color: #FFF;
     background-color:#BE4B67;
@@ -220,6 +223,21 @@ body{
 }
 
 /*Cards*/
+.card{
+    box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.1);
+    border-color: white!important;
+    border-radius: 15px!important;
+
+    .card-footer{
+        background: #FFF;
+        border-radius: 0 15px 15px !important;
+    }
+}
+
+.card-title{
+    font-size: 1.8rem;
+}
+
 .cardmdk-display {
     position: relative;
     display: none;
@@ -233,26 +251,10 @@ body{
     align-content: flex-start;
 }
 
-.card-flow {
-    height: 100%;
-}
-
-/*Flow Cards*/
-.mdkFlowCard{
-    background-color: #f0fcfa;
-    border-color: #5CD5B9 !important;
-    border-width: 3px;
-}
-
-.mdkFlowInactive{
-    filter: grayscale(100%);
-}
-
-#businessPicture {
-    height: 115px;
-    width: 115px;
-    background-color: #EEEEEE;
-    border-radius: 10px;
+.form-control{
+    border-radius: .25rem!important;
+    border: 1px solid #B2B2B2 !important;
+    background-color: #FAFAFA !important;
 }
 
 .mdkTextArea{
@@ -268,13 +270,19 @@ body{
     width: 27.5rem !important;
 }
 
-/*Text*/
-.fs-6{
-    font-size: 0.9rem;
+/*Flow Cards*/
+.mdkFlowCard{
+    background-color: #E2F7F1;
+    border-color: #5CD5B9 !important;
+    border-width: 3px;
 }
 
-.fs-7{
-    font-size: 0.8rem;
+.mdkFlowInactive{
+    filter: grayscale(100%);
+}
+
+.card-flow {
+    height: 100%;
 }
 
 .nav-tabs .nav-item .nav-link {
@@ -308,17 +316,61 @@ body{
     height: 83%;
 }
 
-
-.bg-strongblue {
-    background-color: #166ECD;
+.bg-business-image {
+    background-color: #206152;
 }
 
-.bg-cancel {
-    color: #951111;
+/*Text*/
+.fs-6{
+    font-size: 0.9rem;
 }
 
-.bg-primaryquestion {
-    color: #3497F9
+.fs-7{
+    font-size: 0.8rem;
+}
+
+/*Rating*/
+.rating {
+    --dir: right;
+    --fill: gold;
+    --fillbg: rgba(100, 100, 100, 0.15);
+    --star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.25l-6.188 3.75 1.641-7.031-5.438-4.734 7.172-0.609 2.813-6.609 2.813 6.609 7.172 0.609-5.438 4.734 1.641 7.031z"/></svg>');
+    --stars: 5;
+    --starsize: 3rem;
+    --symbol: var(--star);
+    --w: calc(var(--stars) * var(--starsize));
+    --x: calc(100% * (var(--value) / var(--stars)));
+    block-size: var(--starsize);
+    inline-size: var(--w);
+    position: relative;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+}
+
+.rating::-moz-range-track {
+    background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+    block-size: 100%;
+    mask: repeat left center/var(--starsize) var(--symbol);
+}
+
+.rating::-webkit-slider-runnable-track {
+    background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+    block-size: 100%;
+    mask: repeat left center/var(--starsize) var(--symbol);
+    -webkit-mask: repeat left center/var(--starsize) var(--symbol);
+}
+
+.rating::-moz-range-thumb {
+    height: var(--starsize);
+    opacity: 0;
+    width: var(--starsize);
+}
+
+.rating::-webkit-slider-thumb {
+    height: var(--starsize);
+    opacity: 0;
+    width: var(--starsize);
+    -webkit-appearance: none;
 }
 
 /*Recomendación de usar en escritorio*/
@@ -327,10 +379,26 @@ body{
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     .mdkmodal {
-        display: block !important; /* Muestra el modal en dispositivos móviles */
+        display: block !important;  Muestra el modal en dispositivos móviles 
     }
+}*/
+
+/*Imprimir QR*/
+@media print {
+
+    .btn{
+        display:none;
+    }
+
+    .qr{
+        display:block!important;
+    }
+}
+
+.qr{
+    display:none;
 }
 
 /* DEPRECATED  

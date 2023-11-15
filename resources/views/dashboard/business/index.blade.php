@@ -7,8 +7,8 @@
     @if ($business)
         <h1 class="mt-2 mb-2">Mi <b>negocio</b>:</h1>
     @else
-        <h1 class="mt-3">Actualmente <b>no</b> tienes ningún negocio registrado</h1>
-        <h2 class="mt-2 mb-5">Para utilizar la plataforma, crea tu primer negocio👇</h2>
+        <h1 class="mt-2">Actualmente <b>no</b> tienes ningún negocio registrado</h1>
+        <h2 class="mt-2 mb-3">Para utilizar la plataforma, crea tu primer negocio👇</h2>
     @endif
 @stop
 
@@ -38,7 +38,7 @@
                     </div>
                 </div>            
             </div>
-            <div class="card-body">
+            <div class="card-body mb-0">
                 <div class="row justify-content-between">
                     <div class="col-md-6">
                         <div class="mdkTextArea mdkBigTextArea">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer mb-2">
                 <button type="button" class="btn mdkbtn-primary mr-2" data-toggle="modal" data-target="#qrModal">Ver código QR</button>
                 <button type="button" class="btn mdkbtn-success" id="print">Imprimir QR</button>
             </div>
@@ -88,9 +88,9 @@
     @else
         <div class="card">
             <div class="card-body">
-                <form class="p-3" method="POST" action="{{route('business.store')}}">
+                <form class="px-3 py-2" method="POST" action="{{route('business.store')}}">
                     @csrf
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="form-group col-md-12">
                             <label for="name" class="form-label">Nombre del Negocio</label>
                             <input type="text" class="form-control"  name="name" id="name" required>
@@ -100,13 +100,13 @@
                             <input type="text" class="form-control"  name="address" id="address" required>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="description" class="form-label">Descripción (opcional)</label>
-                            <textarea class="form-control" name="description" id="description"></textarea>
+                            <label for="description" class="form-label">Descripción o eslogan (opcional)</label>
+                            <textarea class="form-control mdkTextArea" name="description" id="description" rows="4"></textarea>
                         </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-2 mb-0">
                         <input name="businessId" value="" type="hidden" />
-                        <button type="submit" class="mdkbtn-success">Guardar</button>
+                        <button type="submit" class="mdkbtn-success py-1 px-3">Guardar</button>
                     </div>
                 </form>
             </div>

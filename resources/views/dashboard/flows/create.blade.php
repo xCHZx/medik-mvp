@@ -73,7 +73,7 @@
                                 </div>
 
                                 <!-- Dinamic description -->
-                                <div id="descripcion-objetivo" class="cardmdk-display my-3 mr-3 col-6">
+                                <div id="descripcion-objetivo" class="mdkTabCard-display my-3 mr-3 col-6">
                                     <div class="card-body ml-3">
                                         <p id="texto-descripcion" class="text-body-secondary"></p>
                                     </div>
@@ -84,7 +84,7 @@
 
                     <!-- Information window -->
                     <div class="tab-pane fade" id="information" role="tabpanel" aria-labelledby="information-tab">
-                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                        <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none">
                                 Démosle un nombre a tu flujo para poder identificarlo, si no asignas un nombre, no te preocupes, le asignaremos uno por ti.
                             </div>
@@ -98,7 +98,7 @@
 
                     <!-- Review window -->
                     <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                        <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none">    
                                 Junto a los comentarios y calificaciones tus pacientes podrán ver links a tus redes sociales o a tu página web, si deseas agregarlos colocalos aquí, en caso de que no tengas ninguno puedes dejar el espacio en blanco
                             </div>
@@ -123,7 +123,7 @@
 
                     <!-- Result window -->
                     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                        <div class="card cardmdk flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
+                        <div class="card mdkTabCard flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
                             <div class="col-5 my-2">
                                 <div class="card-header pl-1 border-0">
                                     <p class="fs-6 text-left fw-medium">Mensaje Principal</p>

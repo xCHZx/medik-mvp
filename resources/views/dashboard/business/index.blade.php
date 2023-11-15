@@ -18,7 +18,7 @@
             <div class="card-header border-0 pt-0">
                 <div class="d-flex row justify-content-end">
                     <div class="mt-2">
-                        <a href="{{route('business.edit',$business['id'])}}" target="_self" role="button" class="btn mdkbtn-outline">
+                        <a href="{{route('business.edit',$business['id'])}}" target="_self" role="button" class="btn mdkbtn-info">
                             <span class="fas fa-edit" aria-hidden="true"></span>
                             Editar información
                         </a>
@@ -106,7 +106,7 @@
                     </div>
                     <div class="mt-3">
                         <input name="businessId" value="" type="hidden" />
-                        <button type="submit" class="btn btn-outline-success">Guardar</button>
+                        <button type="submit" class="mdkbtn-success">Guardar</button>
                     </div>
                 </form>
             </div>

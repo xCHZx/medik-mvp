@@ -56,7 +56,7 @@
                                 <h2 class="card-subtitle" style="font-weight: 500">Datos del perfil</h2> 
                             </div>
                             <div class="col-md-3 d-flex justify-content-end align-items-center">
-                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-info btn-sm" target="_self" role="button">
+                                <a href="{{ route('profile.edit') }}" class="btn mdkbtn-info btn-sm" target="_self" role="button">
                                     <i class="fas fa-edit" aria-hidden="true"></i>
                                     Editar Datos
                                 </a>
@@ -99,7 +99,7 @@
                                 <h2 class="card-subtitle text-center" style="font-weight: 500">Seguridad</h2> 
                             </div>
                             <div class="col-md-3 d-flex justify-content-end align-items-center">
-                                <a href="{{ route('profile.change-password') }}" class="btn btn-outline-info btn-sm" target="_self" role="button">
+                                <a href="{{ route('profile.change-password') }}" class="btn mdkbtn-warning btn-sm" target="_self" role="button">
                                     <i class="fas fa-user-lock" aria-hidden="true"></i>
                                     Cambiar contraseña
                                 </a>

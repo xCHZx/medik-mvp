@@ -3,7 +3,9 @@
 @section('title', 'Mi Cuenta')
 
 @section('content_header')
-<!-- ESPACIO ARRIBA -->
+    <div class="mt-3">
+        <h1 class="">Información de la <b>Cuenta</b></h1>
+    </div>
 @stop
 
 @section('content')
@@ -40,15 +42,12 @@
                     text: 'Tu contraseña actual es incorrecta o intentas usar la misma como la nueva!',
                 })
             </script>   
-        @stop  
+        @stop
     @endif
 
-    <div class="container my-4 px-4 mx-1">
+    <div class="container my-2 px-0 mx-1">
         <div class="card">
             <div class="card-body">
-                <div class="card-header flex justify-content-center border-bottom border-success bg-green-50">
-                    <h1 class="card-title text-center" style="font-weight: 600">Información de la Cuenta</h1>
-                </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item border-bottom border-secondary">
                         <div class="row flex justify-content-between">

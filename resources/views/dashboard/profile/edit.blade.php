@@ -3,17 +3,16 @@
 @section('title', 'Mi Cuenta')
 
 @section('content_header')
-<!-- ESPACIO ARRIBA -->
+    <div class="mt-3">
+        <h1 class="text-center"><b>Edición</b> de la Cuenta</h1>
+    </div>
 @stop
 
 @section('content')
 
-    <div class="container my-4 px-4 mx-1 flex justify-center">
+    <div class="container my-2 px-0 mx-1 flex justify-center">
         <div class="card" style="width: 40rem;">
             <div class="card-body">
-                <div class="card-header flex justify-content-center border-bottom border-success bg-green-50">
-                    <h1 class="card-title text-center" style="font-weight: 600">Edición de la Cuenta</h1>
-                </div>
                 <form id="editar-nombre-form" method="post" action="{{ route('profile.update') }}">
                     @csrf
                     <div class="form-group mt-2.5">
@@ -26,15 +25,15 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                        <input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">Número de Celular</label>
-                        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
+                        <input type="tel" pattern="[0-9]{9-10}" class="form-control" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
                     </div>
                     <div class="mt-4 flex justify-content-end">
-                        <button type="submit" class="btn btnmdk-confirm btnmdk-hover">Guardar y regresar</button>
-                        <a href="{{route('profile.index')}}" role="button" class="btn btnmdk-cancel btnmdk-hover ml-md-2">Cancelar</a>
+                        <button type="submit" class="mdkbtn-success py-2 px-3">Guardar y regresar</button>
+                        <a href="{{route('profile.index')}}" role="button" class="mdkbtn-danger py-2 px-3 ml-md-2">Cancelar</a>
                     </div>
                 </form>
             </div>

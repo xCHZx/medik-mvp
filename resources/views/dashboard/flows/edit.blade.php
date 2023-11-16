@@ -192,7 +192,12 @@
             </div>
         </form>
 
-        <div>
+        <div class="d-flex justify-center mb-3">
+            <button class="mdkbtn-info py-2 w-32" id="reverse-btn">Anterior</button>
+            <button class="mdkbtn-primary py-2 ml-3 w-32" id="forward-btn">Siguiente</button>
+        </div>
+
+        <div class="d-flex flex-column justify-center w-full">
             <div id="info1-container" class="container">
                 <div class="container d-flex justify-content-center">
                     <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
@@ -280,6 +285,36 @@
                 $('input[type="radio"]').not(this).prop('checked', false);
             });
 
+            // Función para retroceder a la pestaña anterior
+            function avanzarPestana() {
+                var $activeTab = $('.nav-tabs .nav-link.active');
+                var $nextTab = $activeTab.parent().next().children('a');
+
+                if ($nextTab.length > 0) {
+                    $nextTab.tab('show');
+                }
+            };
+
+            // Función para retroceder a la pestaña anterior
+            function retrocederPestana() {
+                var $activeTab = $('.nav-tabs .nav-link.active');
+                var $prevTab = $activeTab.parent().prev().children('a');
+
+                if ($prevTab.length > 0) {
+                    $prevTab.tab('show');
+                }
+            };
+
+            // Evento al hacer clic en el botón de avanzar
+            $('#forward-btn').on('click', function () {
+                avanzarPestana();
+            });
+
+            // Evento al hacer clic en el botón de retroceder
+            $('#reverse-btn').on('click', function () {
+                retrocederPestana();
+            });
+
             //Oculta instrucciones
             document.getElementById("info1").addEventListener("click", function() {
                 document.getElementById("info1-container").style.display = "none";
@@ -290,6 +325,8 @@
             });
         });
     </script>
+@stop
 
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@section('css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

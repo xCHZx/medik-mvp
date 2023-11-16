@@ -68,7 +68,7 @@
                 <div class="mt-4">
                     <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
                     <div>
-                        <input id="password" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un dígito"name="password" required autocomplete="new-password" />
+                        <input id="password" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un dígito" name="password" required autocomplete="new-password" />
                         <span id="togglePassword" class="fas fa-eye-slash field-icon"></span>
                     </div>
                     @if ($errors->has('password'))

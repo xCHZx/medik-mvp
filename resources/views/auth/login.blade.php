@@ -9,11 +9,8 @@
     <div class="modal mdkmodal" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="justify-content: center">
               <h5 class="modal-title" id="staticBackdropLabel">Medik te informa:</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
             <div class="modal-body text-center">
                 <p>Para disfrutar de la experiencia completa de Medik, recomendamos usarlo en un escritorio.</p>
@@ -21,7 +18,7 @@
                 <p class="mt-2">Estamos trabajando en la versión mobile</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Lo comprendo</button>
+                <button type="button" id="close-modal" class="mdkbtn-warning py-1 px-2" data-dismiss="modal">Lo comprendo</button>
             </div>
           </div>
         </div>
@@ -126,5 +123,32 @@
             togglePassword.classList.remove("fa-eye");
             togglePassword.classList.add("fa-eye-slash");
         }
+    });
+
+    /*Modal en mobile*/
+    const closeModal = document.getElementById("close-modal");
+    const modal = document.querySelector('.modal');
+
+    function showMobileModal() {
+        if (window.innerWidth < 768) {
+            modal.style.display = 'block';
+        } else {
+            modal.style.display = 'none';
+        }
+    };
+
+    // Mostrar el modal cuando se carga la página
+    showMobileModal();
+
+    // Mostrar el modal al cambiar el tamaño de la ventana
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(showMobileModal, 350);
+    });
+
+    // Cerrar el modal
+    closeModal.addEventListener("click", function () {
+            modal.style.display = 'none';
     });
 </script>

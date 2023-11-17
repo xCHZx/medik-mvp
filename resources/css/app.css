@@ -27,7 +27,7 @@ body{
 /* Active nav pill */
 .sidebar-light-info .nav-sidebar>.nav-item>.nav-link.active {
     color: #fff!important;
-    background: #18CCAB;
+    background: #108e77;
 }
 
 .nav-sidebar>.nav-item {
@@ -155,11 +155,10 @@ body{
 .navbar-nav.ml-auto>.nav-item>.nav-link{
     color: #FFF;
     background-color:#BE4B67;
-    border-radius: 10px;
     border: none;
     display: inline;
-    padding: 1px 5px 2px 3px;
-    border-radius: 0.4rem;
+    padding: 5px 10px;
+    border-radius: 0.8rem;
     
     &:hover {
         background-color:#631F1E;
@@ -273,12 +272,12 @@ body{
 /*Flow Cards*/
 .mdkFlowCard{
     background-color: #E2F7F1;
-    border-color: #5CD5B9 !important;
-    border-width: 3px;
+    border-color: #8ce1ce !important;
+    border-width: 2px;
 }
 
 .mdkFlowInactive{
-    filter: grayscale(100%);
+    filter: brightness(0.9) grayscale(100%);
 }
 
 .card-flow {
@@ -313,7 +312,7 @@ body{
     background-repeat: repeat;
     background-attachment: fixed;
     border-radius: .5rem;
-    height: 83%;
+    height: 85%;
 }
 
 .bg-business-image {
@@ -379,26 +378,49 @@ body{
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-/*@media (max-width: 768px) {
-    .mdkmodal {
-        display: block !important;  Muestra el modal en dispositivos móviles 
-    }
-}*/
-
 /*Imprimir QR*/
 @media print {
+
+    #header,
+    #footer,
+    #nav {
+      display: none !important;
+    }
 
     .btn{
         display:none;
     }
 
-    .qr{
-        display:block!important;
+    .business-name{
+        display: flex;
+        justify-content: center;
+        width: 100%;
     }
-}
 
-.qr{
-    display:none;
+    .mdkTextArea{
+        background: none;
+        border: none;
+        border-width: 0px;
+        margin-left: 0.5rem;
+    }
+
+    .mdkBigTextArea {
+        max-width: fit-content !important;
+        height: fit-content !important;
+    }
+
+    .col-md-6 {
+        max-width: fit-content;
+    }
+
+    #logo-medik{
+        display: inline !important;
+    }
+
+    .qr{
+        display: flex !important;
+        max-width: 44%;
+    }
 }
 
 /* DEPRECATED  

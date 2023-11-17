@@ -33,8 +33,9 @@
                             </div>
                         </a>
                     </div>
-                    <div class="card-title p-1 h1">
-                        <b>{{$business["name"]}}</b>
+                    <div class="card-title p-1 h1 business-name">
+                        <b class="d-inline">{{$business["name"]}} </b>
+                        <p id="logo-medik" class="ml-2" hidden>-<x-logo-full fill-1="#18CCAB" fill-2="#0F0E4B" class="ml-1 d-inline -mt-3" width="100" height="50" /> </p>
                     </div>
                 </div>            
             </div>
@@ -60,7 +61,7 @@
             </div>
         </div>
 
-        <div class="mx-auto qr">{!!$svg!!}</div>
+        <div class="mx-auto qr" hidden>{!!$svg!!}</div>
 
         <!-- Modal -->
         <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
@@ -118,7 +119,6 @@
     <script>
         const printBtn = document.getElementById('print')
         printBtn.addEventListener('click', function(){
-            // $('#qrModal').modal('hide')
             print();
         })
 

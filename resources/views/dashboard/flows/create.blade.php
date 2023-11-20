@@ -187,38 +187,30 @@
             <button class="mdkbtn-primary py-2 ml-3 w-32" id="forward-btn">Siguiente</button>
         </div>
 
-        <div class="d-flex flex-column justify-center w-full">
-            <div id="info1-container" class="container">
-                <div class="container d-flex justify-content-center">
-                    <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
-                        <div class="d-flex align-items-center mx-3">
-                            <i class="fas fa-question-circle bg-primaryquestion"></i>
-                        </div>
-                        <div class="text-black text-left my-2">
-                            Cuando tus pacientes escaneen tu código QR y acepten recibir mensajes tuyos , recibirán un primer mensaje en la aplicación de mensajería Whatsapp para solicitarles que califiquen el objetivo que has seleccionado.
-                        </div>
-                        <div class="d-flex align-self-start mt-1 mr-1 p-0">
-                            <i id="info1" class="fas fa-times-circle bg-cancel"></i>
-                        </div>
-                    </div>
+        <div class="container d-flex flex-column justify-center px-4">
+            <div id="info1-container" class="card flex-row justify-content-between bg-gray-300">
+                <div class="d-flex align-items-center mx-3">
+                    <i class="fas fa-question-circle bg-primaryquestion"></i>
+                </div>
+                <div class="text-black text-left my-2 pr-4">
+                    Cuando tus pacientes escaneen tu código QR y acepten recibir mensajes tuyos , recibirán un primer mensaje en la aplicación de mensajería Whatsapp para solicitarles que califiquen el objetivo que has seleccionado.
+                </div>
+                <div class="d-flex align-self-start mt-1 mr-1 p-0">
+                    <i id="info1" class="fas fa-times-circle bg-cancel cursor-pointer"></i>
                 </div>
             </div>
 
-            <div id="info2-container" class="container">
-                <div class="container d-flex justify-content-center">
-                    <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
-                        <div class="d-flex align-items-center mx-3">
-                            <i class="fas fa-question-circle bg-primaryquestion"></i>
-                        </div>
-                        <div class="text-black text-left my-2">
-                            Una vez que tus pacientes acepten en whatsapp calificar a tu negocio serán redirigidos a una página web donde les explicaremos el objetivo que quieres calificar y cómo pueden hacerlo.
-                        </div>
-                        <div class="d-flex align-self-start mt-1 mr-1 p-0">
-                            <i id="info2" class="fas fa-times-circle bg-cancel"></i>
-                        </div>
-                    </div>
+            <div id="info2-container" class="card flex-row justify-content-between bg-gray-300">
+                <div class="d-flex align-items-center mx-3">
+                    <i class="fas fa-question-circle bg-primaryquestion"></i>
                 </div>
-            </div>
+                <div class="text-black text-left my-2 pr-4">
+                    Una vez que tus pacientes acepten en whatsapp calificar a tu negocio serán redirigidos a una página web donde les explicaremos el objetivo que quieres calificar y cómo pueden hacerlo.
+                </div>
+                <div class="d-flex align-self-start mt-1 mr-1 p-0">
+                    <i id="info2" class="fas fa-times-circle bg-cancel cursor-pointer"></i>
+                </div>
+            </div> 
         </div>
     </div>
 </div>
@@ -226,7 +218,7 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Muestra descripción
             $('input[type="radio"]').on('change', function () {
                 const objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
@@ -295,11 +287,11 @@
 
             //Oculta instrucciones
             document.getElementById("info1").addEventListener("click", function() {
-                document.getElementById("info1-container").style.display = "none";
+                document.getElementById("info1-container").hidden = true;
             });
 
             document.getElementById("info2").addEventListener("click", function() {
-                document.getElementById("info2-container").style.display = "none";
+                document.getElementById("info2-container").hidden = true;
             });
         });
     </script>

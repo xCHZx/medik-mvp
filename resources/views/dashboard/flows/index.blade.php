@@ -19,7 +19,7 @@
     </div>
 @stop
 
-@section('content')
+@section('content')        
     <div class="row">
         @foreach($flows as $flow)
             <div class="col-md-12 mb-3">
@@ -125,87 +125,79 @@
         </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('js')
     <script>
-        /*Cambiar estado del flujo */
-        $('#staticBackdrop').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Botón que activó el modal changeStatus
-            var flowStatus = button.data('status');
-            var flowNamed = button.data('name');
-            var flowID = button.data('id');
-            var modal = $(this);
+        $(document).ready(function () {
+            @if(session('status') === 'Flow-Created')
+                Swal.fire(
+                    'Listo!',
+                    'El flujo fue creado con éxito',
+                    'success'
+                );
+            @elseif(session('status') === 'Flow-Changed')
+                Swal.fire(
+                    'Listo!',
+                    'El flujo fue actualizado',
+                    'success'
+                );
+            @elseif(session('flow-status') === 'success')
+                Swal.fire(
+                    'Listo!',
+                    'Flujo eliminado',
+                    'success'
+                );
+            @elseif(session('flow-status') === 'error')
+                Swal.fire(
+                    'Oops...',
+                    'No puedes tener activos dos flujos a la vez, desactiva uno antes de activar otro',
+                    'error'
+                );
+            @endif
 
-            modal.find('#flowName').text(flowNamed);
-            if (flowStatus === 1) {
-                modal.find('#word').text('desactivar');
-                modal.find('.input2').val('false');
-            } else {
-                modal.find('#word').text('activar');
-                modal.find('.input2').val('true');
-            }
+            /*Cambiar estado del flujo */
+            $('#staticBackdrop').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que activó el modal changeStatus
+                var flowStatus = button.data('status');
+                var flowNamed = button.data('name');
+                var flowID = button.data('id');
+                var modal = $(this);
 
-            modal.find('.input1').val(flowID);
-        });
+                modal.find('#flowName').text(flowNamed);
+                if (flowStatus === 1) {
+                    modal.find('#word').text('desactivar');
+                    modal.find('.input2').val('false');
+                } else {
+                    modal.find('#word').text('activar');
+                    modal.find('.input2').val('true');
+                }
 
-        document.getElementById('submitFormButton').addEventListener('click', function () {
-            document.getElementById('changeStatus').submit();
-        });
+                modal.find('.input1').val(flowID);
+            });
 
-        /*Eliminar flujo*/
-        $('#deleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Botón que activó el modalDelete
-            var flowNamed = button.data('name');
-            var flowID = button.data('id');
-            var modal = $(this);
+            document.getElementById('submitFormButton').addEventListener('click', function () {
+                document.getElementById('changeStatus').submit();
+            });
 
-            modal.find('#flowName').text(flowNamed);
-            modal.find('.inputDelete').val(flowID);
-        });
+            /*Eliminar flujo*/
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que activó el modalDelete
+                var flowNamed = button.data('name');
+                var flowID = button.data('id');
+                var modal = $(this);
 
-        document.getElementById('submitDelete').addEventListener('click', function () {
-            document.getElementById('deleteFlow').submit();
+                modal.find('#flowName').text(flowNamed);
+                modal.find('.inputDelete').val(flowID);
+            });
+
+            document.getElementById('submitDelete').addEventListener('click', function () {
+                document.getElementById('deleteFlow').submit();
+            });
         });
     </script>
+@endsection
 
-    @if(session('status') === 'Flow-Created')
-        @section('js')
-        <script>
-            Swal.fire(
-                'Listo!',
-                'El flujo fue creado con éxito',
-                'success'
-            )
-        </script>
-    @elseif(session('status') === 'Flow-Changed')
-        @section('js')
-        <script>
-            Swal.fire(
-                'Listo!',
-                'El flujo fue actualizado',
-                'success'
-            )
-        </script>
-    @elseif(session('flow-status') === 'success')
-        @section('js')
-        <script>
-            Swal.fire(
-                'Listo!',
-                'Flujo eliminado',
-                'success'
-            )
-        </script>
-    @elseif(session('flow-status') === 'error')
-        @section('js')
-        <script>
-            Swal.fire(
-                'Oops...',
-                'No puedes tener activos dos flujos a la vez, desactiva uno antes de activar otro',
-                'error'
-            )
-        </script>
-    @endif
-
-   @vite(['resources/css/app.css', 'resources/js/app.js'])
+@section('css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

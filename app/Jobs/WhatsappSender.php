@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class WhatsappSender implements ShouldQueue
 {
@@ -22,10 +23,10 @@ class WhatsappSender implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct($visit , $flow)
+    public function __construct($visit, $flow)
     {
         $this->visit = $visit;
-        $this->flow =  $flow;
+        $this->flow = $flow;
     }
 
     /**
@@ -36,7 +37,6 @@ class WhatsappSender implements ShouldQueue
         //obtener el visitante
 
         $visitor = $this->visit->visitor;
-        $business = $this->visit->business;
         $flow = $this->flow;
 
         // preparar mensaje
@@ -48,66 +48,71 @@ class WhatsappSender implements ShouldQueue
         $hashedId = $this->visit->hashedId;
 
         $name = $visitor->firstName;
-        $imageUrl = asset('storage/businesses/images/placeholders/' . $this->visit->businessId . '.png');
+        $imageUrl = Storage::url('businesses/images/placeholders/'.$this->visit->businessId.'.png');
 
 
-        $response = Http::withToken($token)->post('https://graph.facebook.com/'. $version . '/' . $whatsappBusinessId . '/messages', [
-            'messaging_product' => 'whatsapp',
-            'to' => '528715757804',//$visitorNumber,
-            'type' => 'template',
-            'template' => [
-                'name' => 'satisfaccion_general', // $flow->objetivo
-                'language' => [
-                    'code' => 'es_MX'
-                ],
-                'components' => [
-                    [
-                        'type' => 'header',
-                        'parameters' => [
-                            [
-                                'type' => 'image',
-                                'image' => [
-                                    'link' => 'https://picsum.photos/700/400?random' //$imageUrl
+        try {
+            $response = Http::withToken($token)->post('https://graph.facebook.com/' . $version . '/' . $whatsappBusinessId . '/messages', [
+                'messaging_product' => 'whatsapp',
+                'to' => $visitorNumber,
+                'type' => 'template',
+                'template' => [
+                    'name' => 'satisfaccion_general',
+                    // $flow->objetivo
+                    'language' => [
+                        'code' => 'es_MX'
+                    ],
+                    'components' => [
+                        [
+                            'type' => 'header',
+                            'parameters' => [
+                                [
+                                    'type' => 'image',
+                                    'image' => [
+                                        'link' => 'https://app.medik.mx'. $imageUrl 
+                                    ]
+
                                 ]
 
                             ]
 
-                    ]
+                        ],
+                        [
+                            'type' => 'body',
+                            'parameters' => [
+                                [
+                                    'type' => 'text',
+                                    'text' => $name
 
-                    ],
-                    [
-                        'type' => 'body',
-                        'parameters' => [
-                            [
-                                'type' => 'text',
-                                'text' => $name
+                                ]
 
                             ]
-
-                    ]
                         ],
-                    [
-                        'type' => 'button',
-                        'index' => '0',
-                        'sub_type' => 'url',
-                        'parameters' => [
-                            [
-                                'type' => 'text',
-                                'text' =>  $hashedId
+                        [
+                            'type' => 'button',
+                            'index' => '0',
+                            'sub_type' => 'url',
+                            'parameters' => [
+                                [
+                                    'type' => 'text',
+                                    'text' => $hashedId
+
+                                ]
 
                             ]
 
                         ]
 
+
                     ]
-
-
                 ]
-            ]
 
-        ]);
-
+            ]);
         echo $response;
+
+        } catch (Error $e) {
+            echo $e;
+        }
 
     }
 }

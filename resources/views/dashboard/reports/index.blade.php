@@ -9,7 +9,7 @@
 @section('content')
     <section id="resumen" class="grid grid-cols-4 gap-5">
         <div class="card basis-1/4">
-            <div class="card-body">
+            <div class="card-body text-sky-950">
                 <h6 class="font-medium">Negocio Activo</h6>
                 <p class="my-4 font-medium card-text">{{$business->name}}</p>
                 <label class="rating-label d-flex flex-column justify-content-center align-items-center text-4xl">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="card basis-1/4">
-            <div class="card-body">
+            <div class="card-body text-sky-950">
                 <h6 class="font-medium text-lg">Total Opiniones</h6>
                 <div class="row my-2">
                     <div>                
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="card basis-1/4">
-            <div class="card-body">
+            <div class="card-body text-sky-950">
                 <h6 class="font-medium text-lg">Total Clientes</h6>
                 <div class="row my-2">
                     <div>                
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="card basis-1/4">
-            <div class="card-body">
+            <div class="card-body text-sky-950">
                 <h6 class="font-medium text-lg">Total Visitas</h6>
                 <div class="col my-2">
                     <p class="card-text text-6xl">{{count($allVisits)}}</p>
@@ -75,39 +75,137 @@
         </div>
     </section>
 
-    <section id="search" class="d-flex justify-start">
-        <form action="{{ route('reports.index') }}" method="GET">
-            <input type="date" name="startDate" placeholder="Fecha de inicio">
-            <input type="date" name="endDate" placeholder="Fecha de finalización">
+    <section id="search" class="d-flex justify-start my-4">
+        <form action="{{ route('reports.index') }}" method="GET" onsubmit="updateDateInputs()">
+            <label>
+                Desde
+                <input
+                    onfocus="toggleIcon(this)"
+                    onblur="toggleIcon(this)"
+                    type="text" 
+                    name="startDate" 
+                    class="form-control mt-1 w-48" 
+                    value="{{ request()->has('startDate') ? request()->input('startDate') : '' }}"
+                    placeholder="Fecha de inicio"
+                >
+                <i class="far fa-calendar-alt text-gray-400 calendar-icon" onclick="handleIconClick(this)"></i>
+            </label>
+            <label class="ml-md-2">
+                Hasta
+                <input
+                    onfocus="toggleIcon(this)"
+                    onblur="toggleIcon(this)"
+                    type="text" 
+                    name="endDate" 
+                    class="form-control mt-1 w-48"
+                    value="{{ request()->has('endDate') ? request()->input('endDate') : '' }}"
+                    placeholder= "Fecha de fin"
+                >
+                <i class="far fa-calendar-alt text-gray-400 calendar-icon" onclick="handleIconClick(this)"></i>
+            </label>
             <button class="mdkbtn-success py-2 w-24 ml-md-2" type="submit">Filtrar</button>
+            <a href="{{ route('reports.index') }}" class="mdkbtn-danger py-2 d-inline-block text-center w-24 ml-md-2">Limpiar</a>
         </form>
-        <a href="{{ route('reports.index') }}" class="mdkbtn-danger py-2 w-24 text-center ml-md-2">Limpiar</a>
     </section>
 
-    @if (request()->has('startDate') && request()->has('endDate'))
-        <p><b>Fecha de inicio:</b> {{request()->startDate}}</p>
-        <br>
-        <p><b>Fecha de fin:</b> {{request()->endDate}}</p>
-        <br>
-        <p><b>Opiniones del Periodo:</b></p>
-        <p>{{count($allReviewsByPeriod)}}</p>
-        <hr>
-        <p><b>Opiniones Positivas del Periodo:</b></p>
-        <p>{{count($goodReviewsByPeriod)}}</p>
-        <hr>
-        <p><b>Opiniones Negativas del Periodo:</b></p>
-        <p>{{count($badReviewsByPeriod)}}</p>
-        <hr>
-        <p><b>Visitas del Periodo:</b></p>
-        <p>{{count($allVisitsByPeriod)}}</p>
-    @endif
+    <section id="search-result">
+        @if (request()->has('startDate') && request()->has('endDate'))
+            <section class="flex flex-row gap-5">
+                <div class="card basis-1/2" style="background: #E8F0FB">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Total Opiniones</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card basis-1/4" style="background: #E7FFF6">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Clientes</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> <!--Aquí cambiar-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card basis-1/4" style="background: #FFE7FA">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Flujos enviados</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> <!--Aquí cambiar-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="flex flex-row gap-5">
+                <div class="card basis-1/4" style="background: #D9D9D9">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Opiniones Positivas</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($goodReviewsByPeriod)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card basis-1/4" style="background: #EDD2D2">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Opiniones Negativas</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($badReviewsByPeriod)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card basis-1/4" style="background: #A5F1FB">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Visitas</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($allVisitsByPeriod)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card basis-1/4" style="background: #C2DBFF">
+                    <div class="card-body text-sky-950">
+                        <h6 class="font-medium text-lg">Flujos inconclusos</h6>
+                        <div class="row my-2">
+                            <div>                
+                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> <!--Aquí cambiar-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
+    </section>
+@stop
+
+@section('js')
+    <script>
+        console.log('Hi!');
+        function toggleIcon(input) {
+            const icon = input.nextElementSibling;
+            if (input.type === 'text') {
+                input.type = 'date';
+                icon.style.display = 'none';
+            } else {
+                input.type = 'text';
+                icon.style.display = 'inline-block';
+            }
+        }
+    </script>
 @stop
 
 @section('css')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-@stop
-
-@section('js')
-    <script> console.log('Hi!'); </script>
 @stop
 

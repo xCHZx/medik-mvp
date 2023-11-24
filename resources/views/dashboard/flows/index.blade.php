@@ -130,31 +130,40 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            @if(session('status') === 'Flow-Created')
-                Swal.fire(
-                    'Listo!',
-                    'El flujo fue creado con éxito',
-                    'success'
-                );
-            @elseif(session('status') === 'Flow-Changed')
-                Swal.fire(
-                    'Listo!',
-                    'El flujo fue actualizado',
-                    'success'
-                );
-            @elseif(session('flow-status') === 'success')
-                Swal.fire(
-                    'Listo!',
-                    'Flujo eliminado',
-                    'success'
-                );
-            @elseif(session('flow-status') === 'error')
-                Swal.fire(
-                    'Oops...',
-                    'No puedes tener activos dos flujos a la vez, desactiva uno antes de activar otro',
-                    'error'
-                );
-            @endif
+
+            @switch(session('status'))
+                @case('Flow-Created')
+                    Swal.fire(
+                        'Listo!',
+                        'El flujo fue creado con éxito',
+                        'success'
+                    );
+                    @break;
+                @case('Flow-Changed')
+                    Swal.fire(
+                        'Listo!',
+                        'El flujo fue actualizado',
+                        'success'
+                    );
+                @break;                    
+            @endswitch
+
+            @switch(session('flow-status'))
+                @case('success')
+                    Swal.fire(
+                        'Listo!',
+                        'Flujo eliminado',
+                        'success'
+                    );
+                    @break;
+                @case('error')
+                    Swal.fire(
+                        'Oops...',
+                        'No puedes tener activos dos flujos a la vez, desactiva uno antes de activar otro',
+                        'error'
+                    );
+                @break;                    
+            @endswitch
 
             /*Cambiar estado del flujo */
             $('#staticBackdrop').on('show.bs.modal', function (event) {

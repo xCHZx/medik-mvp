@@ -7,10 +7,10 @@
     <h1>Hola {{$user["firstName"]}}</h1>
 
     @if($status)
-        <h2 class="mt-2 mb-5">Bienvenido al panel de administración de <b>medik</b></h2>
+        <h2 class="mt-4 mb-3">Bienvenido al panel de administración de <b>medik</b></h2>
     @else
-        <h1 class="mt-5">Actualmente <b>no</b> tienes una suscripción activa</h1>
-        <h2 class="mt-2 mb-5">Para utilizar la plataforma, inicia tu suscripción👇</h2>
+        <h1 class="mt-4">Actualmente <b>no</b> tienes una suscripción activa</h1>
+        <h2 class="mt-3 mb-3">Para utilizar la plataforma, inicia tu suscripción👇</h2>
     @endif
 
 @stop
@@ -24,8 +24,14 @@
     <div class="card">
         <div class="card-body">
             <h1>Para empezar una suscripción conoce nuestros planes</h1>
-            <div class="mt-3">
-                <a href="{{route('subscription.index')}}" role="button" class="btn btn-outline-success">Ir a los planes</a>
+            <div class="mt-4 d-none d-sm-flex">
+                <a href="{{route('subscription.index')}}" role="button" class="px-3 py-2 mdkbtn-success">Ir a los planes</a>
+            </div>
+            <!-- Mobile -->
+            <div class="mt-4 d-block d-sm-none">
+                <a href="{{route('subscription.index')}}" role="button" class="d-flex w-full px-3 py-2 mdkbtn-success">
+                    <p class="text-center w-full">Ir a los planes</p>
+                </a>
             </div>
         </div>
     </div>

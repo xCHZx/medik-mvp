@@ -73,7 +73,7 @@
                                 </div>
 
                                 <!-- Dinamic description -->
-                                <div id="descripcion-objetivo" class="cardmdk-display my-3 mr-3 col-6">
+                                <div id="descripcion-objetivo" class="mdkTabCard-display my-3 mr-3 col-6">
                                     <div class="card-body ml-3">
                                         <p id="texto-descripcion" class="text-body-secondary"></p>
                                     </div>
@@ -84,7 +84,7 @@
 
                     <!-- Information window -->
                     <div class="tab-pane fade" id="information" role="tabpanel" aria-labelledby="information-tab">
-                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                        <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none">
                                 Démosle un nombre a tu flujo para poder identificarlo, si no asignas un nombre, no te preocupes, le asignaremos uno por ti.
                             </div>
@@ -98,7 +98,7 @@
 
                     <!-- Review window -->
                     <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        <div class="card cardmdk mt-0.5 mb-3 mx-0">
+                        <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none">    
                                 Junto a los comentarios y calificaciones tus pacientes podrán ver links a tus redes sociales o a tu página web, si deseas agregarlos colocalos aquí, en caso de que no tengas ninguno puedes dejar el espacio en blanco
                             </div>
@@ -123,7 +123,7 @@
 
                     <!-- Result window -->
                     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                        <div class="card cardmdk flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
+                        <div class="card mdkTabCard flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
                             <div class="col-5 my-2">
                                 <div class="card-header pl-1 border-0">
                                     <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
@@ -182,38 +182,35 @@
             </div>
         </form>
 
-        <div>
-            <div id="info1-container" class="container">
-                <div class="container d-flex justify-content-center">
-                    <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
-                        <div class="d-flex align-items-center mx-3">
-                            <i class="fas fa-question-circle bg-primaryquestion"></i>
-                        </div>
-                        <div class="text-black text-left my-2">
-                            Cuando tus pacientes escaneen tu código QR y acepten recibir mensajes tuyos , recibirán un primer mensaje en la aplicación de mensajería Whatsapp para solicitarles que califiquen el objetivo que has seleccionado.
-                        </div>
-                        <div class="d-flex align-self-start mt-1 mr-1 p-0">
-                            <i id="info1" class="fas fa-times-circle bg-cancel"></i>
-                        </div>
-                    </div>
+        <div class="d-flex justify-center mb-3">
+            <button class="mdkbtn-info py-2 w-32" id="reverse-btn">Anterior</button>
+            <button class="mdkbtn-primary py-2 ml-3 w-32" id="forward-btn">Siguiente</button>
+        </div>
+
+        <div class="container d-flex flex-column justify-center px-4">
+            <div id="info1-container" class="card flex-row justify-content-between bg-gray-300">
+                <div class="d-flex align-items-center mx-3">
+                    <i class="fas fa-question-circle bg-primaryquestion"></i>
+                </div>
+                <div class="text-black text-left my-2 pr-4">
+                    Cuando tus pacientes escaneen tu código QR y acepten recibir mensajes tuyos , recibirán un primer mensaje en la aplicación de mensajería Whatsapp para solicitarles que califiquen el objetivo que has seleccionado.
+                </div>
+                <div class="d-flex align-self-start mt-1 mr-1 p-0">
+                    <i id="info1" class="fas fa-times-circle bg-cancel cursor-pointer"></i>
                 </div>
             </div>
 
-            <div id="info2-container" class="container">
-                <div class="container d-flex justify-content-center">
-                    <div class="card d-flex flex-row justify-content-between align-items-center bg-gray-300 rounded-lg">
-                        <div class="d-flex align-items-center mx-3">
-                            <i class="fas fa-question-circle bg-primaryquestion"></i>
-                        </div>
-                        <div class="text-black text-left my-2">
-                            Una vez que tus pacientes acepten en whatsapp calificar a tu negocio serán redirigidos a una página web donde les explicaremos el objetivo que quieres calificar y cómo pueden hacerlo.
-                        </div>
-                        <div class="d-flex align-self-start mt-1 mr-1 p-0">
-                            <i id="info2" class="fas fa-times-circle bg-cancel"></i>
-                        </div>
-                    </div>
+            <div id="info2-container" class="card flex-row justify-content-between bg-gray-300">
+                <div class="d-flex align-items-center mx-3">
+                    <i class="fas fa-question-circle bg-primaryquestion"></i>
                 </div>
-            </div>
+                <div class="text-black text-left my-2 pr-4">
+                    Una vez que tus pacientes acepten en whatsapp calificar a tu negocio serán redirigidos a una página web donde les explicaremos el objetivo que quieres calificar y cómo pueden hacerlo.
+                </div>
+                <div class="d-flex align-self-start mt-1 mr-1 p-0">
+                    <i id="info2" class="fas fa-times-circle bg-cancel cursor-pointer"></i>
+                </div>
+            </div> 
         </div>
     </div>
 </div>
@@ -221,7 +218,7 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Muestra descripción
             $('input[type="radio"]').on('change', function () {
                 const objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
@@ -258,16 +255,48 @@
                 $('input[type="radio"]').not(this).prop('checked', false);
             });
 
+            // Función para retroceder a la pestaña anterior
+            function avanzarPestana() {
+                var $activeTab = $('.nav-tabs .nav-link.active');
+                var $nextTab = $activeTab.parent().next().children('a');
+
+                if ($nextTab.length > 0) {
+                    $nextTab.tab('show');
+                }
+            };
+
+            // Función para retroceder a la pestaña anterior
+            function retrocederPestana() {
+                var $activeTab = $('.nav-tabs .nav-link.active');
+                var $prevTab = $activeTab.parent().prev().children('a');
+
+                if ($prevTab.length > 0) {
+                    $prevTab.tab('show');
+                }
+            };
+
+            // Evento al hacer clic en el botón de avanzar
+            $('#forward-btn').on('click', function () {
+                avanzarPestana();
+            });
+
+            // Evento al hacer clic en el botón de retroceder
+            $('#reverse-btn').on('click', function () {
+                retrocederPestana();
+            });
+
             //Oculta instrucciones
             document.getElementById("info1").addEventListener("click", function() {
-                document.getElementById("info1-container").style.display = "none";
+                document.getElementById("info1-container").hidden = true;
             });
 
             document.getElementById("info2").addEventListener("click", function() {
-                document.getElementById("info2-container").style.display = "none";
+                document.getElementById("info2-container").hidden = true;
             });
         });
     </script>
+@stop
 
-    @vite(['resources/css/app.css', 'resources/js/app.js']) 
+@section('css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

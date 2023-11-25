@@ -49,7 +49,7 @@
                 <!-- Email -->
                 <div class="col-12 col-md-6 mt-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                    <input id="email" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
+                    <input id="email" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" value="{{ old('email') }}" required autocomplete="username" />
                     @if ($errors->has('email'))
                         <p class="mt-2 text-sm text-red-600">{{ $errors->first('email') }}</p>
                     @endif
@@ -58,7 +58,7 @@
                 <!-- Phone Number -->
                 <div class="col-12 col-md-6 mt-4">
                     <label for="phone" class="block text-sm font-medium text-gray-700">Número de Celular</label>
-                    <input id="phone" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="tel" pattern="[0-9]{9}" name="phone" value="{{ old('phone') }}" autocomplete="phone" />
+                    <input id="phone" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="tel" pattern="[0-9]{9-10}" name="phone" value="{{ old('phone') }}" autocomplete="phone" />
                     @if ($errors->has('phone'))
                         <p class="mt-2 text-sm text-red-600">{{ $errors->first('phone') }}</p>
                     @endif
@@ -68,7 +68,7 @@
                 <div class="mt-4">
                     <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
                     <div>
-                        <input id="password" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" name="password" required autocomplete="new-password" />
+                        <input id="password" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un dígito" name="password" required autocomplete="new-password" />
                         <span id="togglePassword" class="fas fa-eye-slash field-icon"></span>
                     </div>
                     @if ($errors->has('password'))
@@ -80,7 +80,7 @@
                 <div class="mt-4">
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repite la contraseña</label>
                     <div>
-                        <input id="password_confirmation" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" name="password_confirmation" required autocomplete="new-password" />
+                        <input id="password_confirmation" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password_confirmation" required autocomplete="new-password" />
                         <span id="togglePasswordConfirmation" class="fas fa-eye-slash field-icon"></span>
                     </div>
                     @if ($errors->has('password_confirmation'))

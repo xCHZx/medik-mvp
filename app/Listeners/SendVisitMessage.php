@@ -26,15 +26,14 @@ class SendVisitMessage
     {
         $businessId = $event->visit->businessId;
         $flow = DB::table('flows')
-        ->where('businessId' , '=' , $businessId)
-        ->where('isActive' , '=' , true)
-        ->get();
+            ->where('businessId', '=', $businessId)
+            ->where('isActive', '=', true)
+            ->get();
 
-        if($flow)
-        {
-            WhatsappSender::dispatch($event->visit , $flow)->delay($event->visit->visitDate->addMinutes(2));
+        if ($flow) {
+            WhatsappSender::dispatch($event->visit, $flow)->delay($event->visit->visitDate->addMinutes(env('DELAYMINUTES')));
 
         }
-        
+
     }
 }

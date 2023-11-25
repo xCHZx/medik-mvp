@@ -6,6 +6,7 @@ use App\Models\Business;
 use App\Events\RegisteredVisit;
 use App\Models\Visit;
 use App\Models\Visitor;
+use App\Models\Review;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -39,15 +40,18 @@ class VisitController extends Controller
 
                 if ($this->isPast12Hours($visitor)){
 
-                    $this->createVisit($businessId, $visitor, $request);
-                    return redirect()->route('visit.success', ['businessId' => $businessId]);
+                   $visit = $this->createVisit($businessId, $visitor, $request);
+                   $this->createReview($visit);
+                   event(new RegisteredVisit($visit));  
+                   return redirect()->route('visit.success', ['businessId' => $businessId]);
                 } else {
                     return redirect()->route('visit.denied', ['businessId' => $businessId]);
                 }
 
             } else {
-                $this->createVisit($businessId, $visitor, $request);
-                // hacer el cron job aqui
+                $visit = $this->createVisit($businessId, $visitor, $request);
+                $this->createReview($visit);
+                event(new RegisteredVisit($visit));  
                 return redirect()->route('visit.success', ['businessId' => $businessId]);
             }
             return $visitor;
@@ -76,9 +80,8 @@ class VisitController extends Controller
         $visit->visitDate = Carbon::now();
         $visit->save();
 
-        $this->generateHashedId($visit->id);
-        event(new RegisteredVisit($visit));
-        // hacer aqui el cron job
+        $this->generateHashedId($visit->id);    
+        return $visit;
     }
 
     private function isPast12Hours($visitor){
@@ -114,5 +117,14 @@ class VisitController extends Controller
             abort(404);
         }
         return view('visit.denied',compact('business','businessId'));
+    }
+
+    // realizar esto en el metodo store de el reviewcontroller
+    private function createReview($visit)
+    {
+        // crear la review con el id de la visita pero todo lo demas en null
+        $review = new Review();
+        $review->visitId = $visit->id;
+        $review->save();
     }
 }

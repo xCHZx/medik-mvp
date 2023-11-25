@@ -16,4 +16,9 @@ class Review extends Model
     {
         return $this->belongsTo(Visit::class, 'visitId');
     }
+
+    public function flow() : BelongsTo
+    {
+        return $this->belongsTo(Flow::class, 'flowId');
+    }
 }

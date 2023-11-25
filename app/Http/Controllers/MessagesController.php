@@ -14,6 +14,23 @@ class MessagesController extends Controller
         echo "hola mundillo";
     }
 
+    public function create()
+    {
+        // header
+        $token = 'EAAKJjnghhhUBOZBp50ZCxZB57ptAbANu5q4EwkPFOVhBZCQdcQynjoJTlxEucuuAOoJAIoJvjwJ4lZAXQZChsmFWPlM0Ki8CnrKJHv1VqAM1ZCaWmfFpqFhruyQdZA5n3rbc5n2aRmRT2kUJFdykO4C5RXsUchjO2OwRgkM56csnJzESjAiMvBV8v6zGWfdVhQa4P5mZALixZBRZAufrSwV';
+        $baseUrl = 'https://graph.facebook.com/v18.0';
+        $wabaId = '151669821369238';
+
+        // peticion
+
+        $response = http::withToken($token)->post($baseUrl . '/' . $wabaId . '/' . 'flows' , [
+            'name' => 'satisfaccion general',
+            'categories' => ['SURVEY']
+        ]);
+        echo $response;
+    }
+
+
     public function send()
     {
         // header

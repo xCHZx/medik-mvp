@@ -32,6 +32,11 @@ class Flow extends Model
         return $this->hasMany(CalificactionLink::class , 'flowId');
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class , 'flowId');
+    }
+
 
 
 

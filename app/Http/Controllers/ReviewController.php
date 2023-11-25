@@ -11,6 +11,31 @@ use Money\Exchange;
 
 class ReviewController extends Controller
 {
+    public function index()
+    {
+        // validar que el usuario tenga reviews con un status de complatada y devolver esa review
+        try {
+
+            $Business = Auth::user()->businesses->first();
+            $reviews = Reviews::where('status' , 'finalizada');
+
+            if($reviews)
+            {
+                return view('dashboard.reviews.index' , ['reviews' => $reviews]);
+            }
+            else
+            {
+                throw new ModelNotFoundException('No se encontraron opiniones para este usuario.');
+            }
+
+        } catch (ModelNotFoundException $e)
+         {
+            return view('dashboard.reviews.index' , ['message' => 'no tienes opiniones que mostrar']);
+        }
+
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -24,6 +49,8 @@ class ReviewController extends Controller
             dd($e);
         }
     }
+
+    // realizar la mayoria de esto desde un metodo update
 
     public function store(Request $request, $visitEncrypted){
         try{
@@ -62,6 +89,7 @@ class ReviewController extends Controller
         return view('reviews.thankYouBad');
 
     }
+
 
 
 

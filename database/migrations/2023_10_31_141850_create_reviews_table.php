@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->text('comment')->nullable();
             $table->string('status')->default('Pendiente'); //Pendiente, Enviada, recibida, iniciada, finalizada
             $table->unsignedBigInteger('visitId')->nullable();
+            $table->unsignedBigInteger('flowId')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

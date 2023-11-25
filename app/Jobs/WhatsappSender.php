@@ -109,10 +109,23 @@ class WhatsappSender implements ShouldQueue
 
             ]);
         echo $response;
+        $this->modifyReview($this->visit , $flow);
 
         } catch (Error $e) {
             echo $e;
         }
+
+    }
+
+    // editar la review para que tenga el flujo al que esta opinando y el status de enviada
+
+    public function modifyReview($visit , $flow)
+    {
+        // buscar la review asociada a esa visita
+        $review = Review::where('visitId' , $Visit->id)->firstOrFail();
+        $review->flowId = $flow->id;
+        $review->status = 'enviada';
+        $review->save();
 
     }
 }

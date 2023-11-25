@@ -24,8 +24,8 @@ class Visit extends Model
         return $this->belongsTo(Visitor::class, 'visitorId');
     }
 
-    public function reviews(): HasMany
+    public function reviews(): HasOne
     {
-        return $this->hasMany(Review::class, 'visitId');
+        return $this->hasOne(Review::class, 'visitId');
     }
 }

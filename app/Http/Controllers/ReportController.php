@@ -28,22 +28,30 @@ class ReportController extends Controller
     //Flujos enviados
     //Flujos inconclusos
 
+
     public function index(Request $request){ //Falta optimizar para enviar solo los datos específicos
+
+        $userId = Auth::user()->id;
+
+        $business = $this->getBusinessWithReviews($userId);
+
+        if (!$business){
+            return redirect()->route('business.index');
+        }
+
         $startDate = $request->query('startDate');
         $endDate = $request->query('endDate');
 
-        $id = Auth::user()->id;
-
         if ($startDate && $endDate){
-            $allReviewsByPeriod = Business::find($id)->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->get();
-            $badReviewsByPeriod = Business::find($id)->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('rating', '<=', 3)->get();
-            $goodReviewsByPeriod = Business::find($id)->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('rating', '>=', 4)->get();
-            $allVisitsByPeriod = Business::find($id)->visits()->whereDate('visits.created_at', '>=', $startDate)->whereDate('visits.created_at', '<=', $endDate)->get();
+            $allReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->get();
+            $badReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('rating', '<=', 3)->get();
+            $goodReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('rating', '>=', 4)->get();
+            $allVisitsByPeriod = Business::where('userId', $userId)->first()->visits()->whereDate('visits.created_at', '>=', $startDate)->whereDate('visits.created_at', '<=', $endDate)->get();
         } else {
-            $allReviewsByPeriod = Business::find($id)->reviews()->get();
-            $allVisitsByPeriod = Business::find($id)->visits()->get();
-            $badReviewsByPeriod = Business::find($id)->reviews()->where('rating', '<=', 3)->get();
-            $goodReviewsByPeriod = Business::find($id)->reviews()->where('rating', '>=', 4)->get();
+            $allReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->get();
+            $allVisitsByPeriod = Business::where('userId', $userId)->first()->visits()->get();
+            $badReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->where('rating', '<=', 3)->get();
+            $goodReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->where('rating', '>=', 4)->get();
         }
 
         // $allVisitors = Business::where('id', $id)
@@ -52,19 +60,19 @@ class ReportController extends Controller
         // ->pluck('visits')
         // ->flatten()
         // ->pluck('visitor');
-        $allReviews = Business::find($id)->reviews()->get();
-        $goodReviews = Business::find($id)->reviews()->where('rating', '>=', 4)->get();
-        $badReviews = Business::find($id)->reviews()->where('rating', '<=', 3)->get();
-        $allVisits = Business::find($id)->visits()->get();
+        $allReviews = Business::where('userId', $userId)->first()->reviews()->get();
+        $goodReviews = Business::where('userId', $userId)->first()->reviews()->where('rating', '>=', 4)->get();
+        $badReviews = Business::where('userId', $userId)->first()->reviews()->where('rating', '<=', 3)->get();
+        $allVisits = Business::where('userId', $userId)->first()->visits()->get();
 
 
-        $currentMonthReviews = Business::find($id)
+        $currentMonthReviews = Business::where('userId', $userId)->first()
                                 ->reviews()
                                 ->whereDate('reviews.created_at', '>=', now()->subDays(30))
                                 ->orderBy('created_at', 'desc')
                                 ->get();
 
-        $lastMonthReviews = Business::find($id)
+        $lastMonthReviews = Business::where('userId', $userId)->first()
                                 ->reviews()
                                 ->whereDate('reviews.created_at', '<', now()->subDays(30))
                                 ->orderBy('created_at', 'desc')
@@ -76,13 +84,13 @@ class ReportController extends Controller
             $lastMonthReviewsVariation = (($currentMonthReviews->count() - $lastMonthReviews->count()) / $lastMonthReviews->count()) * 100;
         }
 
-        $currentMonthVisits = Business::find($id)
+        $currentMonthVisits = Business::where('userId', $userId)->first()
         ->visits()
         ->whereDate('visits.created_at', '>=', now()->subDays(30))
         ->orderBy('created_at', 'desc')
         ->get();
 
-        $lastMonthVisits = Business::find($id)
+        $lastMonthVisits = Business::where('userId', $userId)->first()
         ->visits()
         ->whereDate('visits.created_at', '<', now()->subDays(30))
         ->orderBy('created_at', 'desc')
@@ -92,18 +100,6 @@ class ReportController extends Controller
         if ($lastMonthVisits->count() > 0) {
             $lastMonthReviewsVariation = (($currentMonthVisits->count() - $lastMonthVisits->count()) / $lastMonthVisits->count()) * 100;
         }
-
-
-        $business = Business::with(['reviews'=>function($query){
-            $query->orderByDesc('id');
-        },'visits'=>function($query){
-            $query->orderByDesc('id');
-        }])->where('id', Auth::user()->id)->first();
-
-
-
-        // $this->getPercentageVariation($business->id);
-
 
         return view('dashboard.reports.index', compact(
             'business',
@@ -119,6 +115,18 @@ class ReportController extends Controller
             'allVisitsByPeriod',
         ));
     }
+
+    public function getBusinessWithReviews($userId){
+        $business = Business::with(['reviews'=>function($query){
+            $query->orderByDesc('id');
+        },'visits'=>function($query){
+            $query->orderByDesc('id');
+        }])->where('userId', $userId)->first();
+
+        return $business;
+    }
+
+
     // public function getPercentageVariation($reviews) {
     //     $currentMonthReviews = Review::whereMonth('created_at', date('m'))
     //                                  ->whereYear('created_at', date('Y'))

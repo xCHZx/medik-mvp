@@ -1,70 +1,73 @@
 @extends('adminlte::page')
 
-@section('title', 'Reportes - Opiniones')
+@section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Opiniones</h1>
+
+    <h1>Hola {{$user["firstName"]}}</h1>
+
+    @if($status)
+        <h2 class="mt-2 mb-5">Bienvenido al panel de administración de <b>medik</b></h2>
+    @else
+        <h1 class="mt-5">Actualmente <b>no</b> tienes una suscripción activa</h1>
+        <h2 class="mt-2 mb-5">Para utilizar la plataforma, inicia tu suscripción👇</h2>
+    @endif
+
 @stop
 
 @section('content')
-    <p><b>Negocio:</b></p>
-    <p>{{$business->name}}</p>
-    <hr>
-    <p><b>Puntuación:</b></p>
-    <p>{{number_format($business->averageRating, 1)}}</p>
-    <hr>
-    <form action="{{ route('reports.index') }}" method="GET">
-        <input type="date" name="startDate" placeholder="Fecha de inicio">
-        <input type="date" name="endDate" placeholder="Fecha de finalización">
-        <button class="btn btn-outline-primary" type="submit">Filtrar</button>
-    </form>
-    <a href="{{ route('reports.index') }}" class="btn btn-outline-danger">Limpiar</a>
-    <hr>
+    @if($status)
+        <div>
+            <h1>...</h1>
+        </div>
+    @else
+    <div class="card">
+        <div class="card-body">
+            <h1>Para empezar una suscripción conoce nuestros planes</h1>
+            <div class="mt-3">
+                <a href="{{route('subscription.index')}}" role="button" class="btn btn-outline-success">Ir a los planes</a>
+            </div>
+        </div>
+    </div>
+    @endif
 
-
-    <p><b>Total Opiniones:</b></p>
-    <p>{{count($allReviews)}}</p>
-    <hr>
-    <p>+{{$lastMonthReviewsVariation}}% en los últimos 30 días</p>
-    <hr>
-    <p><b>Total Opiniones Positivas:</b></p>
-    <p>{{count($goodReviews)}}</p>
-    <hr>
-    <p><b>Total Opiniones Negativas:</b></p>
-    <p>{{count($badReviews)}}</p>
-    <hr>
-    <p><b>Total de Visitas:</b></p>
-    <p>{{count($allVisits)}}</p>
-    <hr>
-    <p>+{{$lastMonthVisitsVariation}}% en los últimos 30 días</p>
-    <hr>
-    <br>
-    <hr>
-    <br>
-    <hr>
-    @if (request()->has('startDate') && request()->has('endDate'))
-        <p><b>Fecha de inicio:</b> {{request()->startDate}}</p>
-        <br>
-        <p><b>Fecha de fin:</b> {{request()->endDate}}</p>
-        <br>
-        <p><b>Opiniones del Periodo:</b></p>
-        <p>{{count($allReviewsByPeriod)}}</p>
-        <hr>
-        <p><b>Opiniones Positivas del Periodo:</b></p>
-        <p>{{count($goodReviewsByPeriod)}}</p>
-        <hr>
-        <p><b>Opiniones Negativas del Periodo:</b></p>
-        <p>{{count($badReviewsByPeriod)}}</p>
-        <hr>
-        <p><b>Visitas del Periodo:</b></p>
-        <p>{{count($allVisitsByPeriod)}}</p>
+    @if($activeBusiness)
+        <div class="card mt-5">
+            <div class="card-body">
+                <p>Nuevas visitas del último mes</p>
+                <hr>
+                <p>Opiniones positivas del ultimo mes</p>
+                <hr>
+                <p>Opiniones negativas del ultimo mes</p>
+                <hr>
+                <p>Total Visitas</p>
+                <hr>
+                <p>Variación visitas</p>
+                <hr>
+                <p>Total Opiniones</p>
+                <hr>
+                <p>Variación opiniones mes pasado</p>
+                <hr>
+                <p>Total Opiniones Positivas</p>
+                <hr>
+                <p>Total Opiniones Negativas</p>
+                <hr>
+                <p>Últimas 3 opiniones</p>
+                <hr>
+                <p>Flujo activo</p>
+                <hr>
+                <p>Negocio activo</p>
+                <hr>
+            </div>
+        </div>
     @endif
 @stop
 
 @section('css')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop
+

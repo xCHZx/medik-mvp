@@ -6,7 +6,9 @@ use App\Models\Business;
 use App\Models\Review;
 use App\Models\Visit;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Money\Exchange;
 
 class ReviewController extends Controller
@@ -17,7 +19,7 @@ class ReviewController extends Controller
         try {
 
             $Business = Auth::user()->businesses->first();
-            $reviews = Reviews::where('status' , 'finalizada');
+            $reviews = $Business->reviews()->where('status' , 'finalizada')->get();
 
             if($reviews)
             {
@@ -52,13 +54,35 @@ class ReviewController extends Controller
 
     // realizar la mayoria de esto desde un metodo update
 
-    public function store(Request $request, $visitEncrypted){
+    public function store($visit)
+    {
+
+        $review = new Review();
+        $review->visitId = $visit->id;
+        $review->save();
+        
+
+    }
+
+    public function thankYouGood($visitEncrypted)
+    {
+        return view('reviews.thankYouGood');
+    }
+
+    public function thankYouBad($visitEncrypted)
+    {
+        // Se necesitan recuperar las redes sociales
+        return view('reviews.thankYouBad');
+
+    }
+
+    public function update(Request $request, $visitEncrypted)
+    {
         try{
             $visitId = decrypt($visitEncrypted, env('ENCRYPT_KEY'));
-            $review = new Review();
+            $review = Review::where('visitId' , $visitId)->firstOrFail();
             $review->rating = $request->rating;
             $review->comment = $request->comment;
-            $review->visitId = $visitId;
             $review->save();
 
             $newReview = Review::with('visit')->findOrFail($review->id);
@@ -78,15 +102,15 @@ class ReviewController extends Controller
 
     }
 
-    public function thankYouGood($visitEncrypted)
-    {
-        return view('reviews.thankYouGood');
-    }
+    // indicamos que una review ha sido enviada
 
-    public function thankYouBad($visitEncrypted)
+    public function reviewSended($visit , $flow)
     {
-        // Se necesitan recuperar las redes sociales
-        return view('reviews.thankYouBad');
+         // buscar la review asociada a esa visita
+         $review =Review::where('visitId' , $visit->id)->firstOrFail();
+         $review->flowId = $flow->id;
+         $review->status = 'enviada';
+         $review->save();
 
     }
 

@@ -87,7 +87,7 @@ Route::prefix('visita')->group(function () {
 //Opiniones
 Route::prefix('opinion')->group(function () {
     Route::get('/{visitEncrypted}', [ReviewController::class, 'create'])->name('review.create');
-    Route::post('/{visitEncrypted}', [ReviewController::class, 'store'])->name('review.store');
+    Route::post('/{visitEncrypted}', [ReviewController::class, 'update'])->name('review.update');
     Route::get('/gracias/g/{visitEncrypted}', [ReviewController::class, 'thankYouGood'])->name('review.thankYouGood');
     Route::get('/gracias/b/{visitEncrypted}', [ReviewController::class, 'thankYouBad'])->name('review.thankYouBad');
 });

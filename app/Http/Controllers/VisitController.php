@@ -41,7 +41,7 @@ class VisitController extends Controller
                 if ($this->isPast12Hours($visitor)){
 
                    $visit = $this->createVisit($businessId, $visitor, $request);
-                   $this->createReview($visit);
+                   app(ReviewController::class)->store($visit);
                    event(new RegisteredVisit($visit));  
                    return redirect()->route('visit.success', ['businessId' => $businessId]);
                 } else {
@@ -50,7 +50,7 @@ class VisitController extends Controller
 
             } else {
                 $visit = $this->createVisit($businessId, $visitor, $request);
-                $this->createReview($visit);
+                app(ReviewController::class)->store($visit);
                 event(new RegisteredVisit($visit));  
                 return redirect()->route('visit.success', ['businessId' => $businessId]);
             }
@@ -119,12 +119,4 @@ class VisitController extends Controller
         return view('visit.denied',compact('business','businessId'));
     }
 
-    // realizar esto en el metodo store de el reviewcontroller
-    private function createReview($visit)
-    {
-        // crear la review con el id de la visita pero todo lo demas en null
-        $review = new Review();
-        $review->visitId = $visit->id;
-        $review->save();
-    }
 }

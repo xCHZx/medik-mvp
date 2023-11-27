@@ -5,7 +5,7 @@
     <div>
         <div class="card mx-3">
             <div class="card-body">
-                <form class="px-2 py-3"  method="POST" action="{{route('review.store', $visitEncrypted)}}">
+                <form class="px-2 py-3"  method="POST" action="{{route('review.update', $visitEncrypted)}}">
                 @csrf
                     <div class="row mb-3">
                         <div class="form-group col-md-12">

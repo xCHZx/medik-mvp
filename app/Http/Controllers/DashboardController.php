@@ -28,8 +28,15 @@ class DashboardController extends Controller
         $id = Auth::user()->id;
         $status = $user->subscribed('default');
 
-        $activeBusiness = Business::where('userId', $id)->first();
+        $activeBusiness = Business::where('userId', $id)->select('name','description','address','averageRating')->first();
+        if (!$activeBusiness) {
+            return redirect()->route('business.index'); //FALTA MANDAR UN SWAL QUE INDIQUE EL ERROR
+        }
+
         $activeFlow = Business::where('userId', $id)->first()->flows()->where('isActive', 1)->first();
+        if (!$activeFlow) {
+            return redirect()->route('flows.index'); //FALTA MANDAR UN SWAL QUE INDIQUE EL ERROR
+        }
 
         //Get the last 3 reviews
         $lastReviews = Business::where('userId', $id)->first()
@@ -105,21 +112,20 @@ class DashboardController extends Controller
             'status',
             'activeBusiness',
             'activeFlow',
-            'lastReviews',
-            'allVisits',
-            'allReviews',
-            'goodReviews',
-            'badReviews',
-            'goodReviewsLastMonth',
-            'badReviewsLastMonth',
+            'lastReviews', //last 3 reviews
+            'allVisits', //all visits
+            'allReviews', //all reviews
+            'goodReviews', //all good reviews
+            'badReviews', //all bad reviews
+            'goodReviewsLastMonth', //good reviews of the last 30 days
+            'badReviewsLastMonth', //bad reviews of the last 30 days
             'currentMonthReviews',
             'lastMonthReviews',
-            'lastMonthReviewsVariation',
-            'currentMonthVisits',
-            'lastMonthVisitsVariation',
+            'lastMonthReviewsVariation', //variation of reviews of the last 30 days
+            'currentMonthVisits',  //visits of the last 30 days
             'lastMonthVisits',
             'currentMonthVisits',
-            'lastMonthVisitsVariation',
+            'lastMonthVisitsVariation', //variation of visits of the last 30 days
         ));
     }
 }

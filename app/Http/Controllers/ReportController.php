@@ -101,6 +101,8 @@ class ReportController extends Controller
             $lastMonthReviewsVariation = (($currentMonthVisits->count() - $lastMonthVisits->count()) / $lastMonthVisits->count()) * 100;
         }
 
+        $responseRate = count($allVisitsByPeriod) > 0 ? (count($allReviewsByPeriod) / count($allVisitsByPeriod))*100 : 0;
+
         return view('dashboard.reports.index', compact(
             'business',
             'allReviews',
@@ -113,6 +115,7 @@ class ReportController extends Controller
             'allVisits',
             'lastMonthVisitsVariation',
             'allVisitsByPeriod',
+            'responseRate'
         ));
     }
 

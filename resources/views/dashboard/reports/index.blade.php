@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <section id="resumen" class="grid grid-cols-4 gap-5">
+    <section id="resumen" class="grid grid-cols-3 gap-5">
         <div class="card basis-1/4">
             <div class="card-body text-sky-950">
                 <h6 class="font-medium">Negocio Activo</h6>
@@ -44,7 +44,7 @@
                 <a href="#" class="btn mdkbtn-primary mt-2 p-2 w-full text-center">Ver más</a>
             </div>
         </div>
-        <div class="card basis-1/4">
+        {{-- <div class="card basis-1/4">
             <div class="card-body text-sky-950">
                 <h6 class="font-medium text-lg">Total Clientes</h6>
                 <div class="row my-2">
@@ -60,7 +60,7 @@
                 </div>
                 <a href="#" class="btn mdkbtn-primary mt-2 p-2 w-full text-center">Ver más</a>
             </div>
-        </div>
+        </div> --}}
         <div class="card basis-1/4">
             <div class="card-body text-sky-950">
                 <h6 class="font-medium text-lg">Total Visitas</h6>
@@ -123,10 +123,10 @@
                 </div>
                 <div class="card basis-1/4" style="background: #E7FFF6">
                     <div class="card-body text-sky-950">
-                        <h6 class="font-medium text-lg">Clientes</h6>
+                        <h6 class="font-medium text-lg">Visitas</h6>
                         <div class="row my-2">
                             <div>
-                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> <!--Aquí cambiar-->
+                                <p class="card-text text-6xl">{{count($allVisitsByPeriod)}}</p> <!--Aquí cambiar-->
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                         <h6 class="font-medium text-lg">Flujos enviados</h6>
                         <div class="row my-2">
                             <div>
-                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> <!--Aquí cambiar-->
+                                <p class="card-text text-6xl">##</p> <!--Aquí cambiar-->
                             </div>
                         </div>
                     </div>
@@ -166,10 +166,10 @@
                 </div>
                 <div class="card basis-1/4" style="background: #A5F1FB">
                     <div class="card-body text-sky-950">
-                        <h6 class="font-medium text-lg">Visitas</h6>
+                        <h6 class="font-medium text-lg">Tasa de Participación</h6>
                         <div class="row my-2">
                             <div>
-                                <p class="card-text text-6xl">{{count($allVisitsByPeriod)}}</p>
+                                <p class="card-text text-6xl">{{$responseRate}}%</p>
                             </div>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                         <h6 class="font-medium text-lg">Flujos inconclusos</h6>
                         <div class="row my-2">
                             <div>
-                                <p class="card-text text-6xl">{{count($allReviewsByPeriod)}}</p> <!--Aquí cambiar-->
+                                <p class="card-text text-6xl">##</p> <!--Aquí cambiar-->
                             </div>
                         </div>
                     </div>

@@ -42,7 +42,7 @@ class VisitController extends Controller
 
                    $visit = $this->createVisit($businessId, $visitor, $request);
                    $this->createReview($visit);
-                   event(new RegisteredVisit($visit));  
+                   event(new RegisteredVisit($visit));
                    return redirect()->route('visit.success', ['businessId' => $businessId]);
                 } else {
                     return redirect()->route('visit.denied', ['businessId' => $businessId]);
@@ -51,7 +51,7 @@ class VisitController extends Controller
             } else {
                 $visit = $this->createVisit($businessId, $visitor, $request);
                 $this->createReview($visit);
-                event(new RegisteredVisit($visit));  
+                event(new RegisteredVisit($visit));
                 return redirect()->route('visit.success', ['businessId' => $businessId]);
             }
             return $visitor;
@@ -80,7 +80,7 @@ class VisitController extends Controller
         $visit->visitDate = Carbon::now();
         $visit->save();
 
-        $this->generateHashedId($visit->id);    
+        $this->generateHashedId($visit->id);
         return $visit;
     }
 

@@ -41,28 +41,40 @@
         <div class="card mt-5">
             <div class="card-body">
                 <p>Nuevas visitas del último mes</p>
+                <p><b>{{count($currentMonthVisits)}}</b></p>
                 <hr>
                 <p>Opiniones positivas del ultimo mes</p>
+                <p><b>{{count($goodReviewsLastMonth)}}</b></p>
                 <hr>
                 <p>Opiniones negativas del ultimo mes</p>
+                <p><b>{{count($badReviewsLastMonth)}}</b></p>
                 <hr>
                 <p>Total Visitas</p>
+                <p><b>{{count($allVisits)}}</b></p>
                 <hr>
                 <p>Variación visitas</p>
+                <p><b>{{$lastMonthVisitsVariation}}%</b></p>
                 <hr>
                 <p>Total Opiniones</p>
+                <p><b>{{count($allReviews)}}</b></p>
                 <hr>
                 <p>Variación opiniones mes pasado</p>
+                <p><b>{{$lastMonthReviewsVariation}}%</b></p>
                 <hr>
                 <p>Total Opiniones Positivas</p>
+                <p><b>{{count($goodReviews)}}</b></p>
                 <hr>
                 <p>Total Opiniones Negativas</p>
+                <p><b>{{count($badReviews)}}</b></p>
                 <hr>
                 <p>Últimas 3 opiniones</p>
+                <p><b>{{$lastReviews}}</b></p>
                 <hr>
                 <p>Flujo activo</p>
+                <p><b>{{$activeFlow}}</b></p>
                 <hr>
                 <p>Negocio activo</p>
+                <p><b>{{$activeBusiness}}</b></p>
                 <hr>
             </div>
         </div>

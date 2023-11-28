@@ -70,7 +70,7 @@ class WhatsappSender implements ShouldQueue
                                 [
                                     'type' => 'image',
                                     'image' => [
-                                        'link' => 'https://app.medik.mx'. $imageUrl 
+                                        'link' => 'https://app.medik.mx'. $imageUrl
                                     ]
 
                                 ]
@@ -110,7 +110,7 @@ class WhatsappSender implements ShouldQueue
 
             ]);
         echo $response;
-        app(ReviewController::class)->reviewSended($this->visit , $flow);
+        app(ReviewController::class)->reviewSent($this->visit , $flow);
 
         } catch (Error $e) {
             echo $e;

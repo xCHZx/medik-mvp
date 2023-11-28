@@ -23,9 +23,9 @@ class ReviewController extends Controller
             {
                 return redirect()->route('business.index');
             }
-            
+
             $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
-            
+
             if($reviews)
             {
                 return view('dashboard.reviews.index' , ['reviews' => $reviews , 'error' => false]);
@@ -38,7 +38,7 @@ class ReviewController extends Controller
         } catch (Exception $e)
          {
             dd($e);
-            
+
         }
 
     }
@@ -66,7 +66,7 @@ class ReviewController extends Controller
         $review = new Review();
         $review->visitId = $visit->id;
         $review->save();
-        
+
 
     }
 
@@ -110,7 +110,7 @@ class ReviewController extends Controller
 
     // indicamos que una review ha sido enviada
 
-    public function reviewSended($visit , $flow)
+    public function reviewSent($visit , $flow)
     {
          // buscar la review asociada a esa visita
          $review =Review::where('visitId' , $visit->id)->firstOrFail();

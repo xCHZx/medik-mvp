@@ -90,7 +90,7 @@ class ReviewController extends Controller
             $review = Review::where('visitId' , $visitId)->firstOrFail();
             $review->rating = $request->rating;
             $review->comment = $request->comment;
-            $review->status = 'finalizada';
+            $review->status = 'Finalizada';
             $review->save();
 
             $newReview = Review::with('visit')->findOrFail($review->id);

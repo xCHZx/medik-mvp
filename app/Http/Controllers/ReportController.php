@@ -43,12 +43,12 @@ class ReportController extends Controller
         $endDate = $request->query('endDate');
 
         if ($startDate && $endDate){
-            $allReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->get();
+            $allReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->where('status', 'Finalizada')->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->get();
             $badReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('rating', '<=', 3)->get();
             $goodReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('rating', '>=', 4)->get();
             $allVisitsByPeriod = Business::where('userId', $userId)->first()->visits()->whereDate('visits.created_at', '>=', $startDate)->whereDate('visits.created_at', '<=', $endDate)->get();
         } else {
-            $allReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->get();
+            $allReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->where('status', 'Finalizada')->get();
             $allVisitsByPeriod = Business::where('userId', $userId)->first()->visits()->get();
             $badReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->where('rating', '<=', 3)->get();
             $goodReviewsByPeriod = Business::where('userId', $userId)->first()->reviews()->where('rating', '>=', 4)->get();
@@ -60,7 +60,10 @@ class ReportController extends Controller
         // ->pluck('visits')
         // ->flatten()
         // ->pluck('visitor');
-        $allReviews = Business::where('userId', $userId)->first()->reviews()->get();
+
+        $allReviews = Business::where('userId', $userId)->first()->reviews()->where('status', 'Finalizada')->get();
+
+
         $goodReviews = Business::where('userId', $userId)->first()->reviews()->where('rating', '>=', 4)->get();
         $badReviews = Business::where('userId', $userId)->first()->reviews()->where('rating', '<=', 3)->get();
         $allVisits = Business::where('userId', $userId)->first()->visits()->get();

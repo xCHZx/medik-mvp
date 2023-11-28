@@ -73,6 +73,8 @@ Route::middleware('auth' , 'verified')->group(function () {
 
 
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
+
+        Route::get('/opiniones' , [ReviewController::class , 'index'])->name('reviews.index');
     });
 });
 
@@ -91,6 +93,8 @@ Route::prefix('opinion')->group(function () {
     Route::get('/gracias/g/{visitEncrypted}', [ReviewController::class, 'thankYouGood'])->name('review.thankYouGood');
     Route::get('/gracias/b/{visitEncrypted}', [ReviewController::class, 'thankYouBad'])->name('review.thankYouBad');
 });
+
+
 
 Route::get('/confirmar', function(){
     Mail::to('rpayns16@gmail.com')->send(new confircorreoMailable);

@@ -10,29 +10,35 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Money\Exchange;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // validar que el usuario tenga reviews con un status de complatada y devolver esa review
         try {
-
-            $Business = Auth::user()->businesses->first();
-            $reviews = $Business->reviews()->where('status' , 'finalizada')->get();
-
+            $business = Auth::user()->businesses->first();
+            if (!$business)
+            {
+                return redirect()->route('business.index');
+            }
+            
+            $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
+            
             if($reviews)
             {
-                return view('dashboard.reviews.index' , ['reviews' => $reviews]);
+                return view('dashboard.reviews.index' , ['reviews' => $reviews , 'error' => false]);
             }
             else
             {
-                throw new ModelNotFoundException('No se encontraron opiniones para este usuario.');
+                return view('dashboard.reviews.index' , ['error' => true]);
             }
 
-        } catch (ModelNotFoundException $e)
+        } catch (Exception $e)
          {
-            return view('dashboard.reviews.index' , ['message' => 'no tienes opiniones que mostrar']);
+            dd($e);
+            
         }
 
     }

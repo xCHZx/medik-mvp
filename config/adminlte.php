@@ -337,6 +337,12 @@ return [
             'route'       => 'reports.index',
             'icon'        => 'fas fa-fw fa-table',
         ],
+        [
+            'text'        => 'Opiniones',
+            'route'       => 'reviews.index',
+            'icon'        => 'fas fa-fw fa-table',
+
+        ],
         ['header' => 'CONFIGURACIÓN DE CUENTA'],
         [
             'text'        => 'Suscripción',

@@ -20,6 +20,8 @@ class ReviewFactory extends Factory
             'rating' => $this->faker->numberBetween(1,5),
             'comment' => $this->faker->text('200'),
             'visitId' => $this->faker->numberBetween(1,10),
+            'flowId' => 1 ,
+            'status' => 'finalizada'
         ];
     }
 }

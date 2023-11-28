@@ -51,7 +51,8 @@ class ReviewController extends Controller
     {
         try{
             $visitId = decrypt($visitEncrypted, env('ENCRYPT_KEY'));
-            $visit = Visit::with('visitor','business')->findOrFail($visitId);
+            $visit = Visit::with('visitor','business','review','review.flow')->findOrFail($visitId);
+            // return $visit;
             return view('reviews.create',compact('visit', 'visitEncrypted'));
         }catch(Exception $e){
             dd($e);
@@ -89,6 +90,7 @@ class ReviewController extends Controller
             $review = Review::where('visitId' , $visitId)->firstOrFail();
             $review->rating = $request->rating;
             $review->comment = $request->comment;
+            $review->status = 'finalizada';
             $review->save();
 
             $newReview = Review::with('visit')->findOrFail($review->id);

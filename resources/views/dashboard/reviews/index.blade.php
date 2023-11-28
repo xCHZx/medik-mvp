@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    
-    @foreach ($reviews as $review)
+   @if(!$error)
+     @foreach ($reviews as $review)
        <table>
            <tr>
                <th>Visitante</th>
@@ -26,9 +26,12 @@
               <td>{{$review->rating}}</td>
               <td>{{$review->comment}}</td>
               <td>{{$review->created_at}}</td>
-    @endforeach
+     @endforeach
 
-    {{$reviews->links()}}
+     {{$reviews->links()}}
+    @else
+       <p>no hay Opiniones para mostrar</p>
+    @endif
 @stop
 
 @section('css')

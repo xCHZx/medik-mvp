@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         // validar que el usuario tenga reviews con un status de complatada y devolver esa review
         try {
@@ -26,9 +26,10 @@ class ReviewController extends Controller
             
             $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
             
-            if($reviews)
+            if($reviews->count() > 0)
             {
-                return view('dashboard.reviews.index' , ['reviews' => $reviews , 'error' => false]);
+                return view('dashboard.reviews.index', ['reviews' => $reviews , 'error' => false]);
+                
             }
             else
             {

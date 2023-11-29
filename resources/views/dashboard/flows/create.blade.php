@@ -47,19 +47,19 @@
                             <div class="flex justify-content-between col-12">
                                 <div class="card-body ml-3 col-5">
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="radio" name="objetivo" id="obj1" value="Calidad de la atención médica">
+                                        <input class="form-check-input" type="radio" name="objetive" id="obj1" value="Calidad de la atención médica">
                                         <label class="form-check-label" for="obj1">
                                             Calidad de la atención médica
                                         </label>
                                     </div>
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="radio" name="objetivo" id="obj2" value="Accesibilidad y tiempo de espera">
+                                        <input class="form-check-input" type="radio" name="objetive" id="obj2" value="Accesibilidad y tiempo de espera">
                                         <label class="form-check-label" for="obj2">
                                             Accesibilidad y tiempo de espera
                                         </label>
                                     </div>
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="radio" name="objetivo" id="obj3" value="Comunicación médico-paciente">
+                                        <input class="form-check-input" type="radio" name="objetive" id="obj3" value="Comunicación médico-paciente">
                                         <label class="form-check-label" for="obj3">
                                             Comunicación médico-paciente
                                         </label>

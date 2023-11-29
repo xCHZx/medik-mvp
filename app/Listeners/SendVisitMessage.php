@@ -24,11 +24,12 @@ class SendVisitMessage
      */
     public function handle(RegisteredVisit $event): void
     {
-        $businessId = $event->visit->businessId;
-        $flow = DB::table('flows')
-            ->where('businessId', '=', $businessId)
-            ->where('isActive', '=', true)
-            ->get();
+        $business = $event->visit->business;
+        $flow = $business->flows->where('isActive' , 1)->first();
+        // $flow = DB::table('flows')
+        //     ->where('businessId', '=', $businessId)
+        //     ->where('isActive', '=', true)
+        //     ->get();
 
         if ($flow) {
             WhatsappSender::dispatch($event->visit, $flow)->delay($event->visit->visitDate->addMinutes(env('DELAYMINUTES')));

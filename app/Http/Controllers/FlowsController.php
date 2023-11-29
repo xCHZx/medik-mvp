@@ -53,7 +53,7 @@ class FlowsController extends Controller
 
         $validated = $request->validate([
             'name' => 'required', // nuevo flujo de + objetivo
-            'objetivo' => 'required',
+            'objetive' => 'required',
         ]); //No debes asignar la función a una variable si no se usará después -CJ
 
         $user = Auth::user();
@@ -64,7 +64,7 @@ class FlowsController extends Controller
 
         $flow = new Flow();
         $flow->name = $request->name;
-        $flow->objetivo = $request->objetivo;
+        $flow->objetive = $request->objetive;
         $flow->businessId = $business->id;
 
         if(count($flows) > 0) //No se recomienda meter comparativos a 0, mejor utiliza if($flows)
@@ -134,12 +134,12 @@ class FlowsController extends Controller
         $validated = $request->validate([
             'flowId' => 'required',
             'name' => 'required', // validar que sea string
-            'objetivo' => 'required' // validar que sea string
+            'objetive' => 'required' // validar que sea string
         ]);
 
         Flow::where('id' , $request->flowId)->update([
                                'name' => $request->name,
-                               'objetivo' => $request->objetivo
+                               'objetive' => $request->objetive
                            ]);
 
         if(isset($request->googleUrl) && !empty($request->googleUrl))

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('flows', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('objetivo'); 
+            $table->string('objetive'); 
             $table->boolean('isActive'); // para activar el flujo o desactivarlo segun el usuario decida
             $table->unsignedBigInteger('businessId');
             $table->timestamps();

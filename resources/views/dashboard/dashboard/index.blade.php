@@ -74,7 +74,7 @@
                                     {{-- <p class="text-sm text-gray-500">120 ♂️<br> 96 ♀️</p> --}}
                                 </div>
                                 <div class="column">
-                                    <div>IMAGEN</div>
+                                    {{-- <div>IMAGEN</div> --}}
                                     <div class="p-1 rounded-md w-32" style="background: #FFEFE7;">
                                         <p class="text-xs">+{{$lastMonthVisitsVariation}}% desde el mes pasado</p>
                                     </div>
@@ -91,7 +91,7 @@
                                     <p class="text-sm  text-gray-500">{{count($goodReviews)}} Positivas<br> {{count($badReviews)}} Negativas</p>
                                 </div>
                                 <div class="column">
-                                    <div>IMAGEN</div>
+                                    {{-- <div>IMAGEN</div> --}}
                                     <div class="p-1 rounded-md w-32" style="background: #FFEFE7;">
                                         <p class="text-xs">+{{$lastMonthReviewsVariation}}% desde el mes pasado</p>
                                     </div>

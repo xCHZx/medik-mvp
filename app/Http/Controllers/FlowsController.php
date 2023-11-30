@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\objetiveNotFoundException;
+use App\Exceptions\objectiveNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\CalificationLink;
@@ -54,7 +54,7 @@ class FlowsController extends Controller
 
         $request->validate([
             'name' => 'required', // nuevo flujo de + objetivo
-            'objetive' => 'required',
+            'objective' => 'required',
         ]); //No debes asignar la función a una variable si no se usará después -CJ
 
         $user = Auth::user();
@@ -63,15 +63,15 @@ class FlowsController extends Controller
         $flows = $this->getFlows($business->id);
 
         try {
-            $alias = $this->getAlias($request->objetive);
-        } catch (objetiveNotFoundException $e) {
+            $alias = $this->getAlias($request->objective);
+        } catch (objectiveNotFoundException $e) {
             dd($e);
         }
         
 
         $flow = new Flow();
         $flow->name = $request->name;
-        $flow->objetive = $request->objetive;
+        $flow->objective = $request->objective;
         $flow->alias = $alias;
         $flow->businessId = $business->id;
 
@@ -142,12 +142,12 @@ class FlowsController extends Controller
         $validated = $request->validate([
             'flowId' => 'required',
             'name' => 'required', // validar que sea string
-            'objetive' => 'required' // validar que sea string
+            'objective' => 'required' // validar que sea string
         ]);
 
         Flow::where('id' , $request->flowId)->update([
                                'name' => $request->name,
-                               'objetive' => $request->objetive
+                               'objective' => $request->objective
                            ]);
 
         if(isset($request->googleUrl) && !empty($request->googleUrl))
@@ -224,7 +224,7 @@ class FlowsController extends Controller
 
     }
 
-    private function getAlias($objetive)
+    private function getAlias($objective)
     {
         $aliases = [
             'Calidad de la atención médica' => 'Evalua como percibes la calidad de los servicios proporcionados',
@@ -233,11 +233,11 @@ class FlowsController extends Controller
             'Satisfacción general' => 'como evaluarias nuestros servicios, la atencion, el tiempo de espera y la comunicacion con nuestro personal'
         ];
 
-        if(!array_key_exists($objetive,$aliases))
+        if(!array_key_exists($objective,$aliases))
         {
-            throw new objetiveNotFoundException('objetivo no encontrado');
+            throw new objectiveNotFoundException('objetivo no encontrado');
         }
-        return $aliases[$objetive];
+        return $aliases[$objective];
 
         
 

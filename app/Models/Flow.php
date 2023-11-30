@@ -15,7 +15,7 @@ class Flow extends Model
 
     protected $fillable = [
         'name',
-        'objetive',
+        'objective',
         'alias',
         'isActive',
         'businessId'

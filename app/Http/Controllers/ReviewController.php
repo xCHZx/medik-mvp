@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 class ReviewController extends Controller
 {
     public function index()
+    public function index()
     {
         // validar que el usuario tenga reviews con un status de complatada y devolver esa review
         try {
@@ -91,7 +92,7 @@ class ReviewController extends Controller
             $review = Review::where('visitId' , $visitId)->firstOrFail();
             $review->rating = $request->rating;
             $review->comment = $request->comment;
-            $review->status = 'Finalizada';
+            $review->status = 'finalizada';
             $review->save();
 
             $newReview = Review::with('visit')->findOrFail($review->id);

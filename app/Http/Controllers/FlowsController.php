@@ -54,7 +54,7 @@ class FlowsController extends Controller
     {
         $user = Auth::user();
         $business = Business::where('userId' , $user->id)->first();
-        return view('dashboard.flows.create', ['businessName' => $business->name , $this->aliases]);
+        return view('dashboard.flows.create', ['businessName' => $business->name , 'aliases' => $this->aliases]);
     }
 
     public function store(Request $request){

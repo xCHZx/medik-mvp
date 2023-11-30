@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 class ReviewController extends Controller
 {
     public function index()
-    public function index()
     {
         // validar que el usuario tenga reviews con un status de complatada y devolver esa review
         try {

@@ -39,24 +39,24 @@
 
     @if($activeBusiness)
         <div class="row">
-            <div class="col-md-8">
-                <section id="resume" class="d-flex gap-4" >
-                    <div class="card basis-1/3" style="background: #FFEFE7">
-                        <div class="card-body text-sky-950">
+            <div class="col-md-7">
+                <section id="resume" class="flex mdkflex-wrap gap-3 md:flex-row md:flex-nowrap lg:flex-nowrap" >
+                    <div class="card md:basis-1/3 basis-full h-44" style="background: #FFEFE7">
+                        <div class="card-body text-sky-950 flex flex-col justify-between py-3">
                             <h3 class="font-medium text-lg">Nuevas visitas</h3>
                             <p class="card-text text-6xl">{{count($currentMonthVisits)}}</p> <!--Aquí cambiar-->
                             <a href="#" class="text-base-" style="color: #1EDDFF">Último mes</a>
                         </div>
                     </div>
-                    <div class="card basis-1/3" style="background: #E8F0FB">
-                        <div class="card-body text-sky-950">
+                    <div class="card md:basis-1/3 basis-full h-44" style="background: #E8F0FB">
+                        <div class="card-body text-sky-950 flex flex-col justify-between py-3">
                             <h3 class="font-medium text-lg">Opiniones Positivas</h3>
                             <p class="card-text text-6xl">{{count($goodReviewsLastMonth)}}</p>
                             <a href="#" class="text-base" style="color: #3786F1">Último mes</a>
                         </div>
                     </div>
-                    <div class="card basis-1/3" style="background: #FDEBF9">
-                        <div class="card-body text-sky-950">
+                    <div class="card md:basis-1/3 basis-full h-44" style="background: #FDEBF9">
+                        <div class="card-body text-sky-950 flex flex-col justify-between py-3">
                             <h3 class="font-medium text-lg">Opiniones Negativas</h3>
                             <p class="card-text text-6xl">{{count($badReviewsLastMonth)}}</p>
                             <a href="#" class="text-base" style="color: #EE61CF">Último mes</a>
@@ -103,44 +103,51 @@
 
                 <section id="reviews" class="mt-1 d-flex gap-4">
                     <article class="card w-full">
-                        <div class="card-body gap-3">
+                        <div class="card-body gap-3 pb-0">
                             @foreach ($lastReviews as $review)
-                            <div class="card w-full flex flex-row py-1 px-3">
-                                <div class="basis-4/5">
-                                    <h3 class="text-lg text-sky-950">{{$review->comment}}</h3>
-                                    <p class="text-xs text-muted">{{$review->created_at}}</p>
+                                <div class="card w-full flex flex-row py-1 px-3">
+                                    <div class="basis-4/5">
+                                        <h3 class="text-lg text-sky-950">{{$review->comment}}</h3>
+                                        <p class="text-xs text-muted">{{$review->created_at}}</p>
+                                    </div>
+                                    <div class="basis-1/5">
+                                        <input
+                                            name="rating"
+                                            class="rating mt-2"
+                                            max="5"
+                                            {{-- oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" --}}
+                                            {{-- style="--value:{{number_format($activeBusiness->averageRating, 1)}}; --starsize: 2rem" --}}
+                                            style="--value:{{$review->rating}}; --starsize: 1.5rem; --fill: #D29D53"
+                                            {{-- style="--value:{{$activeBusiness->averageRating}}; --starsize: 1.5rem; --fill: #D29D53" --}}
+                                            type="range"
+                                            disabled
+                                        >
+                                    </div>
                                 </div>
-                                <div class="basis-1/5">
-                                    <input
-                                        name="rating"
-                                        class="rating mt-2"
-                                        max="5"
-                                        {{-- oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" --}}
-                                        {{-- style="--value:{{number_format($activeBusiness->averageRating, 1)}}; --starsize: 2rem" --}}
-                                        style="--value:{{$review->rating}}; --starsize: 1.5rem; --fill: #D29D53"
-                                        {{-- style="--value:{{$activeBusiness->averageRating}}; --starsize: 1.5rem; --fill: #D29D53" --}}
-                                        type="range"
-                                        disabled
-                                    >
-                                </div>
-                            </div>
                             @endforeach
-                            <a href={{route('reviews.index')}} class="btn mdkbtn-primary p-2 mt-2 w-full text-center">Ver más</a>
+                            <div class="card-footer border-t-2 d-flex justify-center">
+                                <a href={{route('reviews.index')}} class="w-full font-semibold text-center text-cyan-500">Ver Todas las Opiniones</a>
+                            </div>
+                            
                         </div>
                     </article>
                 </section>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <section id="main-lateral" class="d-flex flex-col gap-x-2 flex-grow h-full">
                     <article class="card bg-slate-900  text-white basis-1/2">
-                        <div class="card-header rounded-t-3xl font-medium text-lg" style="background: #1B204A">
+                        <div class="card-header rounded-t-3xl font-medium text-lg p-2.5 pl-4" style="background: #1B204A">
                             Flujo Activo
                         </div>
-                        <div class="card-body">
-                            <p>Fecha de creación: {{$activeFlow->created_at}}</p>
-                            <h3 class="font-medium text-lg">{{$activeFlow->name}}</h3>
-                            <p>{{$activeFlow->objetivo}}</p>
-                            <a href={{route('flows.index')}} class="btn mdkbtn-primary p-2 mt-2 w-full text-center">Ver más</a>
+                        <div class="card-body px-4">
+                            <p class="pb-2 text-gray-400">Fecha de creación: {{$activeFlow->created_at}}</p>
+                            <h3 class="pb-2 font-medium text-lg">{{$activeFlow->name}}</h3>
+                            <p class="pb-2 text-sm text-gray-400">Obejtivo: {{$activeFlow->objetivo}}</p>
+                            <p id="objetive_description" class="pb-3 text-gray-300"></p>
+                            <div class="flex justify-center">
+                                <a href={{route('flows.index')}} class="btn mdkbtn-primary p-2 mt-2 w-2/3 text-center font-medium">Ver más</a>
+                            </div>
+                            
                         </div>
                     </article>
                     <article class="card basis-1/2">
@@ -154,7 +161,7 @@
                                 class="rating mt-2"
                                 max="5"
                                 oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
-                                style="--value:{{$activeBusiness->averageRating}}; --starsize: 4rem; --fill: #D29D53"
+                                style="--value:{{$activeBusiness->averageRating}}; --starsize: 4rem;"
                                 type="range"
                                 disabled
                             >
@@ -167,11 +174,30 @@
     @endif
 @stop
 
-@section('css')
-<link rel="stylesheet" href="/vendor/adminlte/dist/css/app.css">
-@stop
-
 @section('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const flowObjetive = '{{$activeFlow->objetivo}}';
+
+            function objetiveDescription(flowObjetive) {
+                switch (flowObjetive) {
+                    case 'Calidad de la atención médica':
+                        return "Evalúa cómo tus pacientes perciben la calidad de la atención médica proporcionada, incluida la efectividad de los tratamientos y la gestión de las condiciones de salud.";
+                    case 'Accesibilidad y tiempo de espera':
+                        return "Evalúa cómo tus pacientes perciben la forma con la que pueden acceder a tus servicios médicos y el tiempo de espera para recibir los mismos.";
+                    case 'Comunicación médico-paciente':
+                        return "Evalúa cómo tus pacientes perciben la eficacia de la comunicación que tu o tu personal tiene con ellos, así como la claridad y comprensión de la información proporcionada.";
+                    case 'Satisfacción general':
+                        return "Evalúa cómo tus pacientes percibe la atención que les brindas en tu servicio y la calidad de los mismos, este objetivo abarca los 3 puntos anteriores y es la opción por si no sabes cual escoger o no buscas abordar un punto en particular.";
+                    default:
+                        return "Evalúa un aspecto personalizado por ti de la calidad de tu servicio";
+                }
+            }
+
+            document.getElementById('objetive_description').textContent = objetiveDescription(flowObjetive);
+        });
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop
 

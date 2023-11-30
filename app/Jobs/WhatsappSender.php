@@ -62,8 +62,7 @@ class WhatsappSender implements ShouldQueue
                 'to' => '528715757804',
                 'type' => 'template',
                 'template' => [
-                    'name' => 'encuesta_satisfaccion',
-                    // $flow->objetive
+                    'name' => 'encuesta_test',
                     'language' => [
                         'code' => 'es_MX'
                     ],
@@ -128,7 +127,7 @@ class WhatsappSender implements ShouldQueue
 
 
         } catch (Error $e) {
-            echo $e;
+            echo $response;
         }
 
     }

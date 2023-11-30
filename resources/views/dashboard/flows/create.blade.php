@@ -65,7 +65,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="objetivo" id="obj4" value="Satisfacción general">
+                                        <input class="form-check-input" type="radio" name="objetive" id="obj4" value="Satisfacción general">
                                         <label class="form-check-label" for="obj4">
                                             Satisfacción general
                                         </label>

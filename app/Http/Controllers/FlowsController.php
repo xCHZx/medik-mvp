@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\objetiveNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\CalificationLink;
@@ -51,23 +52,30 @@ class FlowsController extends Controller
 
     public function store(Request $request){
 
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required', // nuevo flujo de + objetivo
             'objetive' => 'required',
         ]); //No debes asignar la función a una variable si no se usará después -CJ
 
         $user = Auth::user();
         $business = $user->businesses->first();
-        $flows = Flow::where('businessId', $business->id)
-                   ->where('isActive' , true)->get(); //Hay que meter select para jalar datos específicos de los modelos -CJ
-        //^^^^No debes llamar una lista de un modelo desde la misma función dónde lo creas-CJ^^^^^
+
+        $flows = $this->getFlows($business->id);
+
+        try {
+            $alias = $this->getAlias($request->objetive);
+        } catch (objetiveNotFoundException $e) {
+            dd($e);
+        }
+        
 
         $flow = new Flow();
         $flow->name = $request->name;
         $flow->objetive = $request->objetive;
+        $flow->alias = $alias;
         $flow->businessId = $business->id;
 
-        if(count($flows) > 0) //No se recomienda meter comparativos a 0, mejor utiliza if($flows)
+        if($flows->count() > 0) //No se recomienda meter comparativos a 0, mejor utiliza if($flows)
         {
             $flow->isActive = false;
 
@@ -205,5 +213,33 @@ class FlowsController extends Controller
 
         Flow::destroy($request->flowId);
         return Redirect::route('flows.index')->with('flow-status' , 'success');
+    }
+
+    public function getFlows($id)
+    {
+        $flows = Flow::where('businessId', $id)
+                   ->where('isActive' , true)->get();
+        
+        return $flows;
+
+    }
+
+    private function getAlias($objetive)
+    {
+        $aliases = [
+            'Calidad de la atención médica' => 'Evalua como percibes la calidad de los servicios proporcionados',
+            'Accesibilidad y tiempo de espera' => 'Compartenos que piensas sobre el tiempo de espera para recibir nuestros servicios',
+            'Comunicación médico-paciente' => 'crees que el medico tiene una buena comunicacion contigo? , te explica de manera clara y escucha con atencion?',
+            'Satisfacción general' => 'como evaluarias nuestros servicios, la atencion, el tiempo de espera y la comunicacion con nuestro personal'
+        ];
+
+        if(!array_key_exists($objetive,$aliases))
+        {
+            throw new objetiveNotFoundException('objetivo no encontrado');
+        }
+        return $aliases[$objetive];
+
+        
+
     }
 }

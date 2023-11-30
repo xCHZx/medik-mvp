@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         // validar que el usuario tenga reviews con un status de complatada y devolver esa review
         try {
@@ -26,9 +26,10 @@ class ReviewController extends Controller
 
             $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
 
-            if($reviews)
+            if($reviews->count() > 0)
             {
-                return view('dashboard.reviews.index' , ['reviews' => $reviews , 'error' => false]);
+                return view('dashboard.reviews.index', ['reviews' => $reviews , 'error' => false]);
+
             }
             else
             {
@@ -114,11 +115,18 @@ class ReviewController extends Controller
 
     public function reviewSent($visit , $flow)
     {
+        dd($flowId,$visitId);
+
+        try {
+            Review::where('visitId' , $visitId)->update([
+                'status' => 'enviada',
+                'flowId' => $flowId
+            ]);
+        } catch (Exception $e) {
+            dd($e);
+        }
          // buscar la review asociada a esa visita
-         $review =Review::where('visitId' , $visit->id)->firstOrFail();
-         $review->flowId = $flow->id;
-         $review->status = 'enviada';
-         $review->save();
+
 
     }
 

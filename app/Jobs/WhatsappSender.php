@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\ReviewController;
 use App\Models\Review;
 use App\Models\Visit;
 use Error;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,6 +22,7 @@ class WhatsappSender implements ShouldQueue
 
     protected $visit;
     public $flow;
+    public $tries = 1;
 
     /**
      * Create a new job instance.
@@ -39,6 +42,7 @@ class WhatsappSender implements ShouldQueue
 
         $visitor = $this->visit->visitor;
         $flow = $this->flow;
+        $visit = $this->visit;
 
         // preparar mensaje
         //header
@@ -49,17 +53,16 @@ class WhatsappSender implements ShouldQueue
         $hashedId = $this->visit->hashedId;
 
         $name = $visitor->firstName;
-        $imageUrl = Storage::url('businesses/images/placeholders/'.$this->visit->businessId.'.png');
+        $imageUrl = Storage::url('businesses/images/placeholders/' . $this->visit->businessId . '.png');
 
 
         try {
             $response = Http::withToken($token)->post('https://graph.facebook.com/' . $version . '/' . $whatsappBusinessId . '/messages', [
                 'messaging_product' => 'whatsapp',
-                'to' => $visitorNumber,
+                'to' => '528715757804',
                 'type' => 'template',
                 'template' => [
-                    'name' => 'satisfaccion_general',
-                    // $flow->objetivo
+                    'name' => 'encuesta_test',
                     'language' => [
                         'code' => 'es_MX'
                     ],
@@ -70,7 +73,7 @@ class WhatsappSender implements ShouldQueue
                                 [
                                     'type' => 'image',
                                     'image' => [
-                                        'link' => 'https://app.medik.mx'. $imageUrl
+                                        'link' => 'https://app.medik.mx' . $imageUrl
                                     ]
 
                                 ]
@@ -85,7 +88,12 @@ class WhatsappSender implements ShouldQueue
                                     'type' => 'text',
                                     'text' => $name
 
+                                ],
+                                [
+                                    'type' => 'text',
+                                    'text' => $this->visit->business->name
                                 ]
+
 
                             ]
                         ],
@@ -109,13 +117,29 @@ class WhatsappSender implements ShouldQueue
                 ]
 
             ]);
-        echo $response;
-        app(ReviewController::class)->reviewSent($this->visit , $flow);
+
+
+            $this->changeReviewStatus($this->visit->id, $this->flow->id);
+            //app(ReviewController::class)->reviewSended($this->visit->id , $this->flow->id);
+
+
+
+
 
         } catch (Error $e) {
-            echo $e;
+            echo $response;
         }
 
     }
+
+    public function changeReviewStatus($visitId, $flowId)
+    {
+        Review::where('visitId', $visitId)->update([
+            'status' => 'enviada',
+            'flowId' => $flowId
+        ]);
+
+    }
+
 
 }

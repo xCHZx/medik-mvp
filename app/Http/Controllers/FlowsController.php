@@ -67,7 +67,7 @@ class FlowsController extends Controller
         } catch (objectiveNotFoundException $e) {
             dd($e);
         }
-        
+
 
         $flow = new Flow();
         $flow->name = $request->name;
@@ -219,7 +219,7 @@ class FlowsController extends Controller
     {
         $flows = Flow::where('businessId', $id)
                    ->where('isActive' , true)->get();
-        
+
         return $flows;
 
     }
@@ -239,7 +239,7 @@ class FlowsController extends Controller
         }
         return $aliases[$objective];
 
-        
+
 
     }
 }

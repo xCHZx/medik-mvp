@@ -23,13 +23,13 @@ class ReviewController extends Controller
             {
                 return redirect()->route('business.index');
             }
-            
+
             $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
-            
+
             if($reviews->count() > 0)
             {
                 return view('dashboard.reviews.index', ['reviews' => $reviews , 'error' => false]);
-                
+
             }
             else
             {
@@ -39,7 +39,7 @@ class ReviewController extends Controller
         } catch (Exception $e)
          {
             dd($e);
-            
+
         }
 
     }
@@ -52,7 +52,8 @@ class ReviewController extends Controller
     {
         try{
             $visitId = decrypt($visitEncrypted, env('ENCRYPT_KEY'));
-            $visit = Visit::with('visitor','business')->findOrFail($visitId);
+            $visit = Visit::with('visitor','business','review','review.flow')->findOrFail($visitId);
+            // return $visit;
             return view('reviews.create',compact('visit', 'visitEncrypted'));
         }catch(Exception $e){
             dd($e);
@@ -67,7 +68,7 @@ class ReviewController extends Controller
         $review = new Review();
         $review->visitId = $visit->id;
         $review->save();
-        
+
 
     }
 
@@ -112,10 +113,10 @@ class ReviewController extends Controller
 
     // indicamos que una review ha sido enviada
 
-    public function reviewSended($visitId , $flowId)
+    public function reviewSent($visit , $flow)
     {
         dd($flowId,$visitId);
-    
+
         try {
             Review::where('visitId' , $visitId)->update([
                 'status' => 'enviada',
@@ -125,7 +126,7 @@ class ReviewController extends Controller
             dd($e);
         }
          // buscar la review asociada a esa visita
-         
+
 
     }
 

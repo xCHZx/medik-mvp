@@ -43,13 +43,14 @@ class DashboardController extends Controller
             //Get the last 3 reviews
             $lastReviews = Business::where('userId', $id)->first()
                 ->reviews()
+                ->where('status', 'Finalizada')
                 ->orderBy('created_at', 'desc')
                 ->take(3)
                 ->get();
 
             $allVisits = Business::where('userId', $id)->first()->visits()->get();
 
-            $allReviews = Business::where('userId', $id)->first()->reviews()->get();
+            $allReviews = Business::where('userId', $id)->first()->reviews()->where('status', 'Finalizada')->get();
             $goodReviews = Business::where('userId', $id)->first()->reviews()->where('rating', '>=', 4)->get();
             //good reviews of the last 30 days
             $goodReviewsLastMonth = Business::where('userId', $id)->first()
@@ -91,6 +92,7 @@ class DashboardController extends Controller
 
             $currentMonthReviews = Business::where('userId', $id)->first()
                 ->reviews()
+                ->where('status', 'Finalizada')
                 ->whereDate('reviews.created_at', '>=', now()->subDays(30))
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -113,21 +115,21 @@ class DashboardController extends Controller
             'user',
             'status',
             'activeBusiness',
-            'activeFlow',
-            'lastReviews', //last 3 reviews
-            'allVisits', //all visits
-            'allReviews', //all reviews
-            'goodReviews', //all good reviews
-            'badReviews', //all bad reviews
-            'goodReviewsLastMonth', //good reviews of the last 30 days
-            'badReviewsLastMonth', //bad reviews of the last 30 days
+            'activeFlow', //Flujo activo
+            'lastReviews', //Últimas 3 opiniones
+            'allVisits', //Todas las visitas
+            'allReviews', //Todas las opiniones
+            'goodReviews', //Opiniones positivas
+            'badReviews', //Opiniones negativas
+            'goodReviewsLastMonth', //Opiniones positivas de los últimos 30 días
+            'badReviewsLastMonth', //Opiniones negativas de los últimos 30 días
             'currentMonthReviews',
             'lastMonthReviews',
-            'lastMonthReviewsVariation', //variation of reviews of the last 30 days
-            'currentMonthVisits',  //visits of the last 30 days
+            'lastMonthReviewsVariation', //Variación de opiniones de los últimos 30 días
+            'currentMonthVisits', //Visitas de los últimos 30 días
             'lastMonthVisits',
             'currentMonthVisits',
-            'lastMonthVisitsVariation', //variation of visits of the last 30 days
+            'lastMonthVisitsVariation', //Variación de visitas de los últimos 30 días
         ));
     }
 }

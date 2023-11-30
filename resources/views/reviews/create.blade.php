@@ -10,7 +10,7 @@
                     <div class="row mb-3">
                         <div class="form-group col-md-12">
                             <label class="rating-label d-flex flex-column justify-content-center align-items-center">
-                                <p>¿Cómo calificarías la OBJETIVO en {{$visit->business->name}}?</p>
+                                <p>¿Cómo calificarías la {{$visit->review->flow->objetivo }}en {{$visit->business->name}}?</p>
 
                                 <input
                                     name="rating"

@@ -18,6 +18,13 @@ class FlowsController extends Controller
     //Agregar descripciones contextuales si son necesarias, de funciones del Controler
     //Si vas a manejar validaciones con If no tires error con Else, sino con Throw
     //Ver ejemplo en http/requests/auth/loginrequest
+
+    public $aliases = [ //pregunta personalizada
+        'Calidad de la atención médica' => 'Por favor, evalúa nuestra atención médica y la calidad del trato que recibiste. ¡Gracias por tu ayuda!',
+        'Accesibilidad y tiempo de espera' => 'Por favor, evalúa el tiempo de espera durante tu visita y tu experiencia al solicitar la consulta. ¡Gracias por tu ayuda!',
+        'Comunicación médico-paciente' => 'Por favor, evalúa la comunicación con tu médico durante la visita. ¡Gracias por tu ayuda!',
+        'Satisfacción general' => 'Por favor, evalúa nuestros servicios, la atencion, el tiempo de espera y la comunicacion con nuestro personal. ¡Gracias por tu ayuda!'
+    ];
     public function index()
     {
         $user = Auth::user();
@@ -47,7 +54,7 @@ class FlowsController extends Controller
     {
         $user = Auth::user();
         $business = Business::where('userId' , $user->id)->first();
-        return view('dashboard.flows.create', ['businessName' => $business->name]);
+        return view('dashboard.flows.create', ['businessName' => $business->name , $this->aliases]);
     }
 
     public function store(Request $request){
@@ -63,7 +70,7 @@ class FlowsController extends Controller
         $flows = $this->getFlows($business->id);
 
         try {
-            $alias = $this->getAlias($request->objective);
+            $alias = $this->getAlias($request->objective, $this->aliases);
         } catch (objectiveNotFoundException $e) {
             dd($e);
         }
@@ -224,14 +231,9 @@ class FlowsController extends Controller
 
     }
 
-    private function getAlias($objective)
+    private function getAlias($objective,$aliases)
     {
-        $aliases = [
-            'Calidad de la atención médica' => 'Evalua como percibes la calidad de los servicios proporcionados',
-            'Accesibilidad y tiempo de espera' => 'Compartenos que piensas sobre el tiempo de espera para recibir nuestros servicios',
-            'Comunicación médico-paciente' => 'crees que el medico tiene una buena comunicacion contigo? , te explica de manera clara y escucha con atencion?',
-            'Satisfacción general' => 'como evaluarias nuestros servicios, la atencion, el tiempo de espera y la comunicacion con nuestro personal'
-        ];
+        
 
         if(!array_key_exists($objective,$aliases))
         {

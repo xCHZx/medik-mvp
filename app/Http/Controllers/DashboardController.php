@@ -116,7 +116,7 @@ class DashboardController extends Controller
             'status',
             'activeBusiness',
             'activeFlow', //Flujo activo
-            'lastReviews',
+            'lastReviews', //Últimas 3 opiniones
             'allVisits', //Todas las visitas
             'allReviews', //Todas las opiniones
             'goodReviews', //Opiniones positivas

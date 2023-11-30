@@ -112,7 +112,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => '/medik-icon.png',
             'alt' => 'Cargando...',
@@ -329,7 +329,7 @@ return [
         ],
         [
             'text'        => 'Flujos de Reputación',
-            'url'         => "panel/flujos",
+            'route'         => 'flows.index',
             'icon'        => 'fab fa-fw fa-whatsapp',
         ],
         [
@@ -340,7 +340,7 @@ return [
         [
             'text'        => 'Opiniones',
             'route'       => 'reviews.index',
-            'icon'        => 'fas fa-fw fa-table',
+            'icon'        => 'fas fa-fw fa-star',
 
         ],
         ['header' => 'CONFIGURACIÓN DE CUENTA'],

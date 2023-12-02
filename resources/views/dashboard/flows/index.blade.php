@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="card-body pt-0 pb-2">
-                        <p class="card-text my-2">Objetivo: {{$flow->objetivo}}</p>
+                        <p class="card-text my-2">Objetivo: {{$flow->objective}}</p>
                         <p class="card-text my-2">Fecha de creación: {{ date('d/m/Y \a \l\a\s H:i', strtotime($flow->created_at)) }}</p>
                         <div class="row d-flex justify-content-between align-items-center mt-4">
 

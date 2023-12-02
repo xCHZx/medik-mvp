@@ -104,31 +104,32 @@
                 <section id="reviews" class="mt-1 d-flex gap-4">
                     <article class="card w-full">
                         <div class="card-body gap-3 pb-0">
-                            @foreach ($lastReviews as $review)
-                                <div class="card w-full flex flex-row py-1 px-3">
-                                    <div class="basis-4/5">
-                                        <h3 class="text-lg text-sky-950">{{$review->comment}}</h3>
-                                        <p class="text-xs text-muted">{{$review->created_at}}</p>
+                            <p class="font-medium text-sky-950 text-lg mb-3.5">Últimas Opiniones</p>
+                            @if(count($lastReviews) > 0)
+                                @foreach ($lastReviews as $review)
+                                    <div class="card-in-card w-full flex flex-row py-1 px-3">
+                                        <div class="basis-4/5">
+                                            <h3 class="text-lg my-1.5">{{$review->comment}}</h3>
+                                            <p class="text-xs text-muted mb-2">{{$review->created_at}}</p>
+                                        </div>
+                                        <div class="basis-1/5 flex items-center">
+                                            <input
+                                                name="rating"
+                                                class="rating mt-2"
+                                                max="5"
+                                                style="--value:{{$review->rating}}; --starsize: 1.5rem;"
+                                                type="range"
+                                                disabled
+                                            >
+                                        </div>
                                     </div>
-                                    <div class="basis-1/5">
-                                        <input
-                                            name="rating"
-                                            class="rating mt-2"
-                                            max="5"
-                                            {{-- oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" --}}
-                                            {{-- style="--value:{{number_format($activeBusiness->averageRating, 1)}}; --starsize: 2rem" --}}
-                                            style="--value:{{$review->rating}}; --starsize: 1.5rem; --fill: #D29D53"
-                                            {{-- style="--value:{{$activeBusiness->averageRating}}; --starsize: 1.5rem; --fill: #D29D53" --}}
-                                            type="range"
-                                            disabled
-                                        >
-                                    </div>
+                                @endforeach
+                                <div class="card-footer border-t-2 rounded-none d-flex justify-center">
+                                    <a href={{route('reviews.index')}} class="w-full font-semibold text-center text-cyan-500">Ver Todas las Opiniones</a>
                                 </div>
-                            @endforeach
-                            <div class="card-footer border-t-2 d-flex justify-center">
-                                <a href={{route('reviews.index')}} class="w-full font-semibold text-center text-cyan-500">Ver Todas las Opiniones</a>
-                            </div>
-                            
+                            @else
+                                <div class="card text-center font-medium">Aún no se han generado opiniones para tu negocio</div>
+                            @endif
                         </div>
                     </article>
                 </section>
@@ -142,7 +143,7 @@
                         <div class="card-body px-4">
                             <p class="pb-2 text-gray-400">Fecha de creación: {{$activeFlow->created_at}}</p>
                             <h3 class="pb-2 font-medium text-lg">{{$activeFlow->name}}</h3>
-                            <p class="pb-2 text-sm text-gray-400">Obejtivo: {{$activeFlow->objetivo}}</p>
+                            <p class="pb-2 text-sm text-gray-400">Obejtivo: {{$activeFlow->objective}}</p>
                             <p id="objetive_description" class="pb-3 text-gray-300"></p>
                             <div class="flex justify-center">
                                 <a href={{route('flows.index')}} class="btn mdkbtn-primary p-2 mt-2 w-2/3 text-center font-medium">Ver más</a>
@@ -154,13 +155,12 @@
                         <div class="card-body text-sky-950">
                             <h6 class="font-medium text-lg">Negocio Activo</h6>
                             <p class="my-4 font-medium text-2xl card-text">{{$activeBusiness->name}}</p>
-                            <label class="rating-label d-flex flex-column justify-content-center align-items-center text-7xl">
+                            <label class="d-flex flex-column justify-content-center align-items-center text-7xl">
                                 {{number_format($activeBusiness->averageRating, 1)}}
                                 <input
                                 name="rating"
                                 class="rating mt-2"
                                 max="5"
-                                oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
                                 style="--value:{{$activeBusiness->averageRating}}; --starsize: 4rem;"
                                 type="range"
                                 disabled
@@ -177,7 +177,7 @@
 @section('js')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const flowObjetive = '{{$activeFlow->objetivo}}';
+            const flowObjetive = '{{$activeFlow->objective}}';
 
             function objetiveDescription(flowObjetive) {
                 switch (flowObjetive) {

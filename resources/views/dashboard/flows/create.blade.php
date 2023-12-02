@@ -16,7 +16,6 @@
                 <div class="text-right col-6 mr-0">
                     <button type="submit" class="btn mdkbtn-success mr-2 col-4">Guardar</button>
                     <a href="{{ route('flows.index') }}" class="btn mdkbtn-danger col-4">Cancelar</a>
-                    
                 </div>
             </div>
             
@@ -37,7 +36,7 @@
                 </ul>
 
                 <div class="tab-content" id="myTabContent">
-                    <!-- Objetive window -->
+                    <!-- Objective window -->
                     <div class="tab-pane fade show active" id="objetives" role="tabpanel" aria-labelledby="objetives-tab">
                         <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none text-black">
@@ -47,25 +46,25 @@
                             <div class="flex justify-content-between col-12">
                                 <div class="card-body ml-3 col-5">
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="radio" name="objetive" id="obj1" value="Calidad de la atención médica">
+                                        <input class="form-check-input" type="radio" name="objective" id="obj1" value="Calidad de la atención médica">
                                         <label class="form-check-label" for="obj1">
                                             Calidad de la atención médica
                                         </label>
                                     </div>
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="radio" name="objetive" id="obj2" value="Accesibilidad y tiempo de espera">
+                                        <input class="form-check-input" type="radio" name="objective" id="obj2" value="Accesibilidad y tiempo de espera">
                                         <label class="form-check-label" for="obj2">
                                             Accesibilidad y tiempo de espera
                                         </label>
                                     </div>
                                     <div class="form-check mb-4">
-                                        <input class="form-check-input" type="radio" name="objetive" id="obj3" value="Comunicación médico-paciente">
+                                        <input class="form-check-input" type="radio" name="objective" id="obj3" value="Comunicación médico-paciente">
                                         <label class="form-check-label" for="obj3">
                                             Comunicación médico-paciente
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="objetive" id="obj4" value="Satisfacción general">
+                                        <input class="form-check-input" type="radio" name="objective" id="obj4" value="Satisfacción general">
                                         <label class="form-check-label" for="obj4">
                                             Satisfacción general
                                         </label>
@@ -73,8 +72,8 @@
                                 </div>
 
                                 <!-- Dinamic description -->
-                                <div id="descripcion-objetivo" class="mdkTabCard-display my-3 mr-3 col-6">
-                                    <div class="card-body ml-3">
+                                <div id="descripcion-objetivo" class="descriptionCard my-3 mr-3 col-6 invisible">
+                                    <div class="card-body ml-3 pl-0 pr-3 py-4">
                                         <p id="texto-descripcion" class="text-body-secondary"></p>
                                     </div>
                                 </div>
@@ -123,57 +122,63 @@
 
                     <!-- Result window -->
                     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                        <div class="card mdkTabCard flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
-                            <div class="col-5 my-2">
+                        <div class="card mdkTabCard flex-row justify-around gap-4 mt-1 mb-3 mx-0 px-4">
+                            <div class="col-6 my-2">
                                 <div class="card-header pl-1 border-0">
-                                    <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
+                                    <p class="fs-6 text-left font-semibold">Mensaje Principal</p>
                                 </div>
-                                <div class="card-body p-2 mb-2 wss-bg">                                
-                                    <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
-                                        <div class="p-2 text-white rounded-lg bg-business-image">
-                                            <span class="text-left text-white fw-bolder">
+                                <div class="card-body p-2 mb-4 wss-bg min-h-[85%]">                                
+                                    <div class="mb-0 px-3 pt-3 pb-0 col-10 bg-white rounded-xl text-left text-black">
+                                        <div class="p-3 text-white rounded-xl bg-business-image">
+                                            <span class="text-left text-white font-bold">
                                                 {{$businessName}}
                                             </span>
 
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <!-- Logo Medik -->
-                                                <x-logo-full fill-1="#FFF" fill-2="#FFF" class="mt-2" width="50" height="25"/>
+                                                <x-logo-full fill-1="#FFF" fill-2="#FFF" class="mt-2" width="60" height="30"/>
                                             </div>
                                         </div>
                                         <div class="mt-2 fs-6 mb-1">
-                                            Hola! 😀<br class="my-0 py-0">
+                                            ¡Hola! ¿Cómo estuvo tu experiencia con nuestro servicio? Nos encantaria conocer tu opinión.😊<br class="my-0 py-0">
                                             <br class="my-0 py-0">
-                                            Te registraste para participar en nuestra encuesta de <p id="whatsappMainPreview" class="my-0 py-0 d-inline">OBJETIVO</p>. 
-                                            ¿Deseas contestar un breve formulario y ayudarnos a evaluar la calidad de nuestro servicio? 🙏
+                                            {{$businessName}} te invita a calificar su servicio. ¡Tu opinión es muy importante para nosotros!🌟
                                         </div>
-                                        <p class="text-gray-500 fs-7 mt-0">¿No te interesa? Toca "Detener promociones"</p>
-                                        <ul class="list-group list-group-flush border-0 mt-2">
-                                            <li class="list-group-item text-center text-primary border-top p-1">
+                                        <ul class="list-group list-group-flush border-0 mt-3 mb-0">
+                                            <li class="list-group-item text-center text-primary border-top px-2 pt-2 pb-0 mb-2 cursor-pointer">
                                                 <i class="fas fa-external-link-alt"></i>
-                                                Participar en encuesta
-                                            </li>
-                                            <li class="list-group-item text-center text-primary p-1">
-                                                <i class="fas fa-reply"></i>
-                                                Detener promociones
+                                                Calificar Servicio
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-5 my-2">
+                            <div class="col-6 my-2">
                                 <div class="card-header pl-1 border-0">
-                                    <p class="fs-6 text-left fw-medium">Encuesta</p>
+                                    <p class="fs-6 text-left font-semibold">Encuesta</p>
                                 </div>
-                                <div class="card-body p-2 mb-2 wss-bg">                                
-                                    <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
-                                        <div class="p-2 text-white rounded-lg bg-business-image">
-                                            <span class="text-left text-white fw-bolder">
-                                                EN DESARROLLO
-                                            </span>
-                                        </div>
-                                        <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <div class="card-body fs-6 py-3 px-4 rounded-xl min-h-[85%]" style="background-color: #F5F4F4">                                
+                                    <p>
+                                        Queremos saber cómo fue tu experiencia con nosotros.<br class="my-0 py-0">
+                                        <br class="my-0 py-0">
+                                        Por favor, evalúa ALIAS. ¡Gracias por tu ayuda!
+                                    </p>
+                                    <div class="d-flex justify-center my-2">
+                                        <input
+                                            class="rating cursor-pointer"
+                                            max="5"
+                                            style="--value:5; --starsize: 1.5rem; background-color: #F5F4F4"
+                                            type="range"
+                                            value="5"
+                                            disabled
+                                        >
                                     </div>
+                                    <p>
+                                        Tu opinión es importante para mejorar nuestro servicio.
+                                    </p>
+                                    <textarea name="comment" id="comment" class="form-control mdkTextArea my-1" rows="4" disabled></textarea>
+                                    <div class="mdkbtn-success w-full py-1 mt-2 text-center cursor-pointer">Enviar</div>
                                 </div>
                             </div>
                         </div>
@@ -225,8 +230,7 @@
                 const nombreObjetivoSeleccionado = $('input[type="radio"]:checked').attr('value');
                 const descripcion = obtenerDescripcion(objetivoSeleccionado);
                 $('#texto-descripcion').text(descripcion);
-                $('#descripcion-objetivo').show();
-                $('#whatsappMainPreview').text(nombreObjetivoSeleccionado);
+                $('#descripcion-objetivo').removeClass('invisible');
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';

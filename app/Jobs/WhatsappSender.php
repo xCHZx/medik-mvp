@@ -118,25 +118,31 @@ class WhatsappSender implements ShouldQueue
 
             ]);
 
-
-            $this->changeReviewStatus($this->visit->id, $this->flow->id);
+            echo $response;
+            $this->changeReviewStatus($this->visit->id, $this->flow->id,$response);
             //app(ReviewController::class)->reviewSended($this->visit->id , $this->flow->id);
+            
 
 
 
 
 
         } catch (Error $e) {
-            echo $response;
+            echo $e;
         }
 
     }
 
-    public function changeReviewStatus($visitId, $flowId)
+    public function changeReviewStatus($visitId, $flowId ,$response)
     {
+        $res = json_decode($response, true);
+        $message = $res['messages'][0];
+        $whatsappId = $message['id'];
+
         Review::where('visitId', $visitId)->update([
-            'status' => 'enviada',
-            'flowId' => $flowId
+            'status' => 'aceptado',
+            'flowId' => $flowId,
+            'whatsappId' => $whatsappId
         ]);
 
     }

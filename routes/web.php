@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FlowsController;
 use App\Http\Controllers\ProfileController;
@@ -100,3 +101,7 @@ Route::get('/confirmar', function(){
     Mail::to('rpayns16@gmail.com')->send(new confircorreoMailable);
 });
 require __DIR__.'/auth.php';
+
+//whastapp webhook
+Route::get('/whatsapp-webhook' , [WebhooksController::class , 'verifyWhatsappWebhook']);
+Route::post('/whatsapp-webhook' , [WebhooksController::class , 'processRequest']);

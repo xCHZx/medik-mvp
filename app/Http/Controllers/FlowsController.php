@@ -39,7 +39,7 @@ class FlowsController extends Controller
                 return view('dashboard.flows.index',['flows' => $flows, 'businessName' => $business->name]);
             }else{
                 // vista para crear su primer flujo
-                return view('dashboard.flows.create', ['businessName' => $business->name]);
+                return view('dashboard.flows.create', ['businessName' => $business->name , 'aliases' => $this->aliases]);
             }
         }
         else{
@@ -240,8 +240,6 @@ class FlowsController extends Controller
             throw new objectiveNotFoundException('objetivo no encontrado');
         }
         return $aliases[$objective];
-
-
 
     }
 }

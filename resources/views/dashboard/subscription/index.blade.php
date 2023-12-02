@@ -32,7 +32,7 @@
               <h5>Suscripción <b>Mensual</b></h5>
             </div>
             <div class="card-body">
-              <h1 class="price text-5xl font-semibold">$299</h1>
+              <h1 class="price text-5xl font-semibold">$399</h1>
               <h5 class="text-muted text-sm pt-2">Mensual</h5>
             </div>
             <article class="px-8 mt-2">

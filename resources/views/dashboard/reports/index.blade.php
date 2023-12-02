@@ -9,17 +9,16 @@
 @section('content')
     <section id="resumen" class="grid grid-cols-3 gap-5">
         <div class="card basis-1/4">
-            <div class="card-body text-sky-950">
-                <h6 class="font-medium">Negocio Activo</h6>
-                <p class="my-4 font-medium card-text">{{$business->name}}</p>
-                <label class="rating-label d-flex flex-column justify-content-center align-items-center text-4xl">
-                    {{number_format($business->averageRating, 1)}}
+            <div class="card-body text-sky-950 pb-1.5">
+                <h6 class="font-medium text-lg">Negocio Activo</h6>
+                <p class="my-3 font-medium card-text text-xl">{{$business->name}}</p>
+                <label class="d-flex flex-column justify-content-center align-items-center">
+                    <p class="font-normal text-6xl">{{number_format($business->averageRating, 1)}}</p>
                     <input
                     name="rating"
                     class="rating mt-2"
                     max="5"
-                    oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
-                    style="--value:{{number_format($business->averageRating, 1)}}; --starsize: 2rem"
+                    style="--value:{{number_format($business->averageRating, 1)}}; --starsize: 3.3rem"
                     type="range"
                     disabled
                 >
@@ -27,18 +26,20 @@
             </div>
         </div>
         <div class="card basis-1/4">
-            <div class="card-body text-sky-950">
+            <div class="card-body text-sky-950 flex flex-col justify-between">
                 <h6 class="font-medium text-lg">Total Opiniones</h6>
-                <div class="row my-2">
-                    <div>
-                        <p class="card-text text-6xl">{{count($allReviews)}}</p>
-                        <div class="p-1 rounded-md" style="background: #FFEFE7;">
-                            <p class="text-xs">+{{$lastMonthReviewsVariation}}% Mes pasado</p>
+                <div class="col my-2">
+                    <div class="row">
+                        <div>
+                            <p class="card-text text-6xl">{{count($allReviews)}}</p>
+                            <div class="p-1 rounded-md" style="background: #FFEFE7;">
+                                <p class="text-xs">+{{$lastMonthReviewsVariation}}% Mes pasado</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="ml-0 pl-1">
-                        <p class="text-sm text-gray-500">{{count($goodReviews)}} Positivas</p>
-                        <p class="text-sm text-gray-500">{{count($badReviews)}} Negativas</p>
+                        <div class="ml-0 pl-1">
+                            <p class="text-sm text-gray-500">{{count($goodReviews)}} Positivas</p>
+                            <p class="text-sm text-gray-500">{{count($badReviews)}} Negativas</p>
+                        </div>
                     </div>
                 </div>
                 <a href="#" class="btn mdkbtn-primary mt-2 p-2 w-full text-center">Ver más</a>
@@ -62,7 +63,7 @@
             </div>
         </div> --}}
         <div class="card basis-1/4">
-            <div class="card-body text-sky-950">
+            <div class="card-body text-sky-950 flex flex-col justify-between">
                 <h6 class="font-medium text-lg">Total Visitas</h6>
                 <div class="col my-2">
                     <p class="card-text text-6xl">{{count($allVisits)}}</p>
@@ -191,7 +192,6 @@
 
 @section('js')
     <script>
-        console.log('Hi!');
         function toggleIcon(input) {
             const icon = input.nextElementSibling;
             if (input.type === 'text') {

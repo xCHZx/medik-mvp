@@ -139,12 +139,6 @@
                 icon.style.display = 'inline-block';
             }
         }
-
-        document.querySelectorAll('.print').forEach(function(element) {
-            element.addEventListener('click', function() {
-                console.log({{$review->id}});
-            });
-        });
     </script>
 @stop
 

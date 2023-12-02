@@ -9,8 +9,18 @@
 @section('content')
     @if(!$error)
         <section id="search-bar" class="d-flex justify-start my-4">
-            <form action="{{ route('reviews.index') }}" method="GET" onsubmit="updateDateInputs()" class="basis-4/6">
+            <form action="{{ route('reviews.index') }}" method="GET" onsubmit="updateDateInputs()" class="w-full">
                 <label>
+                    Flujo
+                    <select id="flowObjective" name="flowObjective" class="form-control mt-1 w-72">
+                        <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </label>
+                <label class="ml-md-2">
                     Desde
                     <input
                         onfocus="toggleIcon(this)"
@@ -39,19 +49,6 @@
                 <button class="mdkbtn-success py-1.5 w-24 ml-md-2" type="submit">Filtrar</button>
                 <a href="{{ route('reports.index') }}" class="mdkbtn-danger py-1.5 d-inline-block text-center w-24 ml-md-2">Limpiar</a>
             </form>
-            <div class="d-flex justify-end basis-2/6">
-                <label>
-                    Flujo
-                    <select id="cars" name="cars" class="form-control mt-1 w-72">
-                        <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </label>
-            </div>
-
         </section>
 
         <section id="review-table" class="card">
@@ -61,7 +58,7 @@
                         <tr>
                             <th>Visitante</th>
                             <th>Telefono</th>
-                            <th>Nombre del Flujo</th>
+                            <th>Objetivo del Flujo</th>
                             <th>Fecha de Creación</th>
                             <th>Calificación</th>
                             <th>Mostrar</th>
@@ -72,7 +69,7 @@
                             <tr>
                                 <td>{{$review->visit->visitor->firstName}} {{$review->visit->visitor->lastName}}</td>
                                 <td>{{$review->visit->visitor->phone}}</td>
-                                <td>{{$review->flow->name}}</td>
+                                <td>{{$review->flow->objective}}</td>
                                 <td>{{ date('d/m/Y \a \l\a\s H:i', strtotime($review->created_at)) }}</td>
                                 <td><input class="rating" max="5" style="--value:{{$review->rating}}; --starsize: 1.5rem" type="range" disabled></td>
                                 <td><button type="button" class="print" data-toggle="modal" data-target="#modal{{$review->id}}"><i class="far fa-eye ml-4"></i></button></td>

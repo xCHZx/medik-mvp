@@ -24,6 +24,8 @@ class ReviewController extends Controller
                 return redirect()->route('business.index');
             }
 
+            //agregar filtros para queryparams donde el usuario me pueda pasar 3 filtros, los recibo y verifico que esten y si estan hago el filtrado antes de enviar las reviews
+
             $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
 
             if($reviews->count() > 0)
@@ -60,7 +62,7 @@ class ReviewController extends Controller
         }
     }
 
-    // realizar la mayoria de esto desde un metodo update
+    
 
     public function store($visit)
     {
@@ -111,26 +113,34 @@ class ReviewController extends Controller
 
     }
 
-    // indicamos que una review ha sido enviada
+    // modificamos el status de la review cuando se envia, se recibe y se lee
 
-    public function reviewSent($visit , $flow)
+    public function changeStatus($whatssAppId , $status)
     {
-        dd($flowId,$visitId);
-
+        $status = $this->translate($status);
+        
         try {
-            Review::where('visitId' , $visitId)->update([
-                'status' => 'enviada',
-                'flowId' => $flowId
+            Review::where('whatsappId' , $whatssAppId)->update([
+                'status' => $status
             ]);
         } catch (Exception $e) {
             dd($e);
         }
-         // buscar la review asociada a esa visita
-
 
     }
 
+    // traducir el status que nos manda whatsapp
+    private function translate($status)
+    {
+        $traduccion = [
+            'read' => 'Leida',
+            'sent' => 'Enviada',
+            'delivered' => 'Entregada'
+        ];
 
+        return $status = $traduccion[$status];
+
+    }
 
 
 }

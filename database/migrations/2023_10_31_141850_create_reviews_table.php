@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('status')->default('Pendiente'); //Pendiente, Enviada, recibida, iniciada, finalizada
             $table->unsignedBigInteger('visitId')->nullable();
             $table->unsignedBigInteger('flowId')->nullable();
+            $table->string('whatsappId')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

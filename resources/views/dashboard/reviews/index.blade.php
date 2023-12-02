@@ -39,6 +39,16 @@
                 <button class="mdkbtn-success py-1.5 w-24 ml-md-2" type="submit">Filtrar</button>
                 <a href="{{ route('reports.index') }}" class="mdkbtn-danger py-1.5 d-inline-block text-center w-24 ml-md-2">Limpiar</a>
             </form>
+            <label class="ml-md-2">
+                Flujo
+                <select id="cars" name="cars" class="form-control mt-1 w-48">
+                    <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </label>
         </section>
 
         <section id="review-table" class="card">

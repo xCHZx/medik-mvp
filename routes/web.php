@@ -100,3 +100,16 @@ Route::get('/confirmar', function(){
     Mail::to('rpayns16@gmail.com')->send(new confircorreoMailable);
 });
 require __DIR__.'/auth.php';
+
+Route::get('/resources/images/{filename}', function ($filename) {
+    $path = resource_path('images/' . $filename);
+    
+    if (file_exists($path)) {
+        $mime = mime_content_type($path);
+
+        return response()->file($path, ['Content-Type' => $mime]);
+    } else {
+        abort(404);
+    }
+})->where('filename', '.*');
+

@@ -128,7 +128,7 @@
                                     <a href={{route('reviews.index')}} class="w-full font-semibold text-center text-cyan-500">Ver Todas las Opiniones</a>
                                 </div>
                             @else
-                                <div class="card text-center font-medium">Aún no se han generado opiniones para tu negocio</div>
+                                <div class="card-in-card w-full text-center font-medium">Aún no se han generado opiniones para tu negocio</div>
                             @endif
                         </div>
                     </article>

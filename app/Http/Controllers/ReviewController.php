@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
+use App\Models\Flow;
 use App\Models\Review;
 use App\Models\Visit;
 use Exception;
@@ -14,32 +15,45 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // validar que el usuario tenga reviews con un status de complatada y devolver esa review
         try {
             $business = Auth::user()->businesses->first();
-            if (!$business)
-            {
+            if (!$business) {
                 return redirect()->route('business.index');
             }
 
-            //agregar filtros para queryparams donde el usuario me pueda pasar 3 filtros, los recibo y verifico que esten y si estan hago el filtrado antes de enviar las reviews
+            $startDate = $request->query('startDate');
+            $endDate = $request->query('endDate');
+            $flowObjective = $request->query('flowObjective');
 
-            $reviews = $business->reviews()->where('status' , 'finalizada')->paginate(5);
+            if ($startDate && $endDate && $flowObjective) {
+                $flowObjective = $this->getFlowObjective($flowObjective);
+                $flowId = Flow::where('objective', $flowObjective)->pluck('id');
+                $reviews = $business->reviews()->where('status', 'Finalizada')->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->where('flowId', $flowId)->orderByDesc('id')->paginate(5);
+            } else if ($startDate && $endDate) {
+                $reviews = $business->reviews()->where('status', 'Finalizada')->whereDate('reviews.created_at', '>=', $startDate)->whereDate('reviews.created_at', '<=', $endDate)->orderByDesc('id')->paginate(5);
+            } else if ($flowObjective) {
+                $flowObjective = $this->getFlowObjective($flowObjective);
+                $flowId = Flow::where('objective', $flowObjective)->pluck('id');
+                $reviews = $business->reviews()->where('status', 'Finalizada')->where('flowId', $flowId)->orderByDesc('id')->paginate(5);
 
-            if($reviews->count() > 0)
-            {
-                return view('dashboard.reviews.index', ['reviews' => $reviews , 'error' => false]);
+            } else {
+                $reviews = $business->reviews()->where('status', 'Finalizada')->orderByDesc('id')->paginate(5);
 
             }
-            else
-            {
-                return view('dashboard.reviews.index' , ['error' => true]);
+
+
+            if ($reviews->count() > 0) {
+                $flows = $business->flows();
+                return view('dashboard.reviews.index', ['reviews' => $reviews, 'flows' => $flows, 'error' => false]);
+
+            } else {
+
+                return view('dashboard.reviews.index', ['error' => true]);
             }
 
-        } catch (Exception $e)
-         {
+        } catch (Exception $e) {
             dd($e);
 
         }
@@ -52,17 +66,17 @@ class ReviewController extends Controller
      */
     public function create($visitEncrypted)
     {
-        try{
+        try {
             $visitId = decrypt($visitEncrypted, env('ENCRYPT_KEY'));
-            $visit = Visit::with('visitor','business','review','review.flow')->findOrFail($visitId);
+            $visit = Visit::with('visitor', 'business', 'review', 'review.flow')->findOrFail($visitId);
             // return $visit;
-            return view('reviews.create',compact('visit', 'visitEncrypted'));
-        }catch(Exception $e){
+            return view('reviews.create', compact('visit', 'visitEncrypted'));
+        } catch (Exception $e) {
             dd($e);
         }
     }
 
-    
+
 
     public function store($visit)
     {
@@ -88,9 +102,9 @@ class ReviewController extends Controller
 
     public function update(Request $request, $visitEncrypted)
     {
-        try{
+        try {
             $visitId = decrypt($visitEncrypted, env('ENCRYPT_KEY'));
-            $review = Review::where('visitId' , $visitId)->firstOrFail();
+            $review = Review::where('visitId', $visitId)->firstOrFail();
             $review->rating = $request->rating;
             $review->comment = $request->comment;
             $review->status = 'finalizada';
@@ -100,13 +114,13 @@ class ReviewController extends Controller
 
             app(BusinessController::class)->calculateRating($newReview->visit->businessId);
 
-            if ($review->rating >= 4){
+            if ($review->rating >= 4) {
                 return redirect()->route('review.thankYouGood', ['visitEncrypted' => $visitEncrypted]);
-            }else{
+            } else {
                 return redirect()->route('review.thankYouBad', ['visitEncrypted' => $visitEncrypted]);
             }
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
 
             dd($e);
         }
@@ -115,12 +129,12 @@ class ReviewController extends Controller
 
     // modificamos el status de la review cuando se envia, se recibe y se lee
 
-    public function changeStatus($whatssAppId , $status)
+    public function changeStatus($whatssAppId, $status)
     {
         $status = $this->translate($status);
-        
+
         try {
-            Review::where('whatsappId' , $whatssAppId)->update([
+            Review::where('whatsappId', $whatssAppId)->update([
                 'status' => $status
             ]);
         } catch (Exception $e) {
@@ -139,6 +153,19 @@ class ReviewController extends Controller
         ];
 
         return $status = $traduccion[$status];
+
+    }
+
+    private function getFlowObjective($objective)
+    {
+        $flows = [
+            '1' => 'Calidad de la atención médica',
+            '2' => 'Accesibilidad y tiempo de espera',
+            '3' => 'Comunicación médico-paciente',
+            '4' => 'Satisfacción general'
+        ];
+
+        return $flows[$objective];
 
     }
 

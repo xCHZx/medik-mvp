@@ -173,7 +173,7 @@
                                     <p>
                                         Queremos saber cómo fue tu experiencia con nosotros.<br class="my-0 py-0">
                                         <br class="my-0 py-0">
-                                        Por favor, evalúa ALIAS. ¡Gracias por tu ayuda!
+                                        <span id="alias-text">¡Gracias por tu ayuda!</span>
                                     </p>
                                     <div class="d-flex justify-center my-2">
                                         <input
@@ -249,17 +249,20 @@
                 const selectedObjetive = $('input[type="radio"]:checked').attr('id');
                 const valueSelectedObjetive = $('input[type="radio"]:checked').attr('value');
                 const description = showDescription(selectedObjetive);
+                const alias = getAlias(selectedObjetive);
                 $('#texto-descripcion').text(description);
                 $('#descripcion-objetivo').removeClass('invisible');
-                $('#whatsappMainPreview').text(valueSelectedObjetive);
+                $('#alias-text').text(`${alias} `);
             });
 
             $('input[type="radio"]').on('click', function () {
                 // Actualiza el valor del objetivo seleccionado
-                const businessName = '{{$businessName}}';
                 const valueSelectedObjetive = $('input[type="radio"]:checked').attr('value');
+                const selectedObjetive = $('input[type="radio"]:checked').attr('id');
                 const defaultFlowName = valueSelectedObjetive;
+                const alias = getAlias(selectedObjetive);
                 $('#flowName').val(defaultFlowName);
+                $('#alias-text').text(`${alias} `);
             });
 
             // Cambia la descripción según el objetivo seleccionado
@@ -276,42 +279,71 @@
                     default:
                         return "Selecciona un objetivo válido";
                 }
-            }
+            };
+
+            function getAlias(selectedObjetive) {
+                const aliases = {!! json_encode($aliases) !!};
+                
+                switch (selectedObjetive) {
+                    case 'obj1':
+                        return aliases['Calidad de la atención médica'];
+                    case 'obj2':
+                        return aliases['Accesibilidad y tiempo de espera'];
+                    case 'obj3':
+                        return aliases['Comunicación médico-paciente'];
+                    case 'obj4':
+                        return aliases['Satisfacción general'];
+                    default:
+                        return "Selecciona un alias válido";
+                }
+            };
 
             // Deselecciona los otros radio buttons
             $('input[type="radio"]').on('click', function () {
                 $('input[type="radio"]').not(this).prop('checked', false);
             });
 
-            // Función para retroceder a la pestaña anterior
-            function avanzarPestana() {
+            function actualizarBotonesPestana() {
                 var $activeTab = $('.nav-tabs .nav-link.active');
-                var $nextTab = $activeTab.parent().next().children('a');
+                var tabIndex = $activeTab.parent().index();
 
-                if ($nextTab.length > 0) {
-                    $nextTab.tab('show');
+                if (tabIndex === 0) {
+                    $('#reverse-btn').prop('disabled', true);
+                } else {
+                    $('#reverse-btn').prop('disabled', false);
                 }
-            };
 
-            // Función para retroceder a la pestaña anterior
-            function retrocederPestana() {
+                if (tabIndex === $('.nav-tabs .nav-item').length - 1) {
+                    $('#forward-btn').prop('disabled', true);
+                } else {
+                    $('#forward-btn').prop('disabled', false);
+                }
+            }
+
+            function cambiarPestana(next) {
                 var $activeTab = $('.nav-tabs .nav-link.active');
-                var $prevTab = $activeTab.parent().prev().children('a');
+                var $tabs = $('.nav-tabs .nav-item');
+                var index = $activeTab.parent().index();
 
-                if ($prevTab.length > 0) {
-                    $prevTab.tab('show');
+                if (next && index < $tabs.length - 1) {
+                    $tabs.eq(index + 1).children('a').tab('show');
+                } else if (!next && index > 0) {
+                    $tabs.eq(index - 1).children('a').tab('show');
                 }
-            };
 
-            // Evento al hacer clic en el botón de avanzar
-            $('#forward-btn').on('click', function () {
-                avanzarPestana();
+                actualizarBotonesPestana();
+            }
+
+            $('#forward-btn, #reverse-btn').on('click', function () {
+                const direction = $(this).is('#forward-btn'); //Si es true avanza, sino retrocede
+                cambiarPestana(direction);
             });
 
-            // Evento al hacer clic en el botón de retroceder
-            $('#reverse-btn').on('click', function () {
-                retrocederPestana();
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                actualizarBotonesPestana();
             });
+
+            actualizarBotonesPestana();
 
             //Oculta instrucciones
             document.getElementById("info1").addEventListener("click", function() {

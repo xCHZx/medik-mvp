@@ -113,24 +113,4 @@ class ReviewController extends Controller
 
     // indicamos que una review ha sido enviada
 
-    public function reviewSent($visit , $flow)
-    {
-        dd($flowId,$visitId);
-
-        try {
-            Review::where('visitId' , $visitId)->update([
-                'status' => 'enviada',
-                'flowId' => $flowId
-            ]);
-        } catch (Exception $e) {
-            dd($e);
-        }
-         // buscar la review asociada a esa visita
-
-
-    }
-
-
-
-
 }

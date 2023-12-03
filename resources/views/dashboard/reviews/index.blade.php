@@ -14,10 +14,9 @@
                     Flujo
                     <select id="flowObjective" name="flowObjective" class="form-control mt-1 w-72">
                         <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
+                        @foreach($flowsObjectives as $flowObjective)
+                           <option value="{{$flows[$flowObjective]}}">{{$flowObjective}}</option>
+                        @endforeach
                     </select>
                 </label>
                 <label class="ml-md-2">
@@ -77,7 +76,16 @@
                                 </tr>
                             @endforeach
                         @elseif ((request()->has('startDate') && request()->has('endDate')) || request()->has('flowObjective'))
-
+                        @foreach ($reviews as $review)
+                                <tr>
+                                    <td>{{$review->visit->visitor->firstName}} {{$review->visit->visitor->lastName}}</td>
+                                    <td>{{$review->visit->visitor->phone}}</td>
+                                    <td>{{$review->flow->objective}}</td>
+                                    <td>{{ date('d/m/Y \a \l\a\s H:i', strtotime($review->created_at)) }}</td>
+                                    <td><input class="rating" max="5" style="--value:{{$review->rating}}; --starsize: 1.5rem" type="range" disabled></td>
+                                    <td><button type="button" data-toggle="modal" data-target="#showReview" data-comment="{{$review->comment}}" data-date="{{ date('d/m/Y', strtotime($review->created_at)) }}" data-visitor="{{$review->visit->visitor->firstName}} {{$review->visit->visitor->lastName}}" data-rating="{{$review->rating}}"><i class="far fa-eye ml-4"></i></button></td>
+                                </tr>
+                            @endforeach
                         @endif
                     </tbody>
                 </table>

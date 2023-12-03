@@ -20,7 +20,7 @@
                     </div>
                         <div class="form-group col-md-12">
                             <label for="phone" class="form-label">Teléfono</label>
-                            <input type="tel" pattern="[0-9]{9-10}" class="form-control" name="phone" id="phone" required>
+                            <input type="tel" pattern="[0-9]{9,10}" class="form-control" name="phone" id="phone" required>
                         </div>
                     <div class="mt-3">
                         <button type="submit" class="mdkbtn-success px-4 py-2 focus:outline-none focus:ring focus:ring-indigo-500 w-full">Enviar</button>

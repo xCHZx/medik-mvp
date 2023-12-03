@@ -58,7 +58,7 @@
                 <!-- Phone Number -->
                 <div class="col-12 col-md-6 mt-4">
                     <label for="phone" class="block text-sm font-medium text-gray-700">Número de Celular</label>
-                    <input id="phone" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="tel" pattern="[0-9]{9-10}" name="phone" value="{{ old('phone') }}" autocomplete="phone" />
+                    <input id="phone" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="tel" pattern="[0-9]{9,10}" name="phone" value="{{ old('phone') }}" autocomplete="phone" />
                     @if ($errors->has('phone'))
                         <p class="mt-2 text-sm text-red-600">{{ $errors->first('phone') }}</p>
                     @endif

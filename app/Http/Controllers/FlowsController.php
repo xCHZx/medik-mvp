@@ -137,7 +137,8 @@ class FlowsController extends Controller
             'businessName' => $business->name,
             'flow' => $flow,
             'facebookLink' => $facebookLink,
-            'googleLink' => $googleLink
+            'googleLink' => $googleLink,
+            'aliases' => $this->aliases
         ]);
 
     }

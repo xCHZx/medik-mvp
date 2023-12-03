@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">Número de Celular</label>
-                        <input type="tel" pattern="[0-9]{9-10}" class="form-control" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
+                        <input type="tel" pattern="[0-9]{9,10}" class="form-control" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
                     </div>
                     <div class="mt-4 flex justify-content-end">
                         <button type="submit" class="mdkbtn-success py-2 px-3">Guardar y regresar</button>

@@ -105,3 +105,16 @@ require __DIR__.'/auth.php';
 //whastapp webhook
 Route::get('/whatsapp-webhook' , [WebhooksController::class , 'verifyWhatsappWebhook']);
 Route::post('/whatsapp-webhook' , [WebhooksController::class , 'processRequest']);
+
+Route::get('/resources/images/{filename}', function ($filename) {
+    $path = resource_path('images/' . $filename);
+    
+    if (file_exists($path)) {
+        $mime = mime_content_type($path);
+
+        return response()->file($path, ['Content-Type' => $mime]);
+    } else {
+        abort(404);
+    }
+})->where('filename', '.*');
+

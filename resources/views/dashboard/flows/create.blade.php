@@ -16,7 +16,6 @@
                 <div class="text-right col-6 mr-0">
                     <button type="submit" class="btn mdkbtn-success mr-2 col-4">Guardar</button>
                     <a href="{{ route('flows.index') }}" class="btn mdkbtn-danger col-4">Cancelar</a>
-                    
                 </div>
             </div>
             
@@ -37,7 +36,7 @@
                 </ul>
 
                 <div class="tab-content" id="myTabContent">
-                    <!-- Objetive window -->
+                    <!-- Objective window -->
                     <div class="tab-pane fade show active" id="objetives" role="tabpanel" aria-labelledby="objetives-tab">
                         <div class="card mdkTabCard mt-0.5 mb-3 mx-0">
                             <div class="card-header border-none text-black">
@@ -73,8 +72,8 @@
                                 </div>
 
                                 <!-- Dinamic description -->
-                                <div id="descripcion-objetivo" class="mdkTabCard-display my-3 mr-3 col-6">
-                                    <div class="card-body ml-3">
+                                <div id="descripcion-objetivo" class="descriptionCard my-3 mr-3 col-6 invisible">
+                                    <div class="card-body ml-3 pl-0 pr-3 py-4">
                                         <p id="texto-descripcion" class="text-body-secondary"></p>
                                     </div>
                                 </div>
@@ -123,57 +122,63 @@
 
                     <!-- Result window -->
                     <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                        <div class="card mdkTabCard flex-row justify-content-around col-12 mt-1 mb-3 mx-0">
-                            <div class="col-5 my-2">
+                        <div class="card mdkTabCard flex-row justify-around gap-4 mt-1 mb-3 mx-0 px-4">
+                            <div class="col-6 my-2">
                                 <div class="card-header pl-1 border-0">
-                                    <p class="fs-6 text-left fw-medium">Mensaje Principal</p>
+                                    <p class="fs-6 text-left font-semibold">Mensaje Principal</p>
                                 </div>
-                                <div class="card-body p-2 mb-2 wss-bg">                                
-                                    <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
-                                        <div class="p-2 text-white rounded-lg bg-business-image">
-                                            <span class="text-left text-white fw-bolder">
+                                <div class="card-body p-2 mb-4 wss-bg min-h-[85%]">                                
+                                    <div class="mb-0 px-3 pt-3 pb-0 col-10 bg-white rounded-xl text-left text-black">
+                                        <div class="p-3 text-white rounded-xl bg-business-image">
+                                            <span class="text-left text-white font-bold">
                                                 {{$businessName}}
                                             </span>
 
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <!-- Logo Medik -->
-                                                <x-logo-full fill-1="#FFF" fill-2="#FFF" class="mt-2" width="50" height="25"/>
+                                                <x-logo-full fill-1="#FFF" fill-2="#FFF" class="mt-2" width="60" height="30"/>
                                             </div>
                                         </div>
                                         <div class="mt-2 fs-6 mb-1">
-                                            Hola! 😀<br class="my-0 py-0">
+                                            ¡Hola! ¿Cómo estuvo tu experiencia con nuestro servicio? Nos encantaria conocer tu opinión.😊<br class="my-0 py-0">
                                             <br class="my-0 py-0">
-                                            Te registraste para participar en nuestra encuesta de <p id="whatsappMainPreview" class="my-0 py-0 d-inline">OBJETIVO</p>. 
-                                            ¿Deseas contestar un breve formulario y ayudarnos a evaluar la calidad de nuestro servicio? 🙏
+                                            {{$businessName}} te invita a calificar su servicio. ¡Tu opinión es muy importante para nosotros!🌟
                                         </div>
-                                        <p class="text-gray-500 fs-7 mt-0">¿No te interesa? Toca "Detener promociones"</p>
-                                        <ul class="list-group list-group-flush border-0 mt-2">
-                                            <li class="list-group-item text-center text-primary border-top p-1">
+                                        <ul class="list-group list-group-flush border-0 mt-3 mb-0">
+                                            <li class="list-group-item text-center text-primary border-top px-2 pt-2 pb-0 mb-2 cursor-pointer">
                                                 <i class="fas fa-external-link-alt"></i>
-                                                Participar en encuesta
-                                            </li>
-                                            <li class="list-group-item text-center text-primary p-1">
-                                                <i class="fas fa-reply"></i>
-                                                Detener promociones
+                                                Calificar Servicio
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-5 my-2">
+                            <div class="col-6 my-2">
                                 <div class="card-header pl-1 border-0">
-                                    <p class="fs-6 text-left fw-medium">Encuesta</p>
+                                    <p class="fs-6 text-left font-semibold">Encuesta</p>
                                 </div>
-                                <div class="card-body p-2 mb-2 wss-bg">                                
-                                    <div class="mb-4 p-3 col-10 bg-white rounded-lg text-left text-black">
-                                        <div class="p-2 text-white rounded-lg bg-business-image">
-                                            <span class="text-left text-white fw-bolder">
-                                                EN DESARROLLO
-                                            </span>
-                                        </div>
-                                        <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <div class="card-body fs-6 py-3 px-4 rounded-xl min-h-[85%]" style="background-color: #F5F4F4">                                
+                                    <p>
+                                        Queremos saber cómo fue tu experiencia con nosotros.<br class="my-0 py-0">
+                                        <br class="my-0 py-0">
+                                        <span id="alias-text">¡Gracias por tu ayuda!</span>
+                                    </p>
+                                    <div class="d-flex justify-center my-2">
+                                        <input
+                                            class="rating cursor-pointer"
+                                            max="5"
+                                            style="--value:5; --starsize: 1.5rem; background-color: #F5F4F4"
+                                            type="range"
+                                            value="5"
+                                            disabled
+                                        >
                                     </div>
+                                    <p>
+                                        Tu opinión es importante para mejorar nuestro servicio.
+                                    </p>
+                                    <textarea name="comment" id="comment" class="form-control mdkTextArea my-1" rows="4" disabled></textarea>
+                                    <div class="mdkbtn-success w-full py-1 mt-2 text-center cursor-pointer">Enviar</div>
                                 </div>
                             </div>
                         </div>
@@ -224,9 +229,10 @@
                 const objetivoSeleccionado = $('input[type="radio"]:checked').attr('id');
                 const nombreObjetivoSeleccionado = $('input[type="radio"]:checked').attr('value');
                 const descripcion = obtenerDescripcion(objetivoSeleccionado);
+                const alias = getAlias(objetivoSeleccionado);
                 $('#texto-descripcion').text(descripcion);
-                $('#descripcion-objetivo').show();
-                $('#whatsappMainPreview').text(nombreObjetivoSeleccionado);
+                $('#descripcion-objetivo').removeClass('invisible');
+                $('#alias-text').text(`${alias} `);
 
                 // Actualiza el valor del objetivo seleccionado
                 const businessName = '{{$businessName}}';
@@ -248,42 +254,71 @@
                     default:
                         return "Selecciona un objetivo válido";
                 }
-            }
+            };
+
+            function getAlias(objetivoSeleccionado) {
+                const aliases = {!! json_encode($aliases) !!};
+                
+                switch (objetivoSeleccionado) {
+                    case 'obj1':
+                        return aliases['Calidad de la atención médica'];
+                    case 'obj2':
+                        return aliases['Accesibilidad y tiempo de espera'];
+                    case 'obj3':
+                        return aliases['Comunicación médico-paciente'];
+                    case 'obj4':
+                        return aliases['Satisfacción general'];
+                    default:
+                        return "Selecciona un objetivo válido";
+                }
+            };
 
             // Deselecciona los otros radio buttons
             $('input[type="radio"]').on('click', function () {
                 $('input[type="radio"]').not(this).prop('checked', false);
             });
 
-            // Función para retroceder a la pestaña anterior
-            function avanzarPestana() {
+            function actualizarBotonesPestana() {
                 var $activeTab = $('.nav-tabs .nav-link.active');
-                var $nextTab = $activeTab.parent().next().children('a');
+                var tabIndex = $activeTab.parent().index();
 
-                if ($nextTab.length > 0) {
-                    $nextTab.tab('show');
+                if (tabIndex === 0) {
+                    $('#reverse-btn').prop('disabled', true);
+                } else {
+                    $('#reverse-btn').prop('disabled', false);
                 }
-            };
 
-            // Función para retroceder a la pestaña anterior
-            function retrocederPestana() {
+                if (tabIndex === $('.nav-tabs .nav-item').length - 1) {
+                    $('#forward-btn').prop('disabled', true);
+                } else {
+                    $('#forward-btn').prop('disabled', false);
+                }
+            }
+
+            function cambiarPestana(next) {
                 var $activeTab = $('.nav-tabs .nav-link.active');
-                var $prevTab = $activeTab.parent().prev().children('a');
+                var $tabs = $('.nav-tabs .nav-item');
+                var index = $activeTab.parent().index();
 
-                if ($prevTab.length > 0) {
-                    $prevTab.tab('show');
+                if (next && index < $tabs.length - 1) {
+                    $tabs.eq(index + 1).children('a').tab('show');
+                } else if (!next && index > 0) {
+                    $tabs.eq(index - 1).children('a').tab('show');
                 }
-            };
 
-            // Evento al hacer clic en el botón de avanzar
-            $('#forward-btn').on('click', function () {
-                avanzarPestana();
+                actualizarBotonesPestana();
+            }
+
+            $('#forward-btn, #reverse-btn').on('click', function () {
+                const direction = $(this).is('#forward-btn'); //Si es true avanza, sino retrocede
+                cambiarPestana(direction);
             });
 
-            // Evento al hacer clic en el botón de retroceder
-            $('#reverse-btn').on('click', function () {
-                retrocederPestana();
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                actualizarBotonesPestana();
             });
+
+            actualizarBotonesPestana();
 
             //Oculta instrucciones
             document.getElementById("info1").addEventListener("click", function() {

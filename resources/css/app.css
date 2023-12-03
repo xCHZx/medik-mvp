@@ -58,6 +58,33 @@ body{
     color: #2B2B2B;
 }
 
+/* Overwrite Pagination*/
+/* .page-item {
+    justify-self: stretch;
+
+    .page-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      box-shadow: none;
+      color: #FFF;
+      background-color:#5C63FF;
+      border-radius: 10px 10px 10px 10px;
+      border: none;
+      
+      &:hover {
+          background-color:#282DA4;
+          color: #FFF;
+      }
+    }
+
+    &:disabled {
+        background-color:#000dff;
+        color: #9EA2B3;
+    }
+} */
+
 /* CSS DESIGN STYLE */
 
 /*Business*/
@@ -236,8 +263,16 @@ body{
 
     .card-footer{
         background: #FFF;
-        border-radius: 0 15px 15px !important;
+        border-radius: 0 !important;
     }
+}
+
+.card-in-card{
+    background-color: #FAFAFA;
+    border-color: #E0E0E0;
+    border-radius: 6px;
+    border-width: 0.5px;
+    margin-bottom: 0.5rem;
 }
 
 .card-title{
@@ -291,6 +326,12 @@ body{
     height: 100%;
 }
 
+.descriptionCard{
+    border-width: 2px;
+    border-color: #C7CDE1;
+    background-color: #F9F4F4;
+}
+
 .nav-tabs .nav-item .nav-link {
     color: #686868;
 }
@@ -323,7 +364,7 @@ body{
 }
 
 .bg-business-image {
-    background-color: #206152;
+    background-color: #22836F;
 }
 
 /*Text*/

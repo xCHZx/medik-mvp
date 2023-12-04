@@ -354,6 +354,11 @@ return [
             'url'         => "panel/perfil",
             'icon'        => 'fas fa-fw fa-cog',
         ],
+        [
+            'text'        => 'Citas',
+            'route'       => 'appointments.index',
+            'icon'        => 'fas fa-fw fa-calendar',
+        ],
         // [
         //     'text' => 'change_password',
         //     'url'  => 'admin/settings',

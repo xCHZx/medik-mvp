@@ -10,15 +10,15 @@
     @if(!$error)
         <section id="search-bar" class="d-flex justify-start my-4">
             <form action="{{ route('reviews.index') }}" method="GET" onsubmit="updateDateInputs()" class="w-full">
-                <label>
+                <label class="relative">
                     Flujo
                     <select id="flowObjective" name="flowObjective" class="form-control mt-1 w-72">
-                        <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
+                        <option value="" disabled selected hidden></option>
+                        @foreach($flowsObjectives as $flowObjective)
+                           <option value="{{$flows[$flowObjective]}}">{{$flowObjective}}</option>
+                        @endforeach
                     </select>
+                    <p class="placeholderFilter">Selecciona un flujo</p>
                 </label>
                 <label class="ml-md-2">
                     Desde
@@ -53,7 +53,7 @@
 
         <section id="review-table" class="card">
             <div class="card-body">
-                <table class="table w-full border">
+                <table class="table w-full border mdkTable-hover">
                     <thead class="thead-light">
                         <tr>
                             <th>Visitante</th>
@@ -77,14 +77,21 @@
                                 </tr>
                             @endforeach
                         @elseif ((request()->has('startDate') && request()->has('endDate')) || request()->has('flowObjective'))
-
+                            @foreach ($reviews as $review)
+                                <tr>
+                                    <td>{{$review->visit->visitor->firstName}} {{$review->visit->visitor->lastName}}</td>
+                                    <td>{{$review->visit->visitor->phone}}</td>
+                                    <td>{{$review->flow->objective}}</td>
+                                    <td>{{ date('d/m/Y \a \l\a\s H:i', strtotime($review->created_at)) }}</td>
+                                    <td><input class="rating" max="5" style="--value:{{$review->rating}}; --starsize: 1.5rem" type="range" disabled></td>
+                                    <td><button type="button" data-toggle="modal" data-target="#showReview" data-comment="{{$review->comment}}" data-date="{{ date('d/m/Y', strtotime($review->created_at)) }}" data-visitor="{{$review->visit->visitor->firstName}} {{$review->visit->visitor->lastName}}" data-rating="{{$review->rating}}"><i class="far fa-eye ml-4"></i></button></td>
+                                </tr>
+                            @endforeach
                         @endif
                     </tbody>
                 </table>
                 <div class="d-flex justify-end mt-3">
                     {{$reviews->links("pagination::bootstrap-4")}}
-                    {{-- <button class="mdkbtn-info py-0.5 px-1.5 rounded-sm" id="reverse-btn"><</button>
-                    <button class="mdkbtn-primary py-0.5 px-1.5 rounded-sm ml-3" id="forward-btn">></button> --}}
                 </div>
             </div>
         </section>
@@ -156,7 +163,10 @@
                 modal.find('#reviewComment').text(comment);
                 modal.find('#reviewRating').css('--value', rating);
             });
-        
+
+            document.getElementById('flowObjective').addEventListener('change', function() {
+                document.querySelector('.red-text').style.display = 'none';
+            });
         });
     </script>
 @stop

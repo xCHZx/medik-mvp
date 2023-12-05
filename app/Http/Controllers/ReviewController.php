@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
+    public $flows = [
+        'Calidad de la atención médica' => '1',
+        'Accesibilidad y tiempo de espera' => '2',
+        'Comunicación médico-paciente' => '3',
+        'Satisfacción general' => '4'
+    ];
+
     public function index(Request $request)
     {
         try {
@@ -45,8 +52,13 @@ class ReviewController extends Controller
 
 
             if ($reviews->count() > 0) {
-                $flows = $business->flows();
-                return view('dashboard.reviews.index', ['reviews' => $reviews, 'flows' => $flows, 'error' => false]);
+                $flowsObjectives = $business->flows()->pluck('objective');
+                return view('dashboard.reviews.index', [
+                    'reviews' => $reviews,
+                    'flowsObjectives' => $flowsObjectives,
+                    'flows' => $this->flows,
+                    'error' => false
+                ]);
 
             } else {
 
@@ -158,16 +170,15 @@ class ReviewController extends Controller
 
     private function getFlowObjective($objective)
     {
-        $flows = [
+       $flowObjectives = [
             '1' => 'Calidad de la atención médica',
             '2' => 'Accesibilidad y tiempo de espera',
             '3' => 'Comunicación médico-paciente',
             '4' => 'Satisfacción general'
         ];
 
-        return $flows[$objective];
-
+        return $flowObjectives[$objective];
+        
     }
-
 
 }

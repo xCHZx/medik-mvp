@@ -1,7 +1,7 @@
 <x-visitor-layout>
 
     <!-- Greeting section -->
-    <div class="text-center mb-1">
+    <div class="text-center mb-1 mt-3">
         <!-- Carita chula -->
         <span class="text-4xl">&#128526;</span>
 
@@ -21,13 +21,11 @@
         <p class="text-gray-600" style="margin-top: -0.25rem">Ingresa tus datos para registrarte con nosotros</p>
     </div>
 
-    <div class="mx-3 mx-md-0">
+    <div class="mx-3 mx-md-0 mb-3">
         <!-- Form section -->
         <form class="w-full sm:max-w-lg mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg" method="POST" action="{{ route('register') }}">
             @csrf
-
             <div class="row">
-
                 <!-- First Name -->
                 <div class="col-12 col-md-6">
                     <label for="firstName" class="block text-sm font-medium text-gray-700">Nombre(s)</label>
@@ -38,7 +36,7 @@
                 </div>
 
                 <!-- Last Name -->
-                <div class="col-12 col-md-6 mt-4 mt-md-0">
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
                     <label for="lastName" class="block text-sm font-medium text-gray-700">Apellido(s)</label>
                     <input id="lastName" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="text" name="lastName" value="{{ old('lastName') }}" autocomplete="lastName" />
                     @if ($errors->has('lastName'))
@@ -47,7 +45,7 @@
                 </div>
 
                 <!-- Email -->
-                <div class="col-12 col-md-6 mt-4">
+                <div class="col-12 col-md-6 mt-3">
                     <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
                     <input id="email" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" name="email" value="{{ old('email') }}" required autocomplete="username" />
                     @if ($errors->has('email'))
@@ -56,7 +54,7 @@
                 </div>
 
                 <!-- Phone Number -->
-                <div class="col-12 col-md-6 mt-4">
+                <div class="col-12 col-md-6 mt-3">
                     <label for="phone" class="block text-sm font-medium text-gray-700">Número de Celular</label>
                     <input id="phone" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="tel" pattern="[0-9]{9,10}" name="phone" value="{{ old('phone') }}" autocomplete="phone" />
                     @if ($errors->has('phone'))
@@ -65,7 +63,7 @@
                 </div>
 
                 <!-- Password -->
-                <div class="mt-4">
+                <div class="mt-3">
                     <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
                     <div>
                         <input id="password" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un dígito" name="password" required autocomplete="new-password" />
@@ -77,7 +75,7 @@
                 </div>
 
                 <!-- Confirm Password -->
-                <div class="mt-4">
+                <div class="mt-3">
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Repite la contraseña</label>
                     <div>
                         <input id="password_confirmation" class="form-control block mt-1 w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password_confirmation" required autocomplete="new-password" />
@@ -87,12 +85,25 @@
                         <p class="mt-2 text-sm text-red-600">{{ $errors->first('password_confirmation') }}</p>
                     @endif
                 </div>
-
             </div>
 
-            <div class="flex flex-col justify-content-between align-items-center mt-4 d-block d-sm-none">
-                <!-- Mobile -->
-                <div class="col-12 mt-4">
+            <div class="flex flex-col justify-content-between align-items-center mt-3 d-block d-sm-flex">
+                <div class="col-12 mt-0 pt-0">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="terminos" required>
+                        <label class="form-check-label text-sm" for="terminos">
+                            Acepto los <a href="https://medik.mx/terminos-y-condiciones-de-uso/" target="_blank" rel="noopener noreferrer" class="text-secondary">términos y condiciones</a> de uso.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="privacidad" required>
+                        <label class="form-check-label text-sm" for="privacidad">
+                            He leído el <a href="https://medik.mx/privacidad/" target="_blank" rel="noopener noreferrer"  class="text-secondary">aviso de privacidad</a>.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-1">
                     <button type="submit" class="mdkbtn-success w-full px-4 py-2 text-sm font-medium focus:outline-none focus:ring focus:border-indigo-500 focus:ring-indigo-500">
                         Registrarme
                     </button>
@@ -102,21 +113,6 @@
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('login') }}">
                         ¿Ya tienes una cuenta?
                     </a>
-                </div>
-            </div>
-
-            <div class="justify-content-between align-items-center mt-4 d-none d-sm-flex">
-                <!-- Mediano y superior -->
-                <div class="col-md-5">
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:border-indigo-500 focus:ring-indigo-500" href="{{ route('login') }}">
-                        ¿Ya tienes una cuenta?
-                    </a>
-                </div>
-
-                <div class="col-md-5">
-                    <button type="submit" class="px-4 py-2 text-sm font-medium mdkbtn-success focus:outline-none focus:ring focus:border-indigo-500 focus:ring-indigo-500 w-full">
-                        Registrarme
-                    </button>
                 </div>
             </div>
         </form>

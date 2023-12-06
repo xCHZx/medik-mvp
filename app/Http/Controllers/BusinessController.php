@@ -54,7 +54,7 @@ class BusinessController extends Controller
                 $business //descripcion (Obj o Exception)
                 );
 
-            $this->generateQr($business->id);
+            $this->generateQr(encrypt($business->id));
             $this->generateImage($business->id);
             //$this->generateImage($business->id);
 
@@ -79,7 +79,7 @@ class BusinessController extends Controller
             $url = urlencode(env('APP_URL'));
             $svgQr = Http::get("http://api.qrserver.com/v1/create-qr-code/?data=".$url."/visita/".$businessId."&size=400x400&format=svg");
             $rawQr = htmlspecialchars($svgQr);
-            $business = Business::find($businessId);
+            $business = Business::find(decrypt($businessId));
             $business->rawQr = $rawQr;
             $business->save();
         }catch(Exception $e){

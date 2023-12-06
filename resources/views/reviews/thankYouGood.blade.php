@@ -19,5 +19,10 @@
                 Tu apoyo nos motiva a seguir mejorando para ofrecerte lo mejor
             </p>
         </div>
+        @if ($links)
+           @foreach ($links as $link)
+              <a href="{{$link->url}}">{{$link->name}}</a>
+           @endforeach
+        @endif
     </div>
 </x-visitor-layout>

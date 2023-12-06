@@ -16,7 +16,7 @@ class WebhooksController extends Controller
     public function verifyWhatsappWebhook(Request $request)
     {
         try {
-            $token = "calamardotentaculos";
+            $token = env('WP_WEBHOOK_TOKEN');
             $query = $request->query();
 
             $mode = $query['hub_mode'];

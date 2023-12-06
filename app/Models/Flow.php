@@ -30,7 +30,7 @@ class Flow extends Model
 
     public function calificationLinks(): HasMany
     {
-        return $this->hasMany(CalificactionLink::class , 'flowId');
+        return $this->hasMany(CalificationLink::class , 'flowId');
     }
 
     public function reviews(): HasMany

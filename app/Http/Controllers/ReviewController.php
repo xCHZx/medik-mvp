@@ -101,12 +101,23 @@ class ReviewController extends Controller
 
     public function thankYouGood($visitEncrypted)
     {
-        return view('reviews.thankYouGood');
+        try {
+            $review = Review::where('visitId', decrypt($visitEncrypted, env('ENCRYPT_KEY')))->first();
+            $flow = $review->flow;
+            $calificationLinks = $flow->calificationLinks()->get();
+
+            if ($calificationLinks) {
+                return view('reviews.thankyouGood', ['links' => $calificationLinks]);
+            }
+            return view('reviews.thankYouGood');
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     public function thankYouBad($visitEncrypted)
     {
-        // Se necesitan recuperar las redes sociales
+
         return view('reviews.thankYouBad');
 
     }
@@ -118,7 +129,7 @@ class ReviewController extends Controller
             $review = Review::where('visitId', $visitId)->firstOrFail();
             $review->rating = $request->rating;
             $review->comment = $request->comment;
-            $review->status = 'finalizada';
+            $review->status = 'Finalizada';
             $review->save();
 
             $newReview = Review::with('visit')->findOrFail($review->id);

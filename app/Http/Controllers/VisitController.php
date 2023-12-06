@@ -20,6 +20,7 @@ class VisitController extends Controller
     public function create($businessId)
     {
         try{
+            $businessId = decrypt($businessId);
             $business = Business::select('name')->findOrFail($businessId);
         }catch(Exception $e){
             abort(404);
@@ -43,16 +44,16 @@ class VisitController extends Controller
                    $visit = $this->createVisit($businessId, $visitor, $request);
                    app(ReviewController::class)->store($visit);
                    event(new RegisteredVisit($visit));
-                   return redirect()->route('visit.success', ['businessId' => $businessId]);
+                   return redirect()->route('visit.success', ['businessId' => encrypt($businessId)]);
                 } else {
-                    return redirect()->route('visit.denied', ['businessId' => $businessId]);
+                    return redirect()->route('visit.denied', ['businessId' => encrypt($businessId)]);
                 }
 
             } else {
                 $visit = $this->createVisit($businessId, $visitor, $request);
                 app(ReviewController::class)->store($visit);
                 event(new RegisteredVisit($visit));
-                return redirect()->route('visit.success', ['businessId' => $businessId]);
+                return redirect()->route('visit.success', ['businessId' => encrypt($businessId)]);
             }
             return $visitor;
         }catch(Exception $e){
@@ -103,6 +104,7 @@ class VisitController extends Controller
 
     public function success($businessId){
         try{
+            $businessId = decrypt($businessId);
             $business = Business::select('name')->findOrFail($businessId);
         }catch(Exception $e){
             abort(404);
@@ -112,6 +114,7 @@ class VisitController extends Controller
 
     public function denied($businessId){
         try{
+            $businessId = decrypt($businessId);
             $business = Business::select('name')->findOrFail($businessId);
         }catch(Exception $e){
             abort(404);

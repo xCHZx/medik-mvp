@@ -220,14 +220,14 @@ class FlowsController extends Controller
         }
 
     }
-     public function delete(Request $request) //Mismas correcciones
-     {
-         // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente
-         $validated = $request->validate(['flowId' => 'required']);
+    //  public function delete(Request $request) //Mismas correcciones
+    //  {
+    //      // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente
+    //      $validated = $request->validate(['flowId' => 'required']);
 
-        Flow::destroy($request->flowId);
-        return Redirect::route('flows.index')->with('flow-status' , 'success');
-    }
+    //     Flow::destroy($request->flowId);
+    //     return Redirect::route('flows.index')->with('flow-status' , 'success');
+    // }
 
     public function getFlows($id)
     {

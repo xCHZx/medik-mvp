@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\DashboardController;
@@ -76,6 +77,11 @@ Route::middleware('auth' , 'verified')->group(function () {
         Route::get('/reportes', [ReportController::class, 'index'])->name('reports.index');
 
         Route::get('/opiniones' , [ReviewController::class , 'index'])->name('reviews.index');
+
+        //Calendario/Citas
+        Route::get('/citas' , [AppointmentController::class , 'index'])->name('appointments.index');
+        Route::post('/citas' , [AppointmentController::class , 'store'])->name('appointments.store');
+        // Route::post('/citas/{id}/editar' , [AppointmentController::class , 'update'])->name('appointments.update');
     });
 });
 
@@ -95,6 +101,10 @@ Route::prefix('opinion')->group(function () {
     Route::get('/gracias/b/{visitEncrypted}', [ReviewController::class, 'thankYouBad'])->name('review.thankYouBad');
 });
 
+Route::get('/crear-cita/{id}' , [AppointmentController::class , 'externalCreate'])->name('appointments.externalCreate');
+Route::post('/crear-cita/' , [AppointmentController::class , 'externalStore'])->name('appointments.externalStore');
+Route::get('/crear-cita/{id}/gracias' , [AppointmentController::class , 'success'])->name('appointments.success');
+
 
 
 Route::get('/confirmar', function(){
@@ -108,7 +118,7 @@ Route::post('/whatsapp-webhook' , [WebhooksController::class , 'processRequest']
 
 Route::get('/resources/images/{filename}', function ($filename) {
     $path = resource_path('images/' . $filename);
-    
+
     if (file_exists($path)) {
         $mime = mime_content_type($path);
 

@@ -13,7 +13,7 @@
                 <label class="relative">
                     Flujo
                     <select id="flowObjective" name="flowObjective" class="form-control mt-1 w-72">
-                        <option value="" disabled selected hidden></option>
+                        <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
                         @foreach($flowsObjectives as $flowObjective)
                            <option value="{{$flows[$flowObjective]}}">{{$flowObjective}}</option>
                         @endforeach

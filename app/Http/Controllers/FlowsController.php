@@ -19,6 +19,12 @@ class FlowsController extends Controller
     //Si vas a manejar validaciones con If no tires error con Else, sino con Throw
     //Ver ejemplo en http/requests/auth/loginrequest
 
+    private $description = [ // crear este arreglo con todas las descripciones y guardalas en la bd en la creacion del flujo
+        'Calidad de la atención médica' => 'Escoge este objetivo si deseas evaluar cómo tus pacientes perciben la calidad de la atención médica proporcionada, incluida la efectividad de los tratamientos y la gestión de las condiciones de salud.',
+        'Accesibilidad y tiempo de espera' => ''
+
+    ];
+
     public $aliases = [ //pregunta personalizada
         'Calidad de la atención médica' => 'Por favor, evalúa nuestra atención médica y la calidad del trato que recibiste. ¡Gracias por tu ayuda!',
         'Accesibilidad y tiempo de espera' => 'Por favor, evalúa el tiempo de espera durante tu visita y tu experiencia al solicitar la consulta. ¡Gracias por tu ayuda!',

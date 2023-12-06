@@ -170,15 +170,16 @@ class ReviewController extends Controller
 
     private function getFlowObjective($objective)
     {
-       $flowObjectives = [
+        $flows = [
             '1' => 'Calidad de la atención médica',
             '2' => 'Accesibilidad y tiempo de espera',
             '3' => 'Comunicación médico-paciente',
             '4' => 'Satisfacción general'
+
         ];
 
-        return $flowObjectives[$objective];
-        
+        return $flows[$objective];
+
     }
 
 }

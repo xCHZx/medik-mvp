@@ -29,7 +29,7 @@
                         <a class="btn d-flex flex-column justify-content-center align-items-center" href="#" value="#">
                             <div class="text-gray-500 d-flex flex-column justify-content-center align-items-center">
                                 <i class="fas fa-upload"></i>
-                                Subir logo                            
+                                Subir logo
                             </div>
                         </a>
                     </div>
@@ -37,7 +37,7 @@
                         <b class="d-inline">{{$business["name"]}} </b>
                         <p id="logo-medik" class="ml-2" hidden>-<x-logo-full fill-1="#18CCAB" fill-2="#0F0E4B" class="ml-1 d-inline -mt-3" width="100" height="50" /> </p>
                     </div>
-                </div>            
+                </div>
             </div>
             <div class="card-body mb-0">
                 <div class="row justify-content-between">

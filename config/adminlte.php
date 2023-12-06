@@ -333,6 +333,11 @@ return [
             'icon'        => 'fab fa-fw fa-whatsapp',
         ],
         [
+            'text'        => 'Calendario de Citas',
+            'route'       => 'appointments.index',
+            'icon'        => 'fas fa-fw fa-calendar',
+        ],
+        [
             'text'        => 'Reportes',
             'route'       => 'reports.index',
             'icon'        => 'fas fa-fw fa-table',

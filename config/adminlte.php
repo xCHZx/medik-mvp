@@ -333,6 +333,11 @@ return [
             'icon'        => 'fab fa-fw fa-whatsapp',
         ],
         [
+            'text'        => 'Calendario de Citas',
+            'route'       => 'appointments.index',
+            'icon'        => 'fas fa-fw fa-calendar',
+        ],
+        [
             'text'        => 'Reportes',
             'route'       => 'reports.index',
             'icon'        => 'fas fa-fw fa-table',
@@ -353,11 +358,6 @@ return [
             'text'        => 'Editar Perfil',
             'url'         => "panel/perfil",
             'icon'        => 'fas fa-fw fa-cog',
-        ],
-        [
-            'text'        => 'Citas',
-            'route'       => 'appointments.index',
-            'icon'        => 'fas fa-fw fa-calendar',
         ],
         // [
         //     'text' => 'change_password',

@@ -20,11 +20,45 @@
     </p>
 </div>
 
-    <div id='calendar'></div>
+<div class="card">
+    <div class="card-body">
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <!-- Datatable-->
+                <div>
+                    <table class="table table-hover table-bordered dt"  id="appointments-dt" class="display">
+                        <thead class=thead-light>
+                            <tr>
+                                <th>#</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Paciente</th>
+                                <th>Descripción</th>
+                                <th>Status</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- End Datatable-->
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-    <!-- Modal -->
+<!-- New Appointment Modal -->
 <div class="modal fade" id="newApointmentModal" tabindex="-1" role="dialog" aria-labelledby="newApointmentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -97,6 +131,34 @@
     </div>
   </div>
 
+<!-- Show Change Status Modal -->
+<div class="modal fade" id="changeStatusApointmentModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusApointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changeStatusApointmentModalLabel">Cambiar Status</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <div>
+                <p>
+                    ¿Está seguro que deseas cambiar el status de la cita a Agendada?
+                </p>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn mdkbtn-primary edit" data-dismiss="modal">Aceptar</button>
+          <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -126,8 +188,24 @@
         document.addEventListener('DOMContentLoaded', function() {
           var calendarEl = document.getElementById('calendar');
           var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
+            initialView: 'timeGridWeek',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            nowIndicator: true,
+            slotDuration: '01:00', // 1 hours
+            slotLabelFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: true,
+                },
+            aspectRatio: 2,
+            selectable: true,
+            contentHeight: 600,
             locale: 'es',
+
             events: [
                 @foreach($appointments as $appointment)
                 {
@@ -140,10 +218,24 @@
             ],
 
             eventTimeFormat: { // like '7pm'
-            hour: 'numeric',
+            hour: '2-digit',
             minute: '2-digit',
             meridiem: 'short'
             },
+
+
+            dateClick: function(info) {
+                    let date = info.dateStr.slice(0, 10)
+                    let time = info.dateStr.slice(11, 16)
+                    $('#newApointmentModal').modal('show');
+                    $('#newApointmentModal .modal-title').html('Nueva cita');
+                    $('#newApointmentModal #date').val(date);
+                    $('#newApointmentModal #time').val(time);
+                    $('#newApointmentModal #patient').val('');
+                    $('#newApointmentModal #description').val('');
+                    $('#newApointmentModal #hidden').val('');
+                    $('#newApointmentModal form').attr('action', '{{route('appointments.store')}}');
+                },
 
             eventClick: function(info) {
                 //trigger modal
@@ -196,9 +288,64 @@
             }
           });
           calendar.render();
+
+
+            var appointmentsData = @json($appointments);
+            var table = $('#appointments-dt').DataTable({
+
+                deferRender: true,
+                processing: true,
+                serverSide: false,
+                data: appointmentsData,
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'date', name: 'date' },
+                    { data: 'time', name: 'time' },
+                    { data: 'patient', name: 'patient' },
+                    { data: 'description', name: 'description' },
+                    { data: 'status', name: 'status' },
+                    { defaultContent:
+                        '<button type="button" class="btn mdkbtn-primary editFromTable">Editar</button>'
+                        +'<button type="button" class="btn mdkbtn-danger statusFromTable ml-2">Cambiar status</button>'
+                    }
+                ]
+            });
+
+            $(document).on('click', '.editFromTable', function(){
+                let data = table.row($(this).parents('tr')).data();
+                let id = data.id;
+                let patient = data.patient;
+                let date = data.date;
+                let time = data.time;
+                let description = data.description;
+
+                //validate if the time last char is a colon and remove it then add a zero at the begining
+                if(time.substring(4, 5) == ':'){
+                    time = time.substring(0, 4);
+                    time = '0' + time;
+                }
+
+                $('#newApointmentModal').modal('show');
+                $('#newApointmentModal .modal-title').html('Editar cita');
+                $('#newApointmentModal #date').val(date);
+                $('#newApointmentModal #time').val(time);
+                $('#newApointmentModal #patient').val(patient);
+                $('#newApointmentModal #description').val(description);
+                $('#newApointmentModal #hidden').val(id);
+                $('#newApointmentModal form').attr('action', '{{route('appointments.store')}}');
+            });
+
+            $(document).on('click', '.statusFromTable', function(){
+                let data = table.row($(this).parents('tr')).data();
+                let id = data.id;
+                let status = data.status;
+                $('#changeStatusApointmentModal').modal('show');
+            });
+
         });
 
       </script>
 
 
 @stop
+

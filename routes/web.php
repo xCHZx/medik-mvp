@@ -101,6 +101,10 @@ Route::prefix('opinion')->group(function () {
     Route::get('/gracias/b/{visitEncrypted}', [ReviewController::class, 'thankYouBad'])->name('review.thankYouBad');
 });
 
+Route::get('/crear-cita/{id}' , [AppointmentController::class , 'externalCreate'])->name('appointments.externalCreate');
+Route::post('/crear-cita/' , [AppointmentController::class , 'externalStore'])->name('appointments.externalStore');
+Route::get('/crear-cita/{id}/gracias' , [AppointmentController::class , 'success'])->name('appointments.success');
+
 
 
 Route::get('/confirmar', function(){

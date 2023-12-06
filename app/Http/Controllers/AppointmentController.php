@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+
     public function index(){
         $appointments = Appointment::where('userId', Auth::user()->id)->get();
         $id=0;
@@ -26,7 +28,7 @@ class AppointmentController extends Controller
             $appointment->patient = $request->patient;
             $appointment->duration = 60;
             $appointment->description = $request->description;
-            $appointment->status = 'scheduled';
+            $appointment->status = 'Agendada';
             $appointment->save();
         }else{
             $appointment = new Appointment();
@@ -35,7 +37,7 @@ class AppointmentController extends Controller
             $appointment->patient = $request->patient;
             $appointment->duration = 60;
             $appointment->description = $request->description;
-            $appointment->status = 'scheduled';
+            $appointment->status = 'Agendada';
             $appointment->userId = Auth::user()->id;
             $appointment->save();
         }
@@ -56,4 +58,32 @@ class AppointmentController extends Controller
     //     return redirect()->route('appointments.index');
 
     // }
+
+    public function externalCreate($id){
+        $doctor = User::with('appointments')->find($id);
+        $appointments = $doctor->appointments;
+        if(!$appointments){
+            $appointments = [];
+        }
+        return view('appointment.create', compact('doctor','appointments'));
+    }
+
+    public function externalStore(Request $request){
+        $appointment = new Appointment();
+        $appointment->date = $request->date;
+        $appointment->time = $request->time;
+        $appointment->patient = $request->patient;
+        $appointment->duration = 60;
+        $appointment->description = $request->description;
+        $appointment->status = 'En revisión';
+        $appointment->userId = $request->hidden;
+        $appointment->save();
+
+        return redirect()->route('appointments.success', ['id' => $appointment->id]);
+    }
+
+    public function success($id){
+        $appointment = Appointment::with('user')->find($id);
+        return view('appointment.success', compact('appointment'));
+    }
 }

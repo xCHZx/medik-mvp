@@ -19,7 +19,8 @@ return new class extends Migration
             $table->time('time');
             $table->integer('duration');
             $table->text('description')->nullable();
-            $table->enum('status', ['scheduled', 'cancelled', 'completed']);
+            // $table->enum('status', ['scheduled', 'cancelled', 'completed']);
+            $table->text('status')->nullable();
             $table->timestamps();
         });
     }

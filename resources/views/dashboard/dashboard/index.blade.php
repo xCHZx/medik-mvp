@@ -40,15 +40,17 @@
     @if($activeBusiness)
         <div class="row">
             <div class="col-md-12">
-                <section id="messageLimit">
-                    <div class="card rounded-xl" style="background-color: #FBF3D7">
-                        <div class="card-body">
-                            <h3 class="text-red font-semibold text-xl">Se ha alcanzado el límite de 400 mensajes</h3>
-                            <p class="font-medium my-2">Ha alcanzado el límite de 400 mensajes automatizados en la cuenta correspondiente a su servicio. Por favor, no dude en contactarnos para encontrar la mejor solución posible.</p>
-                            <a href="#" class="btn mdkbtn-primary sm:w-1/2 md:w-1/4">Contactar con Soporte</a>
+                {{-- @if(request()->has('status') && request()->status === 'limit') --}}
+                    <section id="messageLimit">
+                        <div class="card rounded-xl" style="background-color: #FBF3D7">
+                            <div class="card-body">
+                                <h3 class="text-red font-semibold text-xl">Se ha alcanzado el límite de 400 mensajes</h3>
+                                <p class="font-medium my-2">Ha alcanzado el límite de 400 mensajes automatizados en la cuenta correspondiente a su servicio. Por favor, no dude en contactarnos para encontrar la mejor solución posible.</p>
+                                <a href="#" class="btn mdkbtn-primary sm:w-1/2 md:w-1/4">Contactar con Soporte</a>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                {{-- @endif --}}
             </div>
 
             <div class="col-md-7">

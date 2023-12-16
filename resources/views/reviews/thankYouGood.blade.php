@@ -1,23 +1,26 @@
 <x-visitor-layout>
-    <div class="mb-2">
-        <h1 class="text-center">¡Gracias por tu Increíble Reseña!</h1>
+    <div class="mb-3 px-3">
+        <h1 class="text-center font-bold text-4xl">¡Gracias por tu increíble reseña! <br>💚</h1>
     </div>
-    <div class="mb-4">
-        <h5 class="text-center">¡Nos llena de alegría saber que tu experiencia fue tan positiva! ❤️</h5>
+    <div class="mb-5">
+        <p class="text-lg font-bold" style="color: #22836F">Califícanos en nuestras redes sociales</p>
+        <div class="flex flex-row justify-around">
+            <button class="mdkbtn-success py-2 px-3"><i class="fab fa-facebook-square fa-lg p-0 m-0"></i></button>
+            <button class="mdkbtn-success py-2 px-3"><i class="fab fa-google fa-lg p-0 m-0"></i></i></button>
+        </div>
     </div>
-    <div class="card mx-3 py-3 px-3 d-flex flex-col justify-center align-middle font-medium">
-        <div class="">
-            <p class="text-center">
-                Gracias por tomarte el tiempo para compartir tu opinión.
+    <div class="mb-1 px-3">
+        <h5 class="text-left font-semibold">¡Nos llena de alegría saber que tu experiencia fue tan positiva! 😊</h5>
+    </div>
+    <div class="card mx-3 py-3 px-3 d-flex flex-col justify-center items-center font-medium">
+        <div class="d-flex flex-col align-middle justify-center mb-3">
+            <img class="inline-block" alt="Gatito feliz 🐱" src="{{ url('/resources/images/goodReviewImg.svg') }}">
+        </div>
+        <div class="px-3 flex flex-col justify-center">
+            <p class="text-left text-sm font-semibold">
+                Gracias por tomarte el tiempo para compartir tu opinión con nosotros, ¡tu apoyo nos motiva a seguir mejorando para ofrecerte lo mejor!
             </p>
         </div>
-        <div class="d-flex flex-col align-middle justify-center">
-            <img class="inline-block" alt="Gatito feliz 🐱" src="{{ url('/resources/images/goodReviewImg.webp') }}">
-        </div>
-        <div class="my-0 py-0">
-            <p class="text-center mt-3 mb-0">
-                Tu apoyo nos motiva a seguir mejorando para ofrecerte lo mejor
-            </p>
-        </div>
+        <x-logo-full fill-1="#18CCAB" fill-2="#0F0E4B" class="mt-2" width="100" height="50"/>
     </div>
 </x-visitor-layout>

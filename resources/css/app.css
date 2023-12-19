@@ -376,6 +376,23 @@ body{
     font-size: 0.8rem;
 }
 
+.placeholderFilter {
+    position: absolute;
+    pointer-events: none;
+    color: #9d9d9d;
+    font-size: 1rem;
+    font-weight: 420; /* Puedes ajustar el tamaño del texto según lo desees */
+    top: 2.2rem; /* Ajusta la posición vertical del texto */
+    left: 1rem; /* Ajusta la posición horizontal del texto */
+    z-index: 1; /* Asegura que esté sobre el select */
+}
+
+/*Table*/
+
+.mdkTable-hover tr:hover {
+    background-color: #C4EFE2;
+}
+
 /*Rating*/
 .rating {
     --dir: right;

@@ -21,6 +21,7 @@ class ReviewController extends Controller
         'Comunicación médico-paciente' => '3',
         'Satisfacción general' => '4'
     ];
+
     public function index(Request $request)
     {
         try {
@@ -180,15 +181,16 @@ class ReviewController extends Controller
 
     private function getFlowObjective($objective)
     {
-        $flowObjectives = [
+       $flowObjectives = [
             '1' => 'Calidad de la atención médica',
             '2' => 'Accesibilidad y tiempo de espera',
             '3' => 'Comunicación médico-paciente',
             '4' => 'Satisfacción general'
 
         ];
-        return $flowObjectives[$objective];
-    }
 
+        return $flowObjectives[$objective];
+
+    }
 
 }

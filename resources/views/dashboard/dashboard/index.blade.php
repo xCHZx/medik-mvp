@@ -39,13 +39,25 @@
 
     @if($activeBusiness)
         <div class="row">
+            <div class="col-md-12">
+                <section id="messageLimit">
+                    <div class="card rounded-xl" style="background-color: #FBF3D7">
+                        <div class="card-body">
+                            <h3 class="text-red font-semibold text-xl">Se ha alcanzado el límite de 400 mensajes</h3>
+                            <p class="font-medium my-2">Ha alcanzado el límite de 400 mensajes automatizados en la cuenta correspondiente a su servicio. Por favor, no dude en contactarnos para encontrar la mejor solución posible.</p>
+                            <a href="#" class="btn mdkbtn-primary sm:w-1/2 md:w-1/4">Contactar con Soporte</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
             <div class="col-md-7">
                 <section id="resume" class="flex mdkflex-wrap gap-3 md:flex-row md:flex-nowrap lg:flex-nowrap" >
                     <div class="card md:basis-1/3 basis-full h-44" style="background: #FFEFE7">
                         <div class="card-body text-sky-950 flex flex-col justify-between py-3">
                             <h3 class="font-medium text-lg">Nuevas visitas</h3>
                             <p class="card-text text-6xl">{{count($currentMonthVisits)}}</p> <!--Aquí cambiar-->
-                            <a href="#" class="text-base-" style="color: #1EDDFF">Último mes</a>
+                            <a href="#" class="text-base" style="color: #1EDDFF">Último mes</a>
                         </div>
                     </div>
                     <div class="card md:basis-1/3 basis-full h-44" style="background: #E8F0FB">
@@ -188,7 +200,7 @@
                     case 'Comunicación médico-paciente':
                         return "Evalúa cómo tus pacientes perciben la eficacia de la comunicación que tu o tu personal tiene con ellos, así como la claridad y comprensión de la información proporcionada.";
                     case 'Satisfacción general':
-                        return "Evalúa cómo tus pacientes percibe la atención que les brindas en tu servicio y la calidad de los mismos, este objetivo abarca los 3 puntos anteriores y es la opción por si no sabes cual escoger o no buscas abordar un punto en particular.";
+                        return "Evalúa cómo tus pacientes perciben la atención que les brindas en tu servicio y la calidad de los mismos, este objetivo abarca los 3 puntos anteriores y es la opción por si no sabes cual escoger o no buscas abordar un punto en particular.";
                     default:
                         return "Evalúa un aspecto personalizado por ti de la calidad de tu servicio";
                 }

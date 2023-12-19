@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <section class="w-1/3">
+    <section class="w-5/6 md:w-2/5">
         <div class="card mt-0 p-3 px-4">
             <!-- Descripción -->
             <div class="text-gray-600 mb-2 text-center">

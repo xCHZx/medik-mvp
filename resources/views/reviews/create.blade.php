@@ -11,7 +11,7 @@
                         <div class="form-group col-md-12">
                             <label class="d-flex flex-column">
                                 <p class="text-left my-1">Queremos saber cómo fue tu experiencia con nosotros.</p>
-                                <p class="my-1">{{$visit->review->flow->alias}}. ¡Gracias por tu ayuda!</p>
+                                <p class="my-1">{{$visit->review->flow->alias}}.</p>
                                 <div class="d-flex justify-center mt-4 mb-2">
                                     <input
                                         name="rating"

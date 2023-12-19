@@ -31,6 +31,7 @@ class FlowsController extends Controller
         'Comunicación médico-paciente' => 'Por favor, evalúa la comunicación con tu médico durante la visita. ¡Gracias por tu ayuda!',
         'Satisfacción general' => 'Por favor, evalúa nuestros servicios, la atencion, el tiempo de espera y la comunicacion con nuestro personal. ¡Gracias por tu ayuda!'
     ];
+    
     public function index()
     {
         $user = Auth::user();

@@ -3,166 +3,159 @@
 @section('title', 'Calendario de Citas')
 
 @section('content_header')
+    <div class="row d-flex justify-content-between align-items-center py-3">
+        <div class="col-md-5">
+            <h1 class="mt-2 mb-2">Calendario de <b>citas</b></h1>
+        </div>
 
-    <h1>Calendario de Citas</h1>
-
+        <!-- Nueva Cita -->
+        <div class="col-md-4">
+            <div class="card text-center my-md-0 ">
+                <button type="button" class="btn mdkbtn-success" data-toggle="modal" data-target="#newApointmentModal">
+                    <i class="fas fa-plus mr-2"></i> Nueva cita
+                </button>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('content')
-
-<button type="button" class="btn mdkbtn-success" data-toggle="modal" data-target="#newApointmentModal">
-    Nueva cita
-</button>
-
-<div>
-    <p>
-
-    </p>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <div class="row mb-2">
-            <div class="col-md-12">
-                <div id="calendar"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <div class="row mb-2">
-            <div class="col-md-12">
-                <!-- Datatable-->
-                <div>
-                    <table class="table table-hover table-bordered dt"  id="appointments-dt" class="display">
-                        <thead class=thead-light>
-                            <tr>
-                                <th>#</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th>Paciente</th>
-                                <th>Descripción</th>
-                                <th>Status</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                    </table>
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <div id="calendar"></div>
                 </div>
-                <!-- End Datatable-->
             </div>
         </div>
     </div>
-</div>
 
-
-
-<!-- New Appointment Modal -->
-<div class="modal fade" id="newApointmentModal" tabindex="-1" role="dialog" aria-labelledby="newApointmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newApointmentModalLabel">Nueva cita</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-            <div>
-                <form class="px-3 py-2" method="POST" action="{{route('appointments.store')}}">
-                    @csrf
-                    <div class="row mb-2">
-                        <div class="form-group col-md-12">
-                            <label for="date" class="form-label">Fecha</label>
-                            <input type="date" class="form-control"  name="date" id="date" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="time" class="form-label">Hora</label>
-                            <input type="time" class="form-control"  name="time" id="time" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="patient" class="form-label">Paciente</label>
-                            <input type="text" class="form-control"  name="patient" id="patient" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="description" class="form-label">Descripción o comentarios</label>
-                            <textarea class="form-control mdkTextArea" name="description" id="description" rows="4"></textarea>
-                        </div>
-                        <input id="hidden" type="hidden" name="id" value="">
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <!-- Datatable-->
+                    <div>
+                        <table class="table table-hover table-bordered dt"  id="appointments-dt" class="display">
+                            <thead class=thead-light>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Descripción</th>
+                                    <th>Status</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
-                    <div class="mt-2 mb-0">
-                        <button type="submit" class="mdkbtn-success py-1 px-3">Guardar</button>
+                    <!-- End Datatable-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- New Appointment Modal -->
+    <div class="modal fade" id="newApointmentModal" tabindex="-1" role="dialog" aria-labelledby="newApointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newApointmentModalLabel">Nueva cita</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form class="px-3 py-2" method="POST" action="{{route('appointments.store')}}">
+                            @csrf
+                            <div class="row mb-2">
+                                <div class="form-group col-md-12">
+                                    <label for="date" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control"  name="date" id="date" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="time" class="form-label">Hora</label>
+                                    <input type="time" class="form-control"  name="time" id="time" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="patient" class="form-label">Paciente</label>
+                                    <input type="text" class="form-control"  name="patient" id="patient" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="description" class="form-label">Descripción o comentarios</label>
+                                    <textarea class="form-control mdkTextArea" name="description" id="description" rows="4"></textarea>
+                                </div>
+                                <input id="hidden" type="hidden" name="id" value="">
+                            </div>
+                            <div class="mt-2 mb-0">
+                                <button type="submit" class="mdkbtn-success py-1 px-3">Guardar</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
-
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-<!-- Show Appointment Modal -->
-<div class="modal fade" id="showApointmentModal" tabindex="-1" role="dialog" aria-labelledby="showApointmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="showApointmentModalLabel">Cita</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+    <!-- Show Appointment Modal -->
+    <div class="modal fade" id="showApointmentModal" tabindex="-1" role="dialog" aria-labelledby="showApointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="showApointmentModalLabel">Cita</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
 
-            <div>
+                    <div>
 
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn mdkbtn-primary edit" data-dismiss="modal">Editar</button>
+                <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
-
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn mdkbtn-primary edit" data-dismiss="modal">Editar</button>
-          <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-<!-- Show Change Status Modal -->
-<div class="modal fade" id="changeStatusApointmentModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusApointmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="changeStatusApointmentModalLabel">Cambiar Status</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+    <!-- Show Change Status Modal -->
+    <div class="modal fade" id="changeStatusApointmentModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusApointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="changeStatusApointmentModalLabel">Cambiar Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
 
-            <div>
-                <p>
-                    ¿Está seguro que deseas cambiar el status de la cita a Agendada?
-                </p>
+                    <div>
+                        <p>
+                            ¿Está seguro que deseas cambiar el status de la cita a Agendada?
+                        </p>
 
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn mdkbtn-primary edit" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
-
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn mdkbtn-primary edit" data-dismiss="modal">Aceptar</button>
-          <button type="button" class="btn mdkbtn-danger" data-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
     </div>
-  </div>
-
-
-
-
-
 @stop
 
 @section('js')
@@ -305,8 +298,7 @@
                     { data: 'description', name: 'description' },
                     { data: 'status', name: 'status' },
                     { defaultContent:
-                        '<button type="button" class="btn mdkbtn-primary editFromTable">Editar</button>'
-                        +'<button type="button" class="btn mdkbtn-danger statusFromTable ml-2">Cambiar status</button>'
+                        '<div class="w-full flex flex-row justify-between"> <button type="button" class="btn mdkbtn-primary editFromTable">Editar</button> <button type="button" class="btn mdkbtn-danger statusFromTable ml-2">Cambiar status</button>  </div>'
                     }
                 ]
             });
@@ -343,9 +335,6 @@
             });
 
         });
-
       </script>
-
-
 @stop
 

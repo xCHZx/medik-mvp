@@ -4,9 +4,20 @@
     </div>
     <div class="mb-5">
         <p class="text-lg font-bold" style="color: #22836F">Califícanos en nuestras redes sociales</p>
-        <div class="flex flex-row justify-around">
-            <button class="mdkbtn-success py-2 px-3"><i class="fab fa-facebook-square fa-lg p-0 m-0"></i></button>
-            <button class="mdkbtn-success py-2 px-3"><i class="fab fa-google fa-lg p-0 m-0"></i></i></button>
+        <div class="w-1/2 mx-auto flex justify-center">
+            <div class="flex flex-row justify-around w-full">
+                @if ($links)
+                    @foreach ($links as $link)
+                        <a href="{{$link->url}}" class="mdkbtn-success py-2 px-3">
+                            @if ($link->name === 'facebook')
+                                <i class="fab fa-facebook-square fa-lg p-0 m-0"></i>
+                            @elseif ($link->name === 'google')
+                                <i class="fab fa-google fa-lg p-0 m-0"></i>
+                            @endif
+                        </a>
+                    @endforeach
+                @endif
+            </div>
         </div>
     </div>
     <div class="mb-1 px-3">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FlowsController;
@@ -115,6 +116,9 @@ require __DIR__.'/auth.php';
 //whastapp webhook
 Route::get('/whatsapp-webhook' , [WebhooksController::class , 'verifyWhatsappWebhook']);
 Route::post('/whatsapp-webhook' , [WebhooksController::class , 'processRequest']);
+
+// stripe webhook
+Route::post('/stripe-webhook' , [StripeWebhookController::class , 'handle']);
 
 Route::get('/resources/images/{filename}', function ($filename) {
     $path = resource_path('images/' . $filename);

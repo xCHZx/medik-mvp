@@ -108,7 +108,7 @@ class ReviewController extends Controller
             $calificationLinks = $flow->calificationLinks()->get();
 
             if ($calificationLinks) {
-                return view('reviews.thankyouGood', ['links' => $calificationLinks]);
+                return view('reviews.thankYouGood', ['links' => $calificationLinks]);
             }
             return view('reviews.thankYouGood');
         } catch (Exception $e) {

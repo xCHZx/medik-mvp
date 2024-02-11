@@ -29,6 +29,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $id = Auth::user()->id;
         $status = $user->subscribed('default');
+        $accountStatus = $user->accountStatus->name;
 
         $activeBusiness = Business::where('userId', $id)->select('name','description','address','averageRating')->first();
         if (!$activeBusiness) {
@@ -114,6 +115,7 @@ class DashboardController extends Controller
         return view('dashboard.dashboard.index', compact(
             'user',
             'status',
+            'accountStatus',
             'activeBusiness',
             'activeFlow', //Flujo activo
             'lastReviews', //Últimas 3 opiniones

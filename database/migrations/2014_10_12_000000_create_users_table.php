@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('lastName');
             $table->string('phone');
             $table->string('email')->unique();
+            $table->timestamp('lastPaymentDate')->nullable();
+            $table->integer('limitMessages')->default(400);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('accountStatusId')->default(5);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -255,12 +255,14 @@
                 $('#alias-text').text(`${alias} `);
             });
 
-            $('input[type="radio"]').on('click', function () {
+            $('input[type="radio"]').on('change', function () {
                 // Actualiza el valor del objetivo seleccionado
                 const valueSelectedObjetive = $('input[type="radio"]:checked').attr('value');
                 const selectedObjetive = $('input[type="radio"]:checked').attr('id');
                 const defaultFlowName = valueSelectedObjetive;
+                const description = showDescription(selectedObjetive);
                 const alias = getAlias(selectedObjetive);
+                $('#texto-descripcion').text(description);
                 $('#flowName').val(defaultFlowName);
                 $('#alias-text').text(`${alias} `);
             });

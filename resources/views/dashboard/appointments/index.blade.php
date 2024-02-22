@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row d-flex justify-content-between align-items-center py-3">
         <div class="col-md-5">
-            <h1 class="mt-2 mb-2">Calendario de <b>citas</b></h1>
+            <h1 class="mt-2 mb-2 text-slate-950">Calendario de citas</h1>
         </div>
 
         <!-- Nueva Cita -->

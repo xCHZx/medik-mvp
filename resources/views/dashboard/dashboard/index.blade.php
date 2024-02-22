@@ -4,13 +4,13 @@
 
 @section('content_header')
 
-    <h1>Hola {{$user["firstName"]}}</h1>
+    <h1 class="text-slate-950">Dashboard</h1>
 
     @if($status)
         <h2 class="mt-3 mb-2">Bienvenido al panel de administración de <b>medik</b></h2>
     @else
-        <h1 class="mt-4">Actualmente <b>no</b> tienes una suscripción activa</h1>
-        <h2 class="mt-3 mb-3">Para utilizar la plataforma, inicia tu suscripción👇</h2>
+        <h1 class="mt-4 text-slate-950">Actualmente <b>no</b> tienes una suscripción activa</h1>
+        <h2 class="mt-3 mb-3 text-slate-950">Para utilizar la plataforma, inicia tu suscripción👇</h2>
     @endif
 
 @stop

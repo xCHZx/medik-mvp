@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="mt-3">
-        <h1 class="">Información de la <b>Cuenta</b></h1>
+        <h1 class="text-slate-950 text-2xl">Información de la Cuenta</h1>
     </div>
 @stop
 

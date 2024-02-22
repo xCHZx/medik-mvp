@@ -4,7 +4,7 @@
 
 @section('content_header')
     <section class="mt-3">
-      <h1 class="text-left font-medium"> Suscripciones</h1>
+      <h1 class="text-left text-slate-950"> Suscripciones</h1>
     </section>
 
 @stop

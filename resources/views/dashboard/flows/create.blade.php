@@ -12,7 +12,7 @@
         <form method="POST" action="{{ route('flows.store') }}">
             @csrf
             <div class="card-header row col-12 border-none mt-3 mr-0">
-                <h1 class="card-title col-6 text-black">Creación de flujo</h1>
+                <h1 class="card-title col-6 text-slate-950 text-2xl">Creación de flujo</h1>
                 <div class="text-right col-6 mr-0">
                     <button type="submit" class="btn mdkbtn-success mr-2 col-4">Guardar</button>
                     <a href="{{ route('flows.index') }}" class="btn mdkbtn-danger col-4">Cancelar</a>

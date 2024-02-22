@@ -48,10 +48,10 @@
                         <p class="card-text my-2">Fecha de creación: {{ date('d/m/Y \a \l\a\s H:i', strtotime($flow->created_at)) }}</p>
                         <div class="row d-flex justify-content-between align-items-center mt-4">
 
-                            <!-- Delete -->
+                            <!-- Delete >
                             <button type="button" class="btn mdkbtn-danger" data-toggle="modal" data-target="#deleteModal" data-name="{{$flow->name}}" data-id="{{ $flow->id}}">
                                 <i class="fas fa-trash-alt mr-1"></i>Eliminar
-                            </button>
+                            </button-->
                             
 
                             <!-- Activar/Desactivar flujo -->

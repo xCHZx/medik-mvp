@@ -5,7 +5,7 @@
 @section('content_header')
 
     @if ($business)
-        <h1 class="mt-2 mb-2 text-sky-950 text-2xl">Mi negocio</h1>
+        <h1 class="mt-2 mb-2 text-sky-950 text-2xl">Información de tu negocio</h1>
     @else
         <h1 class="mt-2 text-sky-950 text-2xl">Actualmente <b>no</b> tienes ningún negocio registrado</h1>
         <h2 class="mt-2 mb-3">Para utilizar la plataforma, crea tu primer negocio👇</h2>
@@ -84,8 +84,8 @@
                                         <h5 class="font-semibold text-base my-3">Con este código QR podrás</h5>
                                         <ul class="text-gray-500 list-disc list-inside text-sm">
                                             <li class="mb-1">Calificar nuestro servicio</li>
-                                            <li class="mb-1"> Dejar tus comentarios</li>
-                                            <li class="mb-1">Lorep Ipsum Ipsum sasasa la mesa que más apladuda</li>
+                                            <li class="mb-1">Dejar tus comentarios</li>
+                                            <li class="mb-1">Nos podrás seguir en todas nuestras redes sociales</li>
                                         </ul>
                                     </article>
                                 </div>
@@ -104,8 +104,8 @@
         </div>
 
     @else
-        <div class="card">
-            <div class="card-body">
+        <div class="">
+            <div class="card-body bg-white border-2 rounded-xl border-green-400">
                 <form class="px-3 py-2" method="POST" action="{{route('business.store')}}">
                     @csrf
                     <div class="row mb-2">

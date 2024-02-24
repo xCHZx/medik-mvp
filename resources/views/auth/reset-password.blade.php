@@ -1,7 +1,7 @@
 <x-visitor-layout>
     <div class="text-center mb-1">
         <!-- Emojis seguridad fuerte -->
-        <span class="text-4xl">💪🔐</span>
+        <span class="text-4xl">🔐</span>
 
         <!-- Título -->
         <div class="flex justify-content-center align-content-center mt-2">
@@ -53,7 +53,7 @@
         <div class="flex items-center justify-end mt-4">
             <div class="col-12">
                 <button class="px-4 py-2 mdkbtn-success rounded-md focus:outline-none focus:ring focus:ring-indigo-500 w-full">
-                    Esta es mi nueva contraseña 😎
+                    Restablecer Contraseña
                 </button>
             </div>
         </div>

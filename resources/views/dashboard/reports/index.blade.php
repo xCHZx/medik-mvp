@@ -71,7 +71,7 @@
                         <p class="text-xs">+{{$lastMonthVisitsVariation}}% Mes pasado</p>
                     </div>
                 </div>
-                <a href="#" class="btn mdkbtn-primary p-2 mt-2 w-full text-center">Ver más</a>
+                <a href="opiniones" class="btn mdkbtn-primary p-2 mt-2 w-full text-center">Ver más</a>
             </div>
         </div>
     </section>

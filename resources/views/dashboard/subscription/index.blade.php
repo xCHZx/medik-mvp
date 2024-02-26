@@ -4,7 +4,7 @@
 
 @section('content_header')
     <section class="mt-3">
-      <h1 class="text-left font-medium"> Suscripciones</h1>
+      <h1 class="text-left text-slate-950">Suscripción</h1>
     </section>
 
 @stop
@@ -34,7 +34,7 @@
             <div class="card-body">
               <p class="text-lg">en internet a través de nuestro sistema automatizado de registro de visitas y opiniones</p>
               <p class="py-4 text-5xl">➜</p>
-              <img class="img-fluid min-w-[90%]" alt="Doctor escribiendo" src="{{ url('/resources/images/suscription.svg') }}">
+              <img class="img-fluid min-w-[90%]" alt="Doctor escribiendo" src="{{ url('/resources/images/suscriptionv3.svg') }}">
             </div>
           </div>
 

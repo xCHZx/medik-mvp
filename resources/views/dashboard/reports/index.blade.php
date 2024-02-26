@@ -3,7 +3,7 @@
 @section('title', 'Reportes - Opiniones')
 
 @section('content_header')
-    <h1>Reportes</h1>
+    <h1 class="text-slate-950 mb-2">Reportes</h1>
 @stop
 
 @section('content')
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#" class="btn mdkbtn-primary mt-2 p-2 w-full text-center">Ver más</a>
+                <a href="opiniones" class="btn mdkbtn-primary mt-2 p-2 w-full text-center">Ver más</a>
             </div>
         </div>
         {{-- <div class="card basis-1/4">
@@ -71,7 +71,7 @@
                         <p class="text-xs">+{{$lastMonthVisitsVariation}}% Mes pasado</p>
                     </div>
                 </div>
-                <a href="#" class="btn mdkbtn-primary p-2 mt-2 w-full text-center">Ver más</a>
+                <a href="opiniones" class="btn mdkbtn-primary p-2 mt-2 w-full text-center">Ver más</a>
             </div>
         </div>
     </section>

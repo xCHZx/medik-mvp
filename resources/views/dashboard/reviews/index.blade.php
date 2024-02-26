@@ -3,7 +3,7 @@
 @section('title', 'Reportes - Opiniones')
 
 @section('content_header')
-    <h1>Opiniones</h1>
+    <h1 class="text-slate-950">Opiniones</h1>
 @stop
 
 @section('content')

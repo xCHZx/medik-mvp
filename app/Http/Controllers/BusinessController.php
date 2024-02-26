@@ -184,6 +184,9 @@ class BusinessController extends Controller
      * Calculate the Rating counting all the reviews and dividing by the total
      * --->NEEDS IMPROVEMENT, NEED A CRON JOB<---
      */
+    /* aqui no se esta tomando en cuenta que los reviews tienen diferentes estados
+    solo los que tienen status completada deberian considerarse */
+
     public function calculateRating($businessId){
         $business = Business::with('reviews')->findOrFail($businessId);
         $total = 0.0;

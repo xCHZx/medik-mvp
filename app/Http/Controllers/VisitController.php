@@ -58,6 +58,7 @@ class VisitController extends Controller
             return $visitor;
         }catch(Exception $e){
             // return $e;
+            // desde aqui returnar el mensaje si ocurrio algo con el envio de mensajes
             dd($e);
         }
     }

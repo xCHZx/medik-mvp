@@ -5,7 +5,7 @@
 @section('content_header')
 
     @if ($business)
-        <h1 class="mt-2 mb-2">Editando: <b>{{$business["name"]}}</b></h1>
+        <h1 class="mt-2 mb-2 text-sky-950">Edición de negocio</h1>
     @else
         <h1 class="mt-3">Actualmente <b>no</b> tienes ningún negocio registrado</h1>
         <h2 class="mt-2 mb-3">Para utilizar la plataforma, crea tu primer negocio👇</h2>
@@ -15,8 +15,8 @@
 @stop
 
 @section('content')
-        <div class="card">
-            <div class="card-body">
+        <div class="">
+            <div class="card-body bg-white rounded-xl border-2 border-green-400">
                 <form class="p-3" method="POST" action="{{route('business.update', $business["id"])}}">
                 @csrf
                     <div class="row mb-3">
@@ -25,12 +25,12 @@
                             <input type="text" class="form-control mdkTextArea" value="{{$business["name"]}}"  name="name" id="name" required>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="address" class="form-label">Dirección</label>
-                            <input type="text" class="form-control mdkTextArea" value="{{$business["address"]}}"  name="address" id="address" required>
+                            <label for="description" class="form-label">Descripción o slogan (opcional)</label>
+                            <input type="text" class="form-control mdkTextArea" name="description" id="description" value="{{$business["description"]}}">
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="description" class="form-label">Descripción o slogan (opcional)</label>
-                            <textarea class="form-control mdkTextArea"  name="description" id="description">{{$business["description"]}}</textarea>
+                            <label for="address" class="form-label">Dirección</label>
+                            <textarea class="form-control mdkTextArea" name="address" id="address" required>{{$business["address"]}}</textarea>
                         </div>
                     </div>
                     <div class="mt-3">

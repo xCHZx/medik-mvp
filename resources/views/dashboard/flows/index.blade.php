@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row d-flex justify-content-between align-items-center py-3">
         <div class="col-md-5">
-            <h1> Estos son tus <b>flujos</b> 👇</h1>
+            <h1 class="text-sky-950 text-2xl">Flujos</h1>
         </div>
 
         <!-- Nuevo Flujo -->
@@ -44,14 +44,14 @@
                         </div>
                     </div>
                     <div class="card-body pt-0 pb-2">
-                        <p class="card-text my-2">Objetivo: {{$flow->objective}}</p>
-                        <p class="card-text my-2">Fecha de creación: {{ date('d/m/Y \a \l\a\s H:i', strtotime($flow->created_at)) }}</p>
+                        <p class="card-text my-2"><b>Objetivo:</b> {{$flow->objective}} </p>
+                        <p class="card-text my-2"><b>Fecha de creación:</b> {{ date('d/m/Y \a \l\a\s H:i', strtotime($flow->created_at)) }}</p>
                         <div class="row d-flex justify-content-between align-items-center mt-4">
 
-                            <!-- Delete -->
+                            <!-- Delete >
                             <button type="button" class="btn mdkbtn-danger" data-toggle="modal" data-target="#deleteModal" data-name="{{$flow->name}}" data-id="{{ $flow->id}}">
                                 <i class="fas fa-trash-alt mr-1"></i>Eliminar
-                            </button>
+                            </button-->
                             
 
                             <!-- Activar/Desactivar flujo -->

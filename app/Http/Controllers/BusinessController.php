@@ -158,7 +158,7 @@ class BusinessController extends Controller
         $business = Business::find($id);
         $title = $business->name;
 
-        $templatePath = resource_path('images/placeholder-medik.png');
+        $templatePath = resource_path('images/placeholder-medik-flat.png');
         $watermarkPath = resource_path('images/logo-medik-white.png');
 
         $img = Image::make($templatePath);
@@ -167,7 +167,7 @@ class BusinessController extends Controller
         $watermark->resize(179, 67);
         $img->text($title, 30, 70, function($font){
             $font->file(resource_path('fonts/nunito-semibold.ttf'));
-            $font->size(50);
+            $font->size(35);
             $font->color('#ffffff');
         });
         $img->insert($watermark, 'bottom-right', 30, 20);

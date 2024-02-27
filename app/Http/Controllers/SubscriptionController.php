@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PSpell\Config;
 
 class SubscriptionController extends Controller
 {
@@ -11,10 +12,6 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $status = $user->subscribed('default');
         return view('dashboard.subscription.index', compact('user','status'));
-    }
-
-    public function hola(){
-        return "hola";
     }
 
     public function paymentMethod(){
@@ -25,7 +22,7 @@ class SubscriptionController extends Controller
 
     public function checkout(){ //Cuando haya oportunidad utilizar facade de Cashier
         $user = Auth::user();
-        
+
         \Stripe\Stripe::setApiKey(config(key: 'stripe.sk'));
 
         $session = \Stripe\Checkout\Session::create([
@@ -41,7 +38,7 @@ class SubscriptionController extends Controller
             //   'allowed_countries' => ['US', 'CA'],
             // ],
             'line_items' => [[
-                'price' => 'price_1NrXsAJrAkaG1EW4Ju2Yu28i',
+                'price' => config(key: 'stripe.regular_subscription_price'),
                 'quantity' => 1,
                 ]],
                 'mode' => 'subscription',

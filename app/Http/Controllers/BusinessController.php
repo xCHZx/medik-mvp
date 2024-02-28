@@ -188,12 +188,13 @@ class BusinessController extends Controller
     solo los que tienen status completada deberian considerarse */
 
     public function calculateRating($businessId){
-        $business = Business::with('reviews')->findOrFail($businessId);
+        $business = Business::find($businessId);
+        $reviews = $business->reviews()->where('status','Finalizada')->get();
         $total = 0.0;
-        foreach ($business->reviews as $review) {
+        foreach ($reviews as $review) {
             $total += $review->rating;
         }
-        $business->averageRating = $total/count($business->reviews);
+        $business->averageRating = $total/count($reviews);
         $business->save();
     }
 }

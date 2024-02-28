@@ -26,6 +26,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+        
         $user = Auth::user();
         $id = Auth::user()->id;
         $status = $user->subscribed('default');

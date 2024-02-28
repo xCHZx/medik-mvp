@@ -54,7 +54,9 @@ class SendVisitMessage
 
     private function getReviewsSend($business, $lastPaymentDate)
     {
-        $reviews = $business->reviews()
+        if($lastPaymentDate)
+        {
+            $reviews = $business->reviews()
             ->where(function ($query) {
                 $query->where('status', 'Enviada')
                     ->orWhere('status', 'Entregada')
@@ -64,6 +66,11 @@ class SendVisitMessage
             ->count();
 
         return $reviews;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     private function checkMessagesLimit($business, $user)

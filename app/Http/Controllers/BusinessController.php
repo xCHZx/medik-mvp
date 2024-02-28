@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-
+use Intervention\Image\ImageManager;
+use Intervention\Image\Typography\FontFactory;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class BusinessController extends Controller
 {
@@ -155,24 +157,35 @@ class BusinessController extends Controller
      */
     public function generateImage($id){
 
+        $manager = new ImageManager(Driver::class);
+
         $business = Business::find($id);
         $title = $business->name;
+
+
 
         $templatePath = resource_path('images/placeholder-medik-flat.png');
         $watermarkPath = resource_path('images/logo-medik-white.png');
 
-        $img = Image::make($templatePath);
-        $watermark = Image::make($watermarkPath);
+        // $img = Image::make($templatePath);
+        $img = $manager->read($templatePath);
+        // $watermark = Image::make($watermarkPath);
+        $watermark = $manager->read($watermarkPath);
 
         $watermark->resize(179, 67);
-        $img->text($title, 30, 70, function($font){
+        $img->text($title, 30, 70, function(FontFactory $font){
             $font->file(resource_path('fonts/nunito-semibold.ttf'));
             $font->size(35);
             $font->color('#ffffff');
+            $font->valign('top');
+            $font->lineHeight(1.6);
+            $font->wrap(550);
         });
-        $img->insert($watermark, 'bottom-right', 30, 20);
-        Storage::disk('public')->put('businesses/images/placeholders/'.$id.'.png', $img->encode('png'));
-        $img->destroy();
+        // $img->insert($watermark, 'bottom-right', 30, 20);
+        $img->place($watermark, 'bottom-right', 30, 20);
+        // Storage::disk('public')->put('businesses/images/placeholders/'.$id.'.png', $img->encode('png'));
+        Storage::disk('public')->put('businesses/images/placeholders/'.$id.'.png', $img->toPng());
+        // $img->destroy();
 
         // return response($img->encode('png'), 200, [
         //     'Content-Type' => 'image/png',

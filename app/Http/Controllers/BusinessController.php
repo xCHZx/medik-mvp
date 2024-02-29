@@ -76,12 +76,23 @@ class BusinessController extends Controller
      */
     public function generateQr ($businessId){
         try{
-            $url = urlencode(env('APP_URL'));
-            $svgQr = Http::get("http://api.qrserver.com/v1/create-qr-code/?data=".$url."/visita/".$businessId."&size=400x400&format=svg");
-            $rawQr = htmlspecialchars($svgQr);
+            // $url = urlencode(env('APP_URL'));
+            // $svgQr = Http::get("http://api.qrserver.com/v1/create-qr-code/?data=".$url."/visita/".$businessId."&size=400x400&format=svg");
+            // $rawQr = htmlspecialchars($svgQr);
+            // $business = Business::find(decrypt($businessId));
+            // $business->rawQr = $rawQr;
+            // $business->save();
+
             $business = Business::find(decrypt($businessId));
-            $business->rawQr = $rawQr;
+            $url = urldecode(env('APP_URL'));
+            $savePath = "businesses/images/qr";
+            $pngQr = Http::get("http://api.qrserver.com/v1/create-qr-code/?data=".$url."/visita/".$businessId."&size=400x400");
+            Storage::disk('public')->makeDirectory($savePath);
+            Storage::disk('public')->put($savePath. '/'.$business->id .'.png', $pngQr);
+            $business->rawQr = $savePath. '/'.$business->id.'.png'; // modificar rawQr por QrImageUrl
             $business->save();
+
+
         }catch(Exception $e){
             return $e;
         }
@@ -197,4 +208,7 @@ class BusinessController extends Controller
         $business->averageRating = $total/count($reviews);
         $business->save();
     }
+
+    
 }
+

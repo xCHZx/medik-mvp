@@ -21,8 +21,12 @@
                 @csrf
                     <div class="row mb-3">
                         <div class="form-group col-md-12">
-                            <label for="name" class="form-label">Nombre del Negocio</label>
+                            <div class="row flex justify-between px-2">
+                                <label for="name" class="form-label">Nombre del Negocio</label>
+                                <p id="charRemaining" class="text-cyan-500"></p>
+                            </div>
                             <input type="text" class="form-control mdkTextArea" value="{{$business["name"]}}"  name="name" id="name" required>
+                            
                         </div>
                         <div class="form-group col-md-12">
                             <label for="description" class="form-label">Descripción o slogan (opcional)</label>
@@ -63,6 +67,28 @@
             )
         </script>
     @endif
+
+    <script>
+        var businessName = document.getElementById("name");
+        var currentLenght = businessName.value.length;
+        var remaining = document.getElementById("charRemaining");
+        var limit = 30;
+        remaining.textContent = currentLenght + "/" + limit;
+
+        businessName.addEventListener("input",function(){
+            var textLength = businessName.value.length;
+            remaining.textContent = textLength + "/" + limit;
+
+            if(textLength > limit){
+                businessName.style.borderColor = "#ff0000";
+                remaining.style.color = "#ff0000";
+            }
+            else{
+                businessName.style.borderColor = "#b2b2b2";
+                remaining.style.color = "#1a75ff";
+            }
+        });
+    </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 @stop

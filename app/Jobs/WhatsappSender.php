@@ -140,7 +140,7 @@ class WhatsappSender implements ShouldQueue
         $whatsappId = $message['id'];
 
         Review::where('visitId', $visitId)->update([
-            'status' => 'aceptado',
+            'status' => 'Aceptado',
             'flowId' => $flowId,
             'whatsappId' => $whatsappId
         ]);

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('limitMessages')->default(400);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('accountStatusId')->default(5);
+            $table->unsignedBigInteger('accountStatusId')->default(config(key:'master.accountStatus'));
             $table->rememberToken();
             $table->timestamps();
         });

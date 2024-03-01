@@ -23,8 +23,9 @@ class BusinessController extends Controller
             $user = Auth::user();
             $business = Business::where('userId', $user->id)->first();
             if ($business) {
+                $qrUrl = Storage::url($business->qrImageUrl);
                 $svg= htmlspecialchars_decode($business->rawQr);
-                return view('dashboard.business.index', compact('business','user','svg'));
+                return view('dashboard.business.index', compact('business','user','svg','qrUrl'));
             }else{
                 return view('dashboard.business.index', compact('business','user'));
             }
@@ -54,7 +55,8 @@ class BusinessController extends Controller
                 $business //descripcion (Obj o Exception)
                 );
 
-            $this->generateQr(encrypt($business->id));
+            $this->generateHashedId($business->id);
+            $this->generateQr($business->hashedId);
             $this->generateImage($business->id);
             //$this->generateImage($business->id);
 
@@ -89,7 +91,7 @@ class BusinessController extends Controller
             $pngQr = Http::get("http://api.qrserver.com/v1/create-qr-code/?data=".$url."/visita/".$businessId."&size=400x400");
             Storage::disk('public')->makeDirectory($savePath);
             Storage::disk('public')->put($savePath. '/'.$business->id .'.png', $pngQr);
-            $business->rawQr = $savePath. '/'.$business->id.'.png'; // modificar rawQr por QrImageUrl
+            $business->qrImageUrl = $savePath. '/'.$business->id.'.png';
             $business->save();
 
 
@@ -138,7 +140,8 @@ class BusinessController extends Controller
             $business->description = $request->description;
             $business->address = $request->address;
             $business->save();
-            $this->createImage($business->id);
+            $this->deleteImage($business->id);
+            $this->generateImage($business->id);
 
             app(LogController::class)->store(
                 "success", //tipo
@@ -209,6 +212,22 @@ class BusinessController extends Controller
         $business->save();
     }
 
+    private function generateHashedId($bussinesId)
+    {
+        $bussines = Business::find($bussinesId);
+        $bussines->hashedId = encrypt($bussinesId,env('ENCRYPT_KEY'), ['length' => 10]);
+        $bussines->save();
+    }
+
+
+    private function deleteImage($id)
+    {
+        // eliminar la imagen para que se pueda crear de nuevo en el mismo espacio
+        $imagePath = Storage::url('businesses/images/placeholders/'.$id.'.png');
+        Storage::disk('public')->delete($imagePath);
+    }
+
     
 }
+
 

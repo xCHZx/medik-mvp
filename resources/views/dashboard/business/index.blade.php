@@ -110,7 +110,10 @@
                     @csrf
                     <div class="row mb-2">
                         <div class="form-group col-md-12">
-                            <label for="name" class="form-label">Nombre del Negocio</label>
+                            <div class="row flex justify-between px-2">
+                                <label for="name" class="form-label">Nombre del Negocio</label>
+                                <p id="charRemaining" class="text-cyan-500"></p>
+                            </div>
                             <input type="text" class="form-control"  name="name" id="name" required>
                         </div>
                         <div class="form-group col-md-12">
@@ -148,6 +151,25 @@
                 //print();
             }, 500);
         })
+
+        var businessName = document.getElementById("name");
+        var remaining = document.getElementById("charRemaining");
+        var limit = 30;
+        remaining.textContent = 0 + "/" + limit;
+
+        businessName.addEventListener("input",function(){
+            var textLength = businessName.value.length;
+            remaining.textContent = textLength + "/" + limit;
+
+            if(textLength > limit){
+                businessName.style.borderColor = "#ff0000";
+                remaining.style.color = "#ff0000";
+            }
+            else{
+                businessName.style.borderColor = "#b2b2b2";
+                remaining.style.color = "#1a75ff";
+            }
+        });
     </script>
 
     @if (session("action") == "ok")

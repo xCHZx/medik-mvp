@@ -137,7 +137,7 @@
                         <h6 class="font-medium text-lg">Flujos enviados</h6>
                         <div class="row my-2">
                             <div>
-                                <p class="card-text text-6xl">##</p> <!--Aquí cambiar-->
+                                <p class="card-text text-6xl">{{$reviewsSend}}</p> <!--Aquí cambiar-->
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                         <h6 class="font-medium text-lg">Flujos inconclusos</h6>
                         <div class="row my-2">
                             <div>
-                                <p class="card-text text-6xl">##</p> <!--Aquí cambiar-->
+                                <p class="card-text text-6xl">{{$reviewsNotCompleted}}</p> <!--Aquí cambiar-->
                             </div>
                         </div>
                     </div>

@@ -92,17 +92,33 @@ class ReviewController extends Controller
 
     public function store($visit)
     {
+        try { 
+           $review = new Review();
+           $review->visitId = $visit->id;
+           $review->save();
 
-        $review = new Review();
-        $review->visitId = $visit->id;
-        $review->save();
-
-
+           app(LogController::class)->store(
+               "Succes",
+               "El visitante #".$visit->id." creo una review para el negocio #".$review->visit->businessId,
+               "Review",
+               Auth::user()->id,
+               $review   
+           );
+        } catch (Exception $e) {
+            app(LogController::class)->store(
+                "Error",
+                "El visitante #".$visit->id." erro al crear una review para el negocio #".$review->visit->businessId,
+                "Review",
+                Auth::user()->id,
+                $e
+            );
+        }
     }
 
     public function thankYouGood($visitEncrypted)
     {
         try {
+            $visitId = 
             $review = Review::where('visitId', decrypt($visitEncrypted, env('ENCRYPT_KEY')))->first();
             $flow = $review->flow;
             $calificationLinks = $flow->calificationLinks()->get();
@@ -133,6 +149,14 @@ class ReviewController extends Controller
             $review->status = 'Finalizada';
             $review->save();
 
+            app(LogController::class)->store(
+                "Succes",
+                "El visitante #".$visitId." finalizo una review al negocio #".$review->visit->businessId,
+                "Review",
+                Auth::user()->id,
+                $review
+            );
+
             $newReview = Review::with('visit')->findOrFail($review->id);
 
             app(BusinessController::class)->calculateRating($newReview->visit->businessId);
@@ -143,9 +167,16 @@ class ReviewController extends Controller
                 return redirect()->route('review.thankYouBad', ['visitEncrypted' => $visitEncrypted]);
             }
 
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
+            app(LogController::class)->store(
+                "Error",
+                "El visitante #".$visitId." erro al finalizar una review al negocio #".$review->visit->businessId,
+                "Review",
+                Auth::user()->id,
+                $e
+            );
 
-            dd($e);
         }
 
     }
@@ -157,11 +188,28 @@ class ReviewController extends Controller
         $status = $this->translate($status);
 
         try {
-            Review::where('whatsappId', $whatssAppId)->update([
-                'status' => $status
-            ]);
+            // Review::where('whatsappId', $whatssAppId)->update([
+            //     'status' => $status
+            // ]);
+            $review = Review::where('whatsappId', $whatssAppId)->get();
+            $review->status = $status;
+            $review->save();
+
+            app(LogController::class)->store(
+                "Succes",
+                "La review #".$review->id." cambio de status a ".$reviw->status,
+                "Review",
+                Auth::user()->id,
+                $review
+            );
+            
         } catch (Exception $e) {
-            dd($e);
+            app(LogController::class)->store(
+                "Error",
+                "La review #".$review->id." erro al intentar cambiar de status",
+                "Review",
+                $e
+            );
         }
 
     }

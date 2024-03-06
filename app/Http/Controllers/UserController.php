@@ -9,6 +9,40 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
+    public function store($firstName,$lastName,$phone,$email,$password)
+    {
+        try {
+            $user = new User();
+            $user->firstName = $firstName;
+            $user->lastName = $lastName;
+            $user->phone = $phone;
+            $user->email = $email;
+            $user->password = $password;
+            $user->save();
+
+            app(LogController::class)->store(
+                "Succes",
+                "El usuario #".$user->id." se registro",
+                "Registro",
+                $user->id,
+                $user
+            );
+
+            return $user;
+    
+        } catch (Exception $e)
+        {
+            app(LogController::class)->stor(
+                "Error",
+                "Fallo de intento de registro de usuario",
+                "Registro",
+                0,
+                $e
+            );
+
+            return $e;
+        }
+    }
     // eata funcion se utiliza para cambiar el status de la cuenta del usuario
     public function changeAccountStatus($statusId , $user)
     {

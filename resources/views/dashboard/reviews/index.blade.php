@@ -13,7 +13,7 @@
                 <label class="relative">
                     Flujo
                     <select id="flowObjective" name="flowObjective" class="form-control mt-1 w-72">
-                        <option value="" disabled selected hidden><p class="text-gray-200 m-0 p-0">Selecciona un flujo</p></option>
+                        <option value="" selected hidden></option>
                         @foreach($flowsObjectives as $flowObjective)
                            <option value="{{$flows[$flowObjective]}}">{{$flowObjective}}</option>
                         @endforeach
@@ -131,6 +131,22 @@
                 </div>
             </div>
         </div>
+    @elseif ($reviews->isEmpty())
+        <table class="table w-full border mdkTable-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Visitante</th>
+                    <th>Telefono</th>
+                    <th>Objetivo del Flujo</th>
+                    <th>Fecha de Creación</th>
+                    <th>Calificación</th>
+                    <th>Mostrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- No hay registros, mostrar tabla vacía -->
+            </tbody>
+        </table>
     @else
        <p>Aún no tienes opiniones registradas</p>
     @endif
@@ -138,18 +154,18 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
-            function toggleIcon(input) {
-                const icon = input.nextElementSibling;
-                if (input.type === 'text') {
-                    input.type = 'date';
-                    icon.style.display = 'none';
-                } else {
-                    input.type = 'text';
-                    icon.style.display = 'inline-block';
-                }
-            };
+        function toggleIcon(input) {
+            const icon = input.nextElementSibling;
+            if (input.type === 'text') {
+                input.type = 'date';
+                icon.style.display = 'none';
+            } else {
+                input.type = 'text';
+                icon.style.display = 'inline-block';
+            }
+        }
 
+        $(document).ready(function () {
             $('#showReview').on('show.bs.modal', function (event) {
                 const button = $(event.relatedTarget);
                 const comment = button.data('comment');
@@ -165,7 +181,7 @@
             });
 
             document.getElementById('flowObjective').addEventListener('change', function() {
-                document.querySelector('.red-text').style.display = 'none';
+                document.querySelector('.placeholderFilter').style.display = 'none';
             });
         });
     </script>

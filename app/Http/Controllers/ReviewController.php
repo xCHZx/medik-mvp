@@ -60,8 +60,18 @@ class ReviewController extends Controller
                     'error' => false
                 ]);
 
+            } elseif ($reviews->isEmpty()) {
+                $flowsObjectives = $business->flows()->pluck('objective');
+                // Crear una instancia de LengthAwarePaginator con una colección vacía y el número total de elementos
+                $emptyReviews = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 5);
+                //Luego retorna vista
+                return view('dashboard.reviews.index', [
+                    'reviews' => $emptyReviews,
+                    'flowsObjectives' => $flowsObjectives,
+                    'flows' => $this->flows,
+                    'error' => false
+                ]);
             } else {
-
                 return view('dashboard.reviews.index', ['error' => true]);
             }
 
@@ -197,7 +207,7 @@ class ReviewController extends Controller
 
             app(LogController::class)->store(
                 "Succes",
-                "La review #".$review->id." cambio de status a ".$reviw->status,
+                "La review #".$review->id." cambio de status a ".$review->status,
                 "Review",
                 Auth::user()->id,
                 $review

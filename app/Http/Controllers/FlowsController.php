@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\CalificationLink;
 use App\Models\Flow;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -39,7 +40,8 @@ class FlowsController extends Controller
         $business = Business::where('userId' , $user->id)->first();
         if ($business){
 
-            $flows = Flow::where('businessId' , $business->id)->orderByDesc('isActive')->get();
+            $flows = Flow::where('businessId' , $business->id)
+                           ->where('isDeleted', false)->orderByDesc('isActive')->get();
             if (count($flows) > 0)
             {
                 // vista de sus flujos
@@ -64,68 +66,81 @@ class FlowsController extends Controller
         return view('dashboard.flows.create', ['businessName' => $business->name , 'aliases' => $this->aliases]);
     }
 
-    public function store(Request $request){
-
-        $request->validate([
-            'name' => 'required', // nuevo flujo de + objetivo
-            'objective' => 'required',
-        ]); //No debes asignar la función a una variable si no se usará después -CJ
-
-        $user = Auth::user();
-        $business = $user->businesses->first();
-
-        $flows = $this->getFlows($business->id);
-
+    public function store(Request $request)
+    {
         try {
+            $request->validate([
+                'name' => 'required', // nuevo flujo de + objetivo
+                'objective' => 'required',
+            ]); 
+    
+            $user = Auth::user();
+            $business = $user->businesses->first();
+    
+            $flows = $this->getFlows($business->id);
+    
             $alias = $this->getAlias($request->objective, $this->aliases);
-        } catch (objectiveNotFoundException $e) {
-            dd($e);
+    
+            $flow = new Flow();
+            $flow->name = $request->name;
+            $flow->objective = $request->objective;
+            $flow->alias = $alias;
+            $flow->businessId = $business->id;
+    
+            if($flows->count() > 0) //No se recomienda meter comparativos a 0, mejor utiliza if($flows)
+            {
+                $flow->isActive = false;
+    
+            }
+            else
+            {
+                $flow->isActive = true;
+            }
+            $flow->save();
+
+            app(LogController::class)->store(
+                "Succes",
+                "El usuario #". Auth::user()->id.", creo el flujo #".$flow->id,
+                "Flujo",
+                Auth::user()->id,
+                $flow
+            );
+    
+            $this->generateHasedId($flow->id);
+    
+    
+            if(isset($request->googleUrl) && !empty($request->googleUrl)) //Al recibir en null puedes meter una validación más sencilla y no un AND -CJ
+             {
+                $calification1 = new CalificationLink(); //Hay que cambiar el nombre del modelo ya que no se usa Calification en ninguna instancia, sino Review -CJ
+                $calification1->name = 'google';
+                $calification1->url = $request->googleUrl;
+                $calification1->flowId = $flow->id;
+                $calification1->save();
+                //^^^^El nombre calification1 no es descriptivo -CJ^^^^
+             }
+    
+    
+    
+            if (isset($request->facebookUrl) && !empty($request->facebookUrl)) {
+                $calification2 = new CalificationLink();
+                $calification2->name = 'facebook';
+                $calification2->url = $request->facebookUrl;
+                $calification2->flowId = $flow->id;
+                $calification2->save();
+    
+            }
+            //^^^^Mismos comentarios de la función anterior -CJ^^^^
+    
+            return Redirect::route('flows.index')->with('status', 'Flow-Created'); //Hay que homologar los status a minúsculas, comunícaselo a Fer -CJ
+        } catch (Exception $e) {
+            app(LogController::class)->store(
+                "Error",
+                "El usuario #".Auth::user()->id." erro al intentar crear un flujo",
+                "Flujo",
+                Auth::user()->id,
+                $e
+            );
         }
-
-
-        $flow = new Flow();
-        $flow->name = $request->name;
-        $flow->objective = $request->objective;
-        $flow->alias = $alias;
-        $flow->businessId = $business->id;
-
-        if($flows->count() > 0) //No se recomienda meter comparativos a 0, mejor utiliza if($flows)
-        {
-            $flow->isActive = false;
-
-        }
-        else
-        {
-            $flow->isActive = true;
-        }
-        $flow->save();
-
-
-        if(isset($request->googleUrl) && !empty($request->googleUrl)) //Al recibir en null puedes meter una validación más sencilla y no un AND -CJ
-         {
-            $calification1 = new CalificationLink(); //Hay que cambiar el nombre del modelo ya que no se usa Calification en ninguna instancia, sino Review -CJ
-            $calification1->name = 'google';
-            $calification1->url = $request->googleUrl;
-            $calification1->flowId = $flow->id;
-            $calification1->save();
-            //^^^^El nombre calification1 no es descriptivo -CJ^^^^
-         }
-
-
-
-        if (isset($request->facebookUrl) && !empty($request->facebookUrl)) {
-            $calification2 = new CalificationLink();
-            $calification2->name = 'facebook';
-            $calification2->url = $request->facebookUrl;
-            $calification2->flowId = $flow->id;
-            $calification2->save();
-
-        }
-        //^^^^Mismos comentarios de la función anterior -CJ^^^^
-
-
-
-        return Redirect::route('flows.index')->with('status', 'Flow-Created'); //Hay que homologar los status a minúsculas, comunícaselo a Fer -CJ
 
     }
 
@@ -152,83 +167,144 @@ class FlowsController extends Controller
 
     public function update(Request $request) //Mismas correccciones que en Store
     {
-        // recibo los datos del flujo y lo sobreescribo
-
-        $validated = $request->validate([
-            'flowId' => 'required',
-            'name' => 'required', // validar que sea string
-            'objective' => 'required' // validar que sea string
-        ]);
-
-        Flow::where('id' , $request->flowId)->update([
-                               'name' => $request->name,
-                               'objective' => $request->objective
-                           ]);
-
-        if(isset($request->googleUrl) && !empty($request->googleUrl))
-        {
-            $calificationLink = CalificationLink::updateOrCreate(
-                ['name' => 'google' , 'flowId' => $request->flowId],
-                ['url' => $request->googleUrl]
+        try {
+            $request->validate([
+                'flowId' => 'required',
+                'name' => 'required', // validar que sea string
+                'objective' => 'required' // validar que sea string
+            ]);
+    
+            $flow = Flow::find($request->flowId);
+            $flow->name = $request->name;
+            $flow->objective = $request->objective;
+            $flow->save();
+    
+            if(isset($request->googleUrl) && !empty($request->googleUrl))
+            {
+                CalificationLink::updateOrCreate(
+                    ['name' => 'google' , 'flowId' => $request->flowId],
+                    ['url' => $request->googleUrl]
+                );
+            }
+    
+            if (isset($request->facebookUrl) && !empty($request->facebookUrl))
+            {
+                CalificationLink::updateOrCreate(
+                    ['name' => 'facebook', 'flowId' => $request->flowId],
+                    ['url' => $request->facebookUrl]
+                );
+            }
+            
+            app(LogController::class)->store(
+                "Succes",
+                "El usuario #".Auth::user()->id." , edito el flujo #".$flow->id,
+                "Flujo",
+                Auth::user()->id,
+                $flow
+            );
+            return Redirect::route('flows.index')->with('status', 'Flow-Changed');
+        } catch (Exception $e) {
+            app(LogController::class)->store(
+                "Error",
+                "El usuario #".Auth::user()->id." ,erro al editar un flujo",
+                "Flujo",
+                Auth::user()->id,
+                $e
             );
         }
 
-        if (isset($request->facebookUrl) && !empty($request->facebookUrl))
-        {
-            $calificationLink2 = CalificationLink::updateOrCreate(
-                ['name' => 'facebook', 'flowId' => $request->flowId],
-                ['url' => $request->facebookUrl]
-            );
-        }
-        return Redirect::route('flows.index')->with('status', 'Flow-Changed');
+        
     }
 
     public function changeStatus(Request $request) //Mismas correcciones anteriores
     {
-        // este metodo sirve para modificar el status de un flujo
-        // la vista tiene que enviarme el id del flujo a modificar y si lo intenta activar o desactivar
-        $validated = $request->validate([
-            'flowId' => 'required',
-            'activate' => 'required'
-        ]);
+        try {
+            // este metodo sirve para modificar el status de un flujo
+            // la vista tiene que enviarme el id del flujo a modificar y si lo intenta activar o desactivar
+            $request->validate([
+                'flowId' => 'required',
+                'activate' => 'required'
+            ]);
 
-        if ($request->activate === 'true') //Puedes utilizar una validación más resumida. True nunca se evalúa cómo String. Si lo guardas como String es error de modelo de datos
-        {
-            $business = Auth::user()->businesses->first();
-            $flows = Flow::where('businessId' , $business->id)
-                          ->where('isActive' , true)->get();
-            if (count($flows) == 0){
+            $flow = Flow::find($request->flowId);
+            $status = "";
 
-                Flow::where('id', $request->flowId)
-                       ->update(['isActive' => true]);
+            if ($request->activate === 'true') //Puedes utilizar una validación más resumida. True nunca se evalúa cómo String. Si lo guardas como String es error de modelo de datos
+            {
+                $business = Auth::user()->businesses->first();
+                $flows = Flow::where('businessId' , $business->id)
+                              ->where('isActive' , true)->get();
+                
+                if (count($flows) == 0){
+                    $flow->isActive = true;
+                    $status = "Activado";
+          
+                }
+                else
+                {
+                    // devolver con mensaje de error
+                    // $message = "intento de activar un flujo cuando ya hay uno activado";
+                    // throw new Exception($message);
+                    return Redirect::route('flows.index')->with('flow-status' , 'error');
+                }
 
-                return Redirect::route('flows.index');
             }
             else
             {
-                // devolver con mensaje de error
-                //Falta manejo de excepciones -CJ
-                return Redirect::route('flows.index')->with('flow-status' , 'error');
+                $flow->isActive = false;
+                $status = "Desactivado";
             }
 
-        }
-        else
-        {
-            Flow::where('id', $request->flowId)
-                       ->update(['isActive' => false]);
+            $flow->save();
 
+            app(LogController::class)->store(
+                "Succes",
+                "El usuario #".Auth::user()->id." , cambio el status de el flujo #".$flow->id." a ".$status,
+                "Flujo",
+                Auth::user()->id,
+                $flow
+            );
             return Redirect::route('flows.index');
+
+        } catch (Exception $e) {
+            app(LogController::class)->store(
+                "Error",
+                "El usuario #".Auth::user()->id." , erro al intentar cambiar el status de un flujo",
+                "Flujo",
+                Auth::user()->id,
+                $e->getMessage()
+            );
         }
 
     }
-    //  public function delete(Request $request) //Mismas correcciones
-    //  {
-    //      // metodo para recibir el id de un flujo y eliminarlo de la bd permanentemente
-    //      $validated = $request->validate(['flowId' => 'required']);
 
-    //     Flow::destroy($request->flowId);
-    //     return Redirect::route('flows.index')->with('flow-status' , 'success');
-    // }
+    // el softDelete al flujo
+    public function softDelete(Request $request)
+    {
+        try {
+            $request->validate(['flowId' => 'required']);
+            $flowId = decrypt($request->flowId);
+            Flow::where('flowId',$flowId)
+                 ->update(['isDeleted' => true]);
+
+            app(LogController::class)->store(
+                "Succes",
+                "El usuario #".Auth::user()->id." , elimino el flujo #".$flowId,
+                "Flujo",
+                Auth::user()->id,
+                "Eliminacion de un flujo con softdelete"
+            );
+            return Redirect::route('flows.index')->with('flow-status' , 'succes');
+        } catch (Exception $e) {
+            app(LogController::class)->store(
+                "Error",
+                "El usuario #".Auth::user()->id." , erro al eliminar el flujo #".$flowId,
+                "Flujo",
+                Auth::user()->id,
+                $e
+            );
+        }
+    }
 
     public function getFlows($id)
     {
@@ -249,5 +325,12 @@ class FlowsController extends Controller
         }
         return $aliases[$objective];
 
+    }
+
+    private function generateHasedId($id)
+    {
+        $flow = Flow::find($id);
+        $flow->hashedId = encrypt($id,env('ENCRYPT_KEY'), ['length' => 10]);
+        $flow->save();
     }
 }

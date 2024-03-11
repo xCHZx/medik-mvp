@@ -23,10 +23,23 @@ class VisitorController extends Controller
             $visitor->email = $request->email;
             $visitor->save();
 
+            app(LogController::class)->store(
+                "Succes",
+                "El visitante #".$visitor->id." se registro para el negocio #".Auth::user()->bussinesId,
+                "Visitor",
+                Auth::user()->id,
+                $visitor
+            );
+ 
             return $visitor;
         }catch(Exception $e){
-            // return $e;
-            dd($e);
+            app(LogController::class)->store(
+                "Error",
+                "Error al registrar una visita al negocio #".Auth::user()->businessId,
+                "Visitor",
+                Auth::user()->id,
+                $e
+            );
         }
     }
 }

@@ -104,16 +104,11 @@ class ReportController extends Controller
             $lastMonthReviewsVariation = (($currentMonthVisits->count() - $lastMonthVisits->count()) / $lastMonthVisits->count()) * 100;
         }
         
-        // todas las reviews que se enviarion al visitante
-        $reviewsSend = $business->reviews()->whereNot(function ($query)
-        {
-            $query->where('status','Pendiente')
-                  ->where('status' , 'Aceptado');
+        // numero de  reviews que se enviarion al visitante
+        $reviewsSend = $this->getReviewsSend($business);
 
-        })->count();
-
-        // porcentaje de reviews que se completan en comparacion a las que se envian
-        $reviewsSucces = $this->getReviewsSucces($reviewsSend,$business);
+        // numero de reviews que se enviaron pero no recibieron respuesta
+        $reviewsNotCompleted = $this->getReviewsNotCompleted($business);
 
         $responseRate = count($allVisitsByPeriod) > 0 ? (count($allReviewsByPeriod) / count($allVisitsByPeriod))*100 : 0;
 
@@ -127,7 +122,7 @@ class ReportController extends Controller
             'goodReviewsByPeriod',
             'badReviewsByPeriod',
             'reviewsSend', // nunmero total de reviews que se enviarion
-            'reviewsSucces', // porcentaje de reviews que se completaron en comparacion a las que se mandaron
+            'reviewsNotCompleted', // porcentaje de reviews que se completaron en comparacion a las que se mandaron
             'allVisits',
             'lastMonthVisitsVariation',
             'allVisitsByPeriod',
@@ -164,23 +159,19 @@ class ReportController extends Controller
     //     return $percentageVariation;
     // }
 
-    private function getReviewsSucces($reviewsSend,$business)
-    {
-        if($reviewsSend > 0)
-        {
-            $reviewsCompleted = $business->reviews()->where('status','Finalizada')->count();
-            if($reviewsCompleted > 0)
-            {
-                return ($reviewsCompleted / $reviewsSend) * 100;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        else{
-            return 0;
-        }
-    }
+   private function getReviewsSend($business)
+   {
+     return $business->reviews()->whereNot('status','Pendiente')
+                                ->whereNot('status','Aceptado')
+                                ->count();
+   }
+
+   private function getReviewsNotCompleted($business)
+   {
+    return $business->reviews()->whereNot('status','Pendiente')
+                               ->whereNot('status','Aceptado')
+                               ->whereNot('status','Finalizada')
+                               ->count();
+   }
 
 }

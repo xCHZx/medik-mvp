@@ -23,23 +23,62 @@ class AppointmentController extends Controller
         $appointment = Appointment::find($request->id);
 
         if($appointment){
-            $appointment->date = $request->date;
-            $appointment->time = $request->time;
-            $appointment->patient = $request->patient;
-            $appointment->duration = 60;
-            $appointment->description = $request->description;
-            $appointment->status = 'Agendada';
-            $appointment->save();
-        }else{
-            $appointment = new Appointment();
-            $appointment->date = $request->date;
-            $appointment->time = $request->time;
-            $appointment->patient = $request->patient;
-            $appointment->duration = 60;
-            $appointment->description = $request->description;
-            $appointment->status = 'Agendada';
-            $appointment->userId = Auth::user()->id;
-            $appointment->save();
+           try {
+              $appointment->date = $request->date;
+              $appointment->time = $request->time;
+              $appointment->patient = $request->patient;
+              $appointment->duration = 60;
+              $appointment->description = $request->description;
+              $appointment->status = 'Agendada';
+              $appointment->save();
+
+              app(LogController::class)->store(
+                  "Succes",
+                  "El usuario #".Auth::user()->id." modifico la cita #".$appointment->id,
+                  "Appointment",
+                  Auth::user()->id,
+                  $appointment
+              );
+           } catch (Excpetion $e)
+           {
+               app(LogController::class)->store(
+                   "Error",
+                   "El usuario #".Auth::user()->id." erro al modificar la cita".$appointment->id,
+                   "Appointment",
+                   Auth::user()->id,
+                   $e
+               );
+           }
+        }else
+        {
+            try {
+                $appointment = new Appointment();
+                $appointment->date = $request->date;
+                $appointment->time = $request->time;
+                $appointment->patient = $request->patient;
+                $appointment->duration = 60;
+                $appointment->description = $request->description;
+                $appointment->status = 'Agendada';
+                $appointment->userId = Auth::user()->id;
+                $appointment->save();
+
+                app(LogController::class)->store(
+                    "Succes",
+                    "El usuario #".Auth::user()->id." registro la cita #".$appointment->id,
+                    "Appointment",
+                    Auth::user()->id,
+                    $appointment
+                );
+            } catch (Exception $e) {
+                app(LogController::class)->store(
+                    "Error",
+                    "El usuario #".Auth::user()->id." erro al registrar una cita",
+                    "Appointment",
+                    Auth::user()->id,
+                    $e
+                );
+            }
+            
         }
         return redirect()->route('appointments.index');
     }
@@ -68,18 +107,38 @@ class AppointmentController extends Controller
         return view('appointment.create', compact('doctor','appointments'));
     }
 
-    public function externalStore(Request $request){
-        $appointment = new Appointment();
-        $appointment->date = $request->date;
-        $appointment->time = $request->time;
-        $appointment->patient = $request->patient;
-        $appointment->duration = 60;
-        $appointment->description = $request->description;
-        $appointment->status = 'En revisión';
-        $appointment->userId = $request->hidden;
-        $appointment->save();
+    public function externalStore(Request $request)
+    {
+        try {
+            $appointment = new Appointment();
+            $appointment->date = $request->date;
+            $appointment->time = $request->time;
+            $appointment->patient = $request->patient;
+            $appointment->duration = 60;
+            $appointment->description = $request->description;
+            $appointment->status = 'En revisión';
+            $appointment->userId = $request->hidden;
+            $appointment->save();
 
-        return redirect()->route('appointments.success', ['id' => $appointment->id]);
+            app(LogController::class)->store(
+                "Succes",
+                "Se registro la cita #".$appointment->id." para el usuario #".Auth::user()->id,
+                "Appointment",
+                Auth::user()->id,
+                $appointment
+            );
+
+            return redirect()->route('appointments.success', ['id' => $appointment->id]);
+        } catch (Exception $e) {
+            app(LogController::class)->store(
+                "Error",
+                "Error al registrar una cita para el usuario #".Auth::user()->id,
+                "Appointment",
+                Auth::user()->id,
+                $e
+            );
+        }
+        
     }
 
     public function success($id){

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('alias');
             $table->boolean('isActive'); // para activar el flujo o desactivarlo segun el usuario decida
             $table->unsignedBigInteger('businessId');
+            $table->boolean('isDeleted')->default(false);
+            $table->string('hashedId')->nullable()->unique();
             $table->timestamps();
         });
 

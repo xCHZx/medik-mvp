@@ -21,12 +21,10 @@
                 @csrf
                     <div class="row mb-3">
                         <div class="form-group col-md-12">
-                            <div class="row flex justify-between px-2">
-                                <label for="name" class="form-label">Nombre del Negocio</label>
-                                <p id="charRemaining" class="text-cyan-500"></p>
-                            </div>
+                            <label for="name" class="form-label">Nombre del Negocio</label>
                             <input type="text" class="form-control mdkTextArea" value="{{$business["name"]}}"  name="name" id="name" required>
-                            
+                            <p id="charRemaining" class="text-cyan-500"></p>
+
                         </div>
                         <div class="form-group col-md-12">
                             <label for="description" class="form-label">Descripción o slogan (opcional)</label>
@@ -80,8 +78,8 @@
             remaining.textContent = textLength + "/" + limit;
 
             if(textLength > limit){
-                businessName.style.borderColor = "#ff0000";
-                remaining.style.color = "#ff0000";
+                remaining.style.color = "#C77500";
+                remaining.textContent += " El nombre de tu negocio excede los 30 caracteres recomendados para una visualización óptima  ";
             }
             else{
                 businessName.style.borderColor = "#b2b2b2";
